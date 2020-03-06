@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using grad_proj_api.Data;
+using grad_proj_api.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,7 +32,11 @@ namespace grad_proj_api
             .AddDbContext<DataContext>(db => db.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             //adds cors specified in Configure(IApplicationBuilder app,IHostingEnvironment env)
             services.AddCors();
+            //adds the authentication service
+            services.AddScoped<IAuthRepository, AuthRepository>();
+
             services.AddControllers();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
