@@ -1,0 +1,173 @@
+<div class="background">
+  <div class="container">
+    <div class="screen">
+      <div class="splash" id="splash">
+        <img class="splash-logo" src="" alt="Alpha Logo" />
+      </div>
+      <div class="login">
+        <div class="login-header">
+          <div>
+            <img class="login-logo" src="" alt="Alpha Logo" />
+          </div>
+          <div class="login-subtitle">Sign up to continue</div>
+        </div>
+        <div class="login-body">
+          <!--Form Here -->
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <!--Email  -->
+              <label class="form-label" for="login-email">Email</label>
+              <input
+                matInput
+                formControlName="email"
+                class="form-control"
+                type="email"
+                name="email"
+                placeholder="example@email.com"
+                required
+              />
+              <div
+                *ngIf="email.errors && (email.errors.invalid || email.touched)"
+                class="alert alert-danger"
+              >
+                <small *ngIf="email.errors.email">Error in Email !</small>
+                <small *ngIf="email.errors?.required"
+                  >Email is Requried !</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <!--Email  -->
+              <label class="form-label" for="login-email">UserName</label>
+              <input
+                matInput
+                formControlName="username"
+                class="form-control"
+                type="text"
+                name="UserName"
+                placeholder="Known as"
+                required
+              />
+              <div
+                *ngIf="
+                  username.errors &&
+                  (username.errors.invalid || username.touched)
+                "
+                class="alert alert-danger"
+              >
+                <small *ngIf="username.errors?.required"
+                  >UserName is Requried !</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <!--Password  -->
+              <label class="form-label" for="login-password">Password</label>
+              <input
+                matInput
+                formControlName="password"
+                class="form-control"
+                placeholder="*****"
+                type="password"
+                name="password"
+                name="password"
+              />
+              <div
+                *ngIf="
+                  password.errors &&
+                  (password.errors.invalid || password.touched)
+                "
+                class="alert alert-danger"
+              >
+                <small *ngIf="password.errors?.minlength"
+                  >Error in Password , at least 6 Char !</small
+                >
+                <small *ngIf="password.errors?.required"
+                  >Password is Requried !</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <!--Password  -->
+              <label class="form-label" for="login-password"
+                >Confirm Password</label
+              >
+              <input
+                matInput
+                formControlName="confirmPassword"
+                class="form-control"
+                placeholder="*****"
+                type="password"
+                name="confirmPassword"
+                name="confirmPassword"
+              />
+              <div
+                *ngIf="
+                  confirmPassword.errors &&
+                  (confirmPassword.errors.invalid || confirmPassword.touched)
+                "
+                class="alert alert-danger"
+              >
+                <small *ngIf="confirmPassword.errors?.mustMatch"
+                  >Error in Password , Not Match</small
+                >
+                <small *ngIf="confirmPassword.errors?.required"
+                  >Password is Requried !</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <!--Password  -->
+              <label class="form-label" for="login-Gender">Gender</label>
+              <div
+                class="btn-group btn-group-toggle"
+                ngbRadioGroup
+                name="radioBasic"
+              >
+                <label ngbButtonLabel class="btn-dark">
+                  <input
+                    ngbButton
+                    type="radio"
+                    value="Male"
+                    formControlName="gender"
+                  />
+                  Male
+                </label>
+                <label ngbButtonLabel class="btn-dark">
+                  <input
+                    ngbButton
+                    type="radio"
+                    value="Female"
+                    formControlName="gender"
+                  />
+                  Female
+                </label>
+              </div>
+              <hr />
+            </div>
+            <div class="form-group">
+              <!--Login Btn  -->
+              <button class="login-button" type="submit">Sign Up</button>
+            </div>
+          </form>
+        </div>
+        <div class="text-center">
+          <span>OR</span>
+        </div>
+        <!--Social Icons  -->
+        <div class="social-icons">
+          <img src="../../assets/icons/facebook.png" alt="facebook" />
+          <img src="../../assets/icons/google.png" alt="google" />
+          <img src="../../assets/icons/instagram.png" alt="instagram" />
+        </div>
+        <div class="login-footer">
+          Already User?&nbsp;&nbsp;<a
+            class="link link-register"
+            routerLink="/login"
+            >Login</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
