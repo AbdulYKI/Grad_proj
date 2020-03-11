@@ -13,7 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Net;
 namespace grad_proj_api
 {
     public class Startup
@@ -34,7 +37,36 @@ namespace grad_proj_api
             services.AddCors();
             //adds the authentication service
             services.AddScoped<IAuthRepository, AuthRepository>();
+            //adds token authentication
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                        .AddJwtBearer(options =>
+                        {
+                            IConfigurationSection mainAuth =
+                              Configuration.GetSection("Authentication:MainAuth");
 
+                            options.TokenValidationParameters = new TokenValidationParameters
+                            {
+
+                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(mainAuth["Secret"])),
+                                ValidateIssuerSigningKey = true,
+                                ValidateIssuer = false,
+                                ValidateAudience = false
+                            };
+                            // options.Events = new JwtBearerEvents
+                            // {
+                            //     OnMessageReceived = context =>
+                            //     {
+                            //         var path = context.HttpContext.Request.Path;
+                            //         var accessToken = context.Request.Query["access_token"];
+                            //         if (!string.IsNullOrEmpty(accessToken) &&
+                            //        (path.StartsWithSegments("/api/chat")))
+                            //         {
+                            //             context.Token = accessToken;
+                            //         }
+                            //         return Task.CompletedTask;
+                            //     }
+                            // };
+                        });
             services.AddControllers();
 
         }

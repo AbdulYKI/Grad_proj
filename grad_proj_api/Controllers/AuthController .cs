@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-
+using Google.Apis.Auth;
 namespace DatingApp.API.Controllers
 {
     [Route("api/[controller]")]
@@ -52,6 +52,7 @@ namespace DatingApp.API.Controllers
             return CreatedAtRoute("GetUser", new { controller = "User", id = createdUser.Id }, userToReturn);
 
         }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDTO userForLoginDTO)
         {
@@ -72,7 +73,9 @@ namespace DatingApp.API.Controllers
 
                 };
                 //getting the key from appsettings.json which is why I injected the configuration 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Appsettings:Token").Value));
+                IConfigurationSection mainAuth =
+                             _configuration.GetSection("Authentication:MainAuth");
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(mainAuth["Secret"]));
                 var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
@@ -105,5 +108,21 @@ namespace DatingApp.API.Controllers
             var countriesDTO = _mapper.Map<List<CountryDTO>>(countries);
             return Ok(countriesDTO);
         }
+
+
+        // [HttpPost("login")]
+        // public async Task<IActionResult> GoogleLogin(UserForGoogleLoginDTO userForGoogleLoginDTO)
+        // {
+        //     try
+        //     {
+        //         var payload = GoogleJsonWebSignature.ValidateAsync(userForGoogleLoginDTO.IdToken, new GoogleJsonWebSignature.ValidationSettings()).Result;
+        //         var user = await _repo.Authenticate(payload);
+        //     }
+        //     catch (Exception exception)
+        //     {
+
+        //     }
+        // }
+
     }
 }
