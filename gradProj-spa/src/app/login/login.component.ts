@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   FormGroup,
   FormControl,
@@ -13,11 +13,12 @@ import { MustMatch } from "../helper/must-match.validator";
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  @ViewChild("splash") splash: ElementRef;
-
   submitted = true;
+  loaded = false;
   constructor(private formBuilder: FormBuilder) {}
+  splash = document.getElementById("splash");
   ngOnInit(): void {
+    this.readyScreen();
     this.loginForm = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(6)]]
@@ -44,18 +45,20 @@ export class LoginComponent implements OnInit {
 
   readyScreen() {
     //function load the form
-    setTimeout(function() {
-      this.splash.classList.add("out");
-    }, 1100);
+    setTimeout(() => (this.loaded = true), 1100);
   }
 
-  ngAfterViewInit() {
-    this.readyScreen(); //call this method automatically after all Elements is load
-  }
   get email() {
     return this.loginForm.get("email");
   }
   get password() {
     return this.loginForm.get("password");
+  }
+  checkLoading(): string {
+    if (this.loaded === true) {
+      return "splash out";
+    } else {
+      return "splash";
+    }
   }
 }

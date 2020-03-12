@@ -1,13 +1,21 @@
 <div class="background">
   <div class="container">
     <div class="screen">
-      <div class="splash" id="splash">
-        <img class="splash-logo" src="" alt="Alpha Logo" />
+      <div [ngClass]="checkLoading()">
+        <img
+          class="splash-logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/1280px-Stack_Overflow_logo.svg.png"
+          alt="Alpha Logo"
+        />
       </div>
       <div class="login">
         <div class="login-header">
           <div>
-            <img class="login-logo" src="" alt="Alpha Logo" />
+            <img
+              class="login-logo"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/1280px-Stack_Overflow_logo.svg.png"
+              alt="Alpha Logo"
+            />
           </div>
           <div class="login-subtitle">Sign up to continue</div>
         </div>
