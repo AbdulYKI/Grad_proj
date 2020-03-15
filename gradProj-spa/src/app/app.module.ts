@@ -10,6 +10,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HomePageComponent } from "./home-page/home-page.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavBarComponent } from "./nav-bar/nav-bar.component";
     RegisterComponent,
     HomePageComponent,
     NotFoundComponent,
-    NavBarComponent
+    NavBarComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

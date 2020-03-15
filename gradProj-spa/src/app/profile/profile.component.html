@@ -1,0 +1,162 @@
+
+<div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <div class="list-group" style="padding-bottom:15px;">
+
+          <div class="card">
+
+            <div class="card-body pr-0">
+              <p>
+                <span id="btnToggleSideBar"
+                (click)="ToggleSideBar()">
+                <i class="fas fa-bars"></i> User Dashboard
+              </span>
+              </p>
+                <div [ngbCollapse]="isCollapsed" id="menulinks">
+                <h3> User Dashboard </h3>
+                <a class="nav-link"[class.Active]="isActive('btn1')" (click)="setActive('btn1')"><i class="far fa-user"></i> User info</a>
+                <a class="nav-link" [class.Active]="isActive('btn2')" (click)="setActive('btn2')" ><i class="far fa-heart"></i> Favourites</a>
+                <a class="nav-link" [class.Active]="isActive('btn3')" (click)="setActive('btn3')"><i class="far fa-star"></i> Watchlist</a>
+                <a class="nav-link" [class.Active]="isActive('btn4')" (click)="setActive('btn4')"><i class="fas fa-cog"></i> Settings</a>
+                <a class="nav-link" [class.Active]="isActive('btn5')" (click)="setActive('btn5')"><i class="far fa-bell"></i> Notifications</a>
+                <a class="nav-link" [class.Active]="isActive('btn6')" (click)="setActive('btn6')"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-lg-9">
+         <div class="card">
+          <div class="card-body">
+         <div class="row">
+          <div class="col-5 col-md-5 user-img">
+            <div class="fix_overlay">
+            <div class="overlay"><input type="file"><i class="fas fa-plus"></i> </div>
+            <img src="https://powerviewltd.com/wp-content/uploads/2018/03/profile-img-1.jpg">
+          </div>
+        </div>
+
+          <div class="col-6 col-md-6 m-auto user-info p-0">
+            <h4>Sara Alexender</h4>
+            <p>New York,Usa</p>
+          </div>
+
+        <form  (ngSubmit)="onSubmit()">
+          <div class="container profile-input">
+        <div class="row">
+    <!--Form here-->
+
+  <div class="col-md-6">
+  <!--Name  -->
+  <label class="form-label" for="name">First Name</label>
+  <input
+    matInput
+    class="form-control"
+    type="text"
+    name="name"
+    placeholder="name"
+    required
+  />
+</div>
+
+<div class="col-md-6">
+  <!--Full Name  -->
+  <label class="form-label" for="fullname">Full Name</label>
+  <input
+    matInput
+    class="form-control"
+    type="text"
+    name="fullname"
+    placeholder="Fuull Name"
+    required
+  />
+</div>
+
+<div class="col-md-6">
+
+    <!--Email Address  -->
+    <label class="form-label" for="email">Email Address</label>
+    <input
+      matInput
+      class="form-control"
+      type="email"
+      name="email"
+      placeholder="example@email.com"
+      required
+    />
+</div>
+
+<div class="col-md-6">
+  <!--Phone Number  -->
+  <label class="form-label" for="phone">Phone Number</label>
+  <input
+    matInput
+    class="form-control"
+    type="tel"
+    name="phone"
+    placeholder="+962-xxxxxxxxxx"
+    required
+  />
+</div>
+
+<div class="col-md-6">
+    <!--Location   -->
+    <label class="form-label" for="Location">Location</label>
+    <input
+      matInput
+      class="form-control"
+      type="text"
+      name="Location"
+      placeholder="e.g.New York , USA"
+      required
+    />
+</div>
+
+<div class="col-md-6">
+    <!--Postal Code   -->
+    <label class="form-label" for="Postal">Postal Code</label>
+    <input
+      matInput
+      class="form-control"
+      type="text"
+      name="Location"
+      placeholder="Postal Code"
+      required
+    />
+        </div>
+
+          </div>
+          <!--End Row-->
+
+          <div class="btn-save">
+            <!--Login Btn  -->
+            <button type="submit"> Save Changes</button>
+          </div>
+          </div>
+          <!--End Container-->
+
+
+        </form>
+           </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
