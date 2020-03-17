@@ -6,12 +6,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2"/>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.2"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.2"/>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0"/>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0"/>
-    <PackageReference Include="Google.Apis.Auth.AspNetCore" Version="1.44.1"/>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.2"/>
+    <PackageReference Include="Google.Apis.Core" Version="1.44.1"/>
+    <PackageReference Include="Google.Apis.Auth" Version="1.44.1"/>
   </ItemGroup>
 </Project>
