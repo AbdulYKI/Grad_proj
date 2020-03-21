@@ -1,3 +1,4 @@
+import { environment } from "./../../environments/environment";
 import { Component, OnInit } from "@angular/core";
 import {
   FormGroup,
@@ -13,6 +14,10 @@ import { MustMatch } from "../helper/must-match.validator";
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  fbLogo: string = environment.fbLogo;
+  instagramLogo: string = environment.instagramLogo;
+  googleLogo: string = environment.googleLogo;
+  logo: string = environment.logo;
   submitted = true;
   loaded = false;
   constructor(private formBuilder: FormBuilder) {}

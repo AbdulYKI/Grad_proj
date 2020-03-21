@@ -1,3 +1,4 @@
+import { environment } from "./../../environments/environment";
 import {
   Component,
   OnInit,
@@ -19,6 +20,10 @@ import { MustMatch } from "../helper/must-match.validator";
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  logo: string = environment.logo;
+  fbLogo: string = environment.fbLogo;
+  instagramLogo: string = environment.instagramLogo;
+  googleLogo: string = environment.googleLogo;
   submitted = false;
   constructor(private formBuilder: FormBuilder) {}
   loaded = false;

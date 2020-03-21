@@ -1,3 +1,5 @@
+import { MyRoutes } from "./routes.routing";
+import { HomeComponent } from "./home/home.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
@@ -6,8 +8,6 @@ import { LoginComponent } from "./login/login.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RegisterComponent } from "./register/register.component";
-import { AppRoutingModule } from "./app-routing.module";
-import { HomePageComponent } from "./home-page/home-page.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 
@@ -16,7 +16,7 @@ import { NavBarComponent } from "./nav-bar/nav-bar.component";
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomePageComponent,
+    HomeComponent,
     NotFoundComponent,
     NavBarComponent
   ],
@@ -26,7 +26,7 @@ import { NavBarComponent } from "./nav-bar/nav-bar.component";
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    MyRoutes
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,20 +2,12 @@
   <div class="container">
     <div class="screen">
       <div [ngClass]="checkLoading()">
-        <img
-          class="splash-logo"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/1280px-Stack_Overflow_logo.svg.png"
-          alt="Alpha Logo"
-        />
+        <img class="splash-logo" [src]="logo" alt="Alpha Logo" />
       </div>
       <div class="login">
         <div class="login-header">
           <div>
-            <img
-              class="login-logo"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/1280px-Stack_Overflow_logo.svg.png"
-              alt="Alpha Logo"
-            />
+            <img class="login-logo" [src]="logo" alt="Alpha Logo" />
           </div>
           <div class="login-subtitle">Sign up to continue</div>
         </div>
@@ -164,9 +156,9 @@
         </div>
         <!--Social Icons  -->
         <div class="social-icons">
-          <img src="../../assets/icons/facebook.png" alt="facebook" />
-          <img src="../../assets/icons/google.png" alt="google" />
-          <img src="../../assets/icons/instagram.png" alt="instagram" />
+          <img [src]="fbLogo" alt="facebook" />
+          <img [src]="googleLogo" alt="google" />
+          <img [src]="instagramLogo" alt="instagram" />
         </div>
         <div class="login-footer">
           Already User?&nbsp;&nbsp;<a
