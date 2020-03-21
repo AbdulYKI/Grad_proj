@@ -1,0 +1,81 @@
+<div
+  class="navigation-wrap bg-light start-header  start-style"
+  [ngClass]="onScroll()"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="navbar navbar-expand-md navbar-light">
+          <a class="navbar-brand" routerLink=""
+            ><img
+              src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Stack_Overflow_logo.png"
+              alt=""
+          /></a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            (click)="ToggleMenuCollapsed()"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed">
+            <ul class="navbar-nav ml-auto py-4 py-md-0">
+              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+                <a
+                  class="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  >Home</a
+                >
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Link1</a>
+                  <a class="dropdown-item" href="#">Link2</a>
+                  <a class="dropdown-item" href="#">Link3</a>
+                  <a class="dropdown-item" href="#">Link4</a>
+                </div>
+              </li>
+              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <a class="nav-link" routerLink="login">Login</a>
+              </li>
+              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <a class="nav-link" routerLink="register">Register</a>
+              </li>
+              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <a
+                  class="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  >Profile</a
+                >
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Link1</a>
+                  <a class="dropdown-item" href="#">Link2</a>
+                  <a class="dropdown-item" href="#">Link3</a>
+                  <a class="dropdown-item" href="#">Link4</a>
+                </div>
+              </li>
+              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <a class="nav-link" href="#">Problems</a>
+              </li>
+              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <a class="nav-link" href="#">Question</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
