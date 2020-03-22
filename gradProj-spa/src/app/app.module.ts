@@ -11,10 +11,15 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RegisterComponent } from "./register/register.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
+<<<<<<< HEAD
 import { HttpClientModule } from "@angular/common/http";
 export function tokenGetter() {
   return localStorage.getItem("gradPorjToken");
 }
+=======
+import { ProfileComponent } from './profile/profile.component';
+
+>>>>>>> 9955db16d79f493e1945f7266bf7a7fc45e422f1
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +27,8 @@ export function tokenGetter() {
     RegisterComponent,
     HomeComponent,
     NotFoundComponent,
-    NavBarComponent
+    NavBarComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
