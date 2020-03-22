@@ -22,7 +22,8 @@ export class NavBarComponent implements OnInit {
   }
 
   onScroll(): string {
-    if (window.scrollY >= 10) {
+    console.log(window.scrollY);
+    if (window.scrollY >= 15) {
       return "scroll-on";
     } else {
       return "start-header";

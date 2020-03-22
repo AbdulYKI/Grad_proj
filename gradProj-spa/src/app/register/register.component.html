@@ -1,6 +1,6 @@
 <div class="background">
   <div class="container">
-    <div class="screen">
+    <div class="screen p-3 mt-2 mb-2">
       <div [ngClass]="checkLoading()">
         <img class="splash-logo" [src]="logo" alt="Alpha Logo" />
       </div>
@@ -22,18 +22,17 @@
                 formControlName="email"
                 class="form-control"
                 type="email"
-                name="email"
                 placeholder="example@email.com"
                 required
               />
               <div
-                *ngIf="email.errors && (email.errors.invalid || email.touched)"
+                *ngIf="email.errors && email.touched"
                 class="alert alert-danger"
               >
-                <small *ngIf="email.errors.email">Error in Email !</small>
-                <small *ngIf="email.errors?.required"
-                  >Email is Requried !</small
+                <small *ngIf="email.hasError('email')"
+                  >Error in email pattern</small
                 >
+                <small *ngIf="email.errors?.required">Email is required</small>
               </div>
             </div>
             <div class="form-group">
@@ -44,17 +43,21 @@
                 formControlName="username"
                 class="form-control"
                 type="text"
-                name="UserName"
-                placeholder="Known as"
+                placeholder="eg. username123"
                 required
               />
               <div
-                *ngIf="
-                  username.errors &&
-                  (username.errors.invalid || username.touched)
-                "
+                *ngIf="username.errors && username.touched"
                 class="alert alert-danger"
               >
+                <small
+                  *ngIf="
+                    username.hasError('minLength') ||
+                    username.hasError('maxLength') ||
+                    username.hasError('pattern')
+                  "
+                  >Username pattern error!
+                </small>
                 <small *ngIf="username.errors?.required"
                   >UserName is Requried !</small
                 >
@@ -70,20 +73,21 @@
                 placeholder="*****"
                 type="password"
                 name="password"
-                name="password"
               />
               <div
-                *ngIf="
-                  password.errors &&
-                  (password.errors.invalid || password.touched)
-                "
+                *ngIf="password.errors && password.touched"
                 class="alert alert-danger"
               >
-                <small *ngIf="password.errors?.minlength"
-                  >Error in Password , at least 6 Char !</small
-                >
-                <small *ngIf="password.errors?.required"
-                  >Password is Requried !</small
+                <small
+                  *ngIf="
+                    password.hasError('minLength') ||
+                    password.hasError('maxLength') ||
+                    password.hasError('pattern')
+                  "
+                  >Password pattern error!
+                </small>
+                <small *ngIf="password.hasError('required')">
+                  Password is required !</small
                 >
               </div>
             </div>
@@ -98,21 +102,16 @@
                 class="form-control"
                 placeholder="*****"
                 type="password"
-                name="confirmPassword"
-                name="confirmPassword"
               />
               <div
-                *ngIf="
-                  confirmPassword.errors &&
-                  (confirmPassword.errors.invalid || confirmPassword.touched)
-                "
+                *ngIf="confirmPassword.errors && confirmPassword.touched"
                 class="alert alert-danger"
               >
                 <small *ngIf="confirmPassword.errors?.mustMatch"
                   >Error in Password , Not Match</small
                 >
                 <small *ngIf="confirmPassword.errors?.required"
-                  >Password is Requried !</small
+                  >Confirm Password is required !</small
                 >
               </div>
             </div>
@@ -128,16 +127,16 @@
                   <input
                     ngbButton
                     type="radio"
-                    value="Male"
+                    [value]="genderEnum.MALE"
                     formControlName="gender"
                   />
                   Male
                 </label>
                 <label ngbButtonLabel class="btn-dark">
                   <input
-                    ngbButton
+                    ngbButtons
                     type="radio"
-                    value="Female"
+                    [value]="genderEnum.FEMALE"
                     formControlName="gender"
                   />
                   Female
@@ -147,7 +146,16 @@
             </div>
             <div class="form-group">
               <!--Login Btn  -->
-              <button class="login-button" type="submit">Sign Up</button>
+              <button
+                class="login-button"
+                type="submit"
+                [disabled]="
+                  (registerForm.invalid && registerForm.touched) ||
+                  !registerForm.touched
+                "
+              >
+                Sign Up
+              </button>
             </div>
           </form>
         </div>

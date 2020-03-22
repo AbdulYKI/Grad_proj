@@ -44,7 +44,6 @@ input[type="number"]:focus,
 
 .screen {
   position: relative;
-  padding: 40px;
   background: #fff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   border-radius: 2px;
@@ -102,13 +101,25 @@ input[type="number"]:focus,
   width: 100%;
   padding: 15px 0;
   color: #fff;
-  background: #d68206;
+
   border: none;
   border-radius: 3px;
   font-size: 14px;
-  cursor: pointer;
 }
-
+.login-button:enabled {
+  background-color: #d68206;
+  cursor: pointer;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 1000ms linear;
+}
+.login-button:disabled {
+  background-color: #989494;
+  cursor: auto;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
+}
 .login-footer {
   margin-top: -6px;
   color: #9d9e9d;
