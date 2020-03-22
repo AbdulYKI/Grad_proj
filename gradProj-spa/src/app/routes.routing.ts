@@ -1,3 +1,4 @@
+import { ProfileComponent } from "./profile/profile.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { RegisterComponent } from "./register/register.component";
 import { LoginComponent } from "./login/login.component";
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: "register",
     component: RegisterComponent
+  },
+  {
+    path: "profile",
+    component: ProfileComponent
   },
   {
     path: "404",
