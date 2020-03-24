@@ -15,8 +15,9 @@ import { HttpClientModule } from "@angular/common/http";
 export function tokenGetter() {
   return localStorage.getItem("gradPorjToken");
 }
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ProfileComponent } from "./profile/profile.component";
-import { LoadingCompComponent } from './loading-comp/loading-comp.component';
+import { LoadingCompComponent } from "./loading-comp/loading-comp.component";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { LoadingCompComponent } from './loading-comp/loading-comp.component';
         whitelistedDomains: ["example.com"],
         blacklistedRoutes: ["example.com/examplebadroute/"]
       }
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
