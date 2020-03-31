@@ -1,12 +1,12 @@
 <nav
-  class="bg-light  navbar-expand-md start-header start-style fixed-top"
+  class="bg-light  navbar-expand-md start-header start-style  fixed-top"
   [ngClass]="onScroll()"
 >
   <div class="container">
     <div class="row">
       <div class="col-12">
         <nav class="navbar navbar-light bg-light navbar-expand-md">
-          <a class="navbar-brand" routerLink="/">
+          <a class="navbar-brand" [routerLink]="['./']">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Stack_Overflow_logo.png"
               alt="logo"
@@ -25,40 +25,57 @@
           </button>
           <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed">
             <ul class="navbar-nav ml-0 py-0 py-md-0">
-              <li class="nav-item active pl-q ml-0  ml-md-1 ml-lg-4">
-                <a class="nav-link" routerLink="/"
-                  >Home <span class="sr-only">(current)</span></a
-                >
+              <li
+                class="nav-item   pl-q ml-0  ml-md-1 ml-lg-4"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                <a class="nav-link" [routerLink]="['./home']">Home </a>
               </li>
-              <li class="nav-item pl-q ml-0  ml-md-1 ml-lg-4">
-                <a
-                  class="nav-link dropdown-toggle ddl"
-                  data-toggle="dropdown"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  >Profile</a
-                >
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" routerLink="/profile">dashboard</a>
-                  <a class="dropdown-item" routerLink="">Link2</a>
-                  <a class="dropdown-item" routerLink="">Link3</a>
-                  <a class="dropdown-item" routerLink="">Link4</a>
-                </div>
-              </li>
-              <li class="nav-item pl-q ml-0  ml-md-1 ml-lg-4">
-                <a class="nav-link" routerLink="">Problems</a>
-              </li>
-              <li class="nav-item pl-q ml-0  ml-md-1 ml-lg-4">
-                <a class="nav-link" routerLink="">Question</a>
+              <li
+                *ngIf="loggedIn()"
+                class="nav-item pl-q ml-0  ml-md-1 ml-lg-4"
+                routerLinkActive="active"
+              >
+                <a class="nav-link " [routerLink]="['/profile']">Profile</a>
               </li>
             </ul>
-            <ul class="navbar-nav ml-auto py-0 py-md-0">
-              <li class="nav-item pl-q  ml-0  ml-md-1 ml-lg-4">
-                <a class="nav-link" routerLink="/SignUp">Sign Up </a>
+            <ul *ngIf="!loggedIn()" class="navbar-nav ml-auto py-0 py-md-0">
+              <li
+                class="nav-item pl-q  ml-0  ml-md-1 ml-lg-4"
+                routerLinkActive="active"
+              >
+                <a class="nav-link" [routerLink]="['/sign-up']">Sign Up </a>
               </li>
-              <li class="nav-item pl-q ml-0 ml-md-1">
-                <a class="nav-link" routerLink="/SignIn">Sign In</a>
+              <li class="nav-item pl-q ml-0 ml-md-1" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/sign-in']">Sign In</a>
+              </li>
+            </ul>
+
+            <ul *ngIf="loggedIn()" class="navbar-nav ml-auto py-0 py-md-0">
+              <img [src]="photoUrl || defaultPhoto" class="thumbnail" />
+              <li class="nav-item  pl-q ml-0 ml-md-1" ngbDropdown>
+                <a
+                  id="navbarDropdown1"
+                  class=" nav-link dropdown-toggle"
+                  style="cursor: pointer"
+                  ngbDropdownToggle
+                  role="button"
+                >
+                  {{ name }}
+                </a>
+                <div
+                  aria-labelledby="navbarDropdown1"
+                  ngbDropdownMenu
+                  class="dropdown-menu"
+                >
+                  <a ngbDropdownItem [routerLink]="['/profile']"
+                    >Edit Profile</a
+                  >
+                  <a ngbDropdownItem style="cursor: pointer" (click)="logOut()"
+                    >Log Out</a
+                  >
+                </div>
               </li>
             </ul>
           </div>

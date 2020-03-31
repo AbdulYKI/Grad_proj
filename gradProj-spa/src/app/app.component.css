@@ -1,10 +1,3 @@
-.fix_margin {
-  position: absolute;
-  top: 60%;
-  height: 100vh;
-  left: 0;
-  width: 100%;
-  margin-top: 20px;
-  transform: translateY(-50%);
-  z-index: 20;
+.fixed_padding {
+  padding-top: 6.5rem !important;
 }

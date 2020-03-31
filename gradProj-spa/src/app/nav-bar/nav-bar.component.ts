@@ -1,4 +1,8 @@
+import { Router } from "@angular/router";
+import { AlertifyService } from "./../services/Alertify.service";
+import { AuthService } from "./../services/auth.service";
 import { Component, OnInit, HostListener } from "@angular/core";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-nav-bar",
@@ -8,7 +12,13 @@ import { Component, OnInit, HostListener } from "@angular/core";
 export class NavBarComponent implements OnInit {
   isMenuCollapsed = true;
   scrolled = 0;
-  constructor() {}
+  photoUrl: string;
+  defaultPhoto = environment.defaultPhoto;
+  constructor(
+    private authService: AuthService,
+    private alertifyService: AlertifyService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -22,11 +32,25 @@ export class NavBarComponent implements OnInit {
   }
 
   onScroll(): string {
-    console.log(window.scrollY);
     if (window.scrollY >= 15) {
       return "scroll-on";
     } else {
       return "start-header";
     }
+  }
+  loggedIn() {
+    return this.authService.loggedIn();
+  }
+  logOut() {
+    localStorage.removeItem(environment.tokenName);
+    localStorage.removeItem("info");
+    this.authService.currentUser = null;
+    this.authService.decodedToken = null;
+    this.alertifyService.message("Good Bye");
+    this.router.navigate(["./"]);
+  }
+
+  get name() {
+    return this.authService.decodedToken.unique_name;
   }
 }

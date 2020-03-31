@@ -1,9 +1,11 @@
-namespace grad_proj_api.Helpers {
-    public enum GenderEnum {
-        NONE = 0,
-        MALE = 1,
-        FEMALE = 2,
-        OTHER = 3
+namespace grad_proj_api.Helpers
+{
+    public enum GenderEnum
+    {
+        None = 0,
+        Male = 1,
+        Female = 2,
+        Other = 3
 
     }
 }

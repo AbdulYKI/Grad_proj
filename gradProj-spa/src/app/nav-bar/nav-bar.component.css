@@ -123,9 +123,7 @@
   box-shadow: 0 5px 10px 0 rgba(138, 155, 165, 0.15);
   transition: all 200ms linear;
 }
-.dropdown-toggle::after {
-  display: none;
-}
+
 .dropdown-item {
   padding: 3px 15px;
   color: #212121;
@@ -143,13 +141,23 @@
 .ddl {
   cursor: pointer;
 }
+.thumbnail {
+  height: 50px !important;
+  width: 50px;
+  border: 1px solid gray;
+  border-radius: 0.25rem;
+}
+
 /* =============Media for nav item in small screen======== */
 @media (max-width: 767px) {
   .nav-item:after {
     display: none;
   }
   /* this is code for plus minus in nav  */
-  .nav-item::before {
+  .thumbnail {
+    display: none;
+  }
+  /* .nav-item::before {
     position: absolute;
     display: block;
     top: 15px;
@@ -160,7 +168,7 @@
     border: none;
     background-color: #000;
     vertical-align: 0;
-  }
+  } */
   .dropdown-toggle::after {
     position: absolute;
     display: block;
@@ -188,9 +196,9 @@
     margin-top: 10px !important;
     margin-bottom: 20px !important;
   }
-  .nav-item::before {
+  /* .nav-item::before {
     background-color: black;
-  }
+  } */
   .dropdown-toggle::after {
     background-color: black;
   }

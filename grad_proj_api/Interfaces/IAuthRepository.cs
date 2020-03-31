@@ -8,7 +8,7 @@ namespace grad_proj_api.Interfaces
     public interface IAuthRepository
     {
         Task<User> Register(User user, string password);
-        Task<User> Login(string userName, string password);
+        Task<User> Login(string username, string password);
         Task<User> GoogleLogin(GoogleJsonWebSignature.Payload payload);
         Task<bool> UserExists(string userName);
         Task<bool> EmailExists(string email);

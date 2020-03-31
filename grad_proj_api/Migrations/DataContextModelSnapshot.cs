@@ -116,7 +116,7 @@ namespace grad_proj_api.Migrations
                     b.Property<bool>("CreatedWithGoogle")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -131,7 +131,7 @@ namespace grad_proj_api.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("LastActiveUTC")
+                    b.Property<DateTime?>("LastActiveUTC")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
