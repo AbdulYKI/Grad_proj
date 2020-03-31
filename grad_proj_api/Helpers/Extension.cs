@@ -22,11 +22,11 @@ namespace grad_proj_api.Helpers
         //     response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader, cammelCaseSettings));
         //     response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         // }
-        public static int CalculateAge(this DateTime dateOfBirth)
+        public static int CalculateAge(this DateTime? dateOfBirth)
         {
 
-            var age = DateTime.Now.Year - dateOfBirth.Year;
-            if (dateOfBirth.AddYears(age) > DateTime.Now)
+            var age = DateTime.Now.Year - dateOfBirth.Value.Year;
+            if (dateOfBirth.Value.AddYears(age) > DateTime.Now)
             {
                 age--;
             }

@@ -24,7 +24,7 @@ export class AuthService {
       map((user: any) => {
         if (user) {
           localStorage.setItem("info", JSON.stringify(user.info));
-          localStorage.setItem("gradProjToken", user.token);
+          localStorage.setItem(environment.tokenName, user.token);
           this.currentUser = user.info;
           this.changeMemeberPhotoUrl(this.currentUser.photoUrl);
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
@@ -36,7 +36,7 @@ export class AuthService {
     return this.http.post(this.baseUrl + "register", model);
   }
   loggedIn() {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(environment.tokenName);
     return !this.jwtHelper.isTokenExpired(token);
   }
 }

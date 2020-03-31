@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using grad_proj_api.Helpers;
 using grad_proj_api.Models;
 
-namespace grad_proj_api.DTOs {
-    public class UserForDetailedDTO {
+namespace grad_proj_api.DTOs
+{
+    public class UserForDetailedDTO
+    {
         public int Id { get; set; }
 
         public GenderEnum Gender { get; set; }

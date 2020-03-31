@@ -1,5 +1,5 @@
-<app-loading-comp></app-loading-comp>
-<app-nav-bar></app-nav-bar>
-<div class="fix_margin">
-    <router-outlet></router-outlet>
+<app-loading-comp *ngIf="loadingOverlay"></app-loading-comp>
+<app-nav-bar [style.visibility]="loadingOverlay ? 'hidden' : ''"></app-nav-bar>
+<div class="fixed_padding" [style.visibility]="loadingOverlay ? 'hidden' : ''">
+  <router-outlet></router-outlet>
 </div>

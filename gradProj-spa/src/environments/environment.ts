@@ -8,7 +8,9 @@ export const environment = {
   logo: "../assets/icons/logo.png",
   fbLogo: "../assets/icons/facebook.png",
   googleLogo: "../assets/icons/google.png",
-  instagramLogo: "../assets/icons/instagram.png"
+  instagramLogo: "../assets/icons/instagram.png",
+  defaultPhoto: "../assets/icons/user.png",
+  tokenName: "gradProjToken"
 };
 
 /*

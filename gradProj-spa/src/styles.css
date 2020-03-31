@@ -1,8 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 /* @import "../node_modules/bootswatch/dist/minty/bootstrap.min.css"; */
-/* @import "../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../node_modules/alertifyjs/build/css/alertify.min.css";
 @import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
-@import "../src/assets/tabs.css";
+/*@import "../src/assets/tabs.css";
 @import "../src/assets/flags.css";
 @import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"; */
+.form-button:enabled {
+  background-color: #d68206;
+  cursor: pointer;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 1000ms linear;
+}
+.form-button:disabled {
+  background-color: #989494;
+  cursor: auto;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
+}
