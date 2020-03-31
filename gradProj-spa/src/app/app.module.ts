@@ -16,6 +16,7 @@ export function tokenGetter() {
   return localStorage.getItem("gradPorjToken");
 }
 import { ProfileComponent } from "./profile/profile.component";
+import { LoadingCompComponent } from './loading-comp/loading-comp.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ProfileComponent } from "./profile/profile.component";
     HomeComponent,
     NotFoundComponent,
     NavBarComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoadingCompComponent
   ],
   imports: [
     BrowserModule,
