@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace grad_proj_api.Migrations
 {
-    public partial class initialisation : Migration
+    public partial class Initialisation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,17 +28,20 @@ namespace grad_proj_api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Username = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
-                    Gender = table.Column<string>(nullable: true),
+                    CreatedWithGoogle = table.Column<bool>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    KnownAs = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastActive = table.Column<DateTime>(nullable: false),
+                    CreatedUTC = table.Column<DateTime>(nullable: false),
+                    LastActiveUTC = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     CompanyName = table.Column<string>(nullable: true),
                     SchoolName = table.Column<string>(nullable: true),
-                    CountryNumericCode = table.Column<int>(nullable: false)
+                    CountryNumericCode = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,10 +93,8 @@ namespace grad_proj_api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Url = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
                     PublicId = table.Column<string>(nullable: true),
                     DateAdded = table.Column<DateTime>(nullable: false),
-                    IsMain = table.Column<bool>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -120,7 +121,8 @@ namespace grad_proj_api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Photos_UserId",
                 table: "Photos",
-                column: "UserId");
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_CountryNumericCode",

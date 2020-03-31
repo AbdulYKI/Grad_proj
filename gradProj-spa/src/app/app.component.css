@@ -1,0 +1,10 @@
+.fix_margin{
+    position: absolute;
+    top: 60%;
+    height: 100vh;
+    left: 0;
+    width: 100%;
+    margin-top: 60px;
+    transform: translateY(-50%);
+    z-index: 20;
+}

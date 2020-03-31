@@ -1,0 +1,159 @@
+
+.container {
+color:#8888;
+}
+@media screen and (min-width: 992px) {
+    #menulinks {
+    /*show link in sidebar */
+       display: block;
+    }
+    #btnToggleSideBar {
+       display: none;
+ /*hide Toggle btn  in sidebar  in large screen*/
+    }
+    .user-img img {
+      width: 35%;
+    }
+    .overlay{
+      width: 35%;
+      height: 100%;
+
+   }
+ }
+ @media screen and (max-width: 991px) {
+    #btnToggleSideBar {
+       display: block;
+         /*show Toggle btn  in sidebar ==> in small screen*/
+    }
+    .user-img img {
+      width: 50%;
+    }
+    .overlay{
+      width: 50%;
+      height: 100%;
+   }
+ }
+
+ .Active{
+   border-right: 3px solid #f17548;
+   color: #000000bd;
+   transition: 0.8s ease;
+}
+.Active:hover{
+   color: #000000bd;
+}
+ #menulinks a{
+    margin: 25px 0px;
+    font-size: 14px;
+    width: 100%;
+    cursor: pointer;
+    font-weight: bolder;
+  }
+ #menulinks a i {
+   font-size: 25px;
+   margin-right: 10px;
+   vertical-align: sub;
+ }
+ #menulinks  h3{
+   color: black;
+   font-family: monospace;
+   font-weight: bolder;
+   font-size: 22px;
+   margin: auto 15px;
+  }
+.fa-bars{
+   cursor: pointer;
+}
+.user-img{
+   padding: 0px;
+}
+
+.fix_overlay{
+   padding: 0px;
+   position: relative;
+   display: contents;
+}
+.user-img img {
+    box-shadow: 0px 0px 17px 0px #777676;
+     border-radius: 50%;
+     cursor: pointer;
+     display: block;
+     border: 3px solid white;
+     margin-left: auto;
+ }
+.overlay{
+   position:absolute;
+   right: 0;
+   top: 0;
+  background-color: #000000bd;
+  border-radius: 50%;
+  -webkit-transition: .5s ease;
+    transition: .5s ease;
+    opacity: 0.0;
+
+}
+
+.user-info h4{
+color: #000000bd;
+letter-spacing: 2px;
+font-weight: bolder;
+}
+.user-info p{
+   padding: 0px 6px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+.fix_overlay:hover .overlay{
+    opacity: 1;
+}
+
+input[type="file"]{
+   position: absolute;
+   width: 50%;
+   height: 50%;
+   opacity: 0;
+   cursor: pointer;
+   left: 26%;
+   top: 24%;
+   z-index: 10;
+}
+.fa-plus{
+   position: absolute;
+   left: 45%;
+   top: 45%;
+    color: white;
+    font-size: 20px
+}
+.profile-input{
+margin-top: 10px;
+}
+.form-control{
+   width: 70%;
+   margin: auto;
+}
+.profile-input .row div{
+   padding: 10px 0px;
+}
+.profile-input .row div label{
+   text-align: start;
+   margin-bottom: 8px;
+   margin-left: 15%;
+   font-size: 13px;
+}
+.btn-save{
+   text-align: center;
+   margin-top: 30px;
+   margin-bottom: 2px;
+}
+
+.btn-save button{
+   width: 160px;
+    height: 40px;
+    background-color: #f17548;
+    color: white;
+    border: 0px;
+    border-radius: 20px;
+    box-shadow: 3px 7px 12px #797979;
+    font-weight: 600;
+    outline: none;
+}

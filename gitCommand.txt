@@ -1,0 +1,2 @@
+git log --all --decorate --oneline --graph
+git branch -f b1 b2

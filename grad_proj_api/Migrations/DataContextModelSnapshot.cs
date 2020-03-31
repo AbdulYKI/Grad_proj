@@ -81,12 +81,6 @@ namespace grad_proj_api.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsMain")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("PublicId")
                         .HasColumnType("TEXT");
 
@@ -98,7 +92,8 @@ namespace grad_proj_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Photos");
                 });
@@ -112,11 +107,14 @@ namespace grad_proj_api.Migrations
                     b.Property<string>("CompanyName")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("CountryNumericCode")
+                    b.Property<int?>("CountryNumericCode")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedUTC")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("CreatedWithGoogle")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("TEXT");
@@ -124,13 +122,19 @@ namespace grad_proj_api.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Gender")
+                    b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("KnownAs")
+                    b.Property<string>("FirstName")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastActive")
+                    b.Property<int>("Gender")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastActiveUTC")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
                     b.Property<byte[]>("PasswordHash")
@@ -170,8 +174,8 @@ namespace grad_proj_api.Migrations
             modelBuilder.Entity("grad_proj_api.Models.Photo", b =>
                 {
                     b.HasOne("grad_proj_api.Models.User", "User")
-                        .WithMany("Photos")
-                        .HasForeignKey("UserId")
+                        .WithOne("Photo")
+                        .HasForeignKey("grad_proj_api.Models.Photo", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -181,8 +185,7 @@ namespace grad_proj_api.Migrations
                     b.HasOne("grad_proj_api.Models.Country", "Country")
                         .WithMany("Users")
                         .HasForeignKey("CountryNumericCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

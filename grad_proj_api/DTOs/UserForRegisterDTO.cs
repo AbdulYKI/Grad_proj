@@ -1,42 +1,46 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using grad_proj_api.Helpers;
 
-namespace grad_proj_api.DTOs
-{
-    public class UserForRegisterDTO
-    {
+namespace grad_proj_api.DTOs {
+    public class UserForRegisterDTO {
         [Required]
-
+        [CustomValidation (typeof (UserForRegisterDTO), "ValidateUsername")]
         public string Username { get; set; }
+        public static ValidationResult ValidateUsername (string userName, ValidationContext context) {
+
+            Regex regex = new Regex (@"^[a-zA-Z0-9_\.\-]{8,20}$");
+            if (regex.IsMatch (userName)) { return ValidationResult.Success; } else { return new ValidationResult (null); }
+
+        }
+
         [Required]
-        [StringLength(10, MinimumLength = 5, ErrorMessage = "Password length should be between 5 and 10")]
+        [CustomValidation (typeof (UserForRegisterDTO), "ValidateEmail")]
+        public string Email { get; set; }
+        public static ValidationResult ValidateEmail (string email, ValidationContext context) {
+
+            Regex regex = new Regex (@"^([a-zA-Z0-9_\.\-]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$ ");
+            if (regex.IsMatch (email)) { return ValidationResult.Success; } else { return new ValidationResult (null); }
+
+        }
+
+        [Required]
+        [CustomValidation (typeof (UserForRegisterDTO), "ValidatePassword")]
 
         public string Password { get; set; }
-        [Required]
-        public int CountryNumericCode { get; set; }
+        public static ValidationResult ValidatePassword (string email, ValidationContext context) {
 
-        [Required]
-        public string KnownAs { get; set; }
-        [Required]
-        public string Gender { get; set; }
-        [Required]
-        [CustomValidation(typeof(UserForRegisterDTO), "ValidateAge")]
-        public DateTime DateOfBirth { get; set; }
-        public static ValidationResult ValidateAge(DateTime dateOfBirth, ValidationContext context)
-        {
-            var age = dateOfBirth.CalculateAge();
+            Regex regex = new Regex (@"^[a-zA-Z0-9_\-\.~!@\#\$%^&\*\+=`\|\\\(\)\{\}\[\]:;'<>,\.\?\/]{8,20}$");
+            if (regex.IsMatch (email)) { return ValidationResult.Success; } else { return new ValidationResult (null); }
 
-            return (age < 18)
-                ? new ValidationResult(null)
-                : ValidationResult.Success;
         }
-        public DateTime Created { get; set; }
-        public DateTime LastActive { get; set; }
-        public UserForRegisterDTO()
-        {
-            LastActive = DateTime.UtcNow;
-            Created = DateTime.UtcNow;
+
+        public DateTime CreatedUTC { get; set; }
+        public DateTime LastActiveUTC { get; set; }
+        public UserForRegisterDTO () {
+            LastActiveUTC = DateTime.UtcNow;
+            CreatedUTC = DateTime.UtcNow;
         }
     }
 }
