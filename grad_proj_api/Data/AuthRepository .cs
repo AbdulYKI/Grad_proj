@@ -21,7 +21,7 @@ namespace grad_proj_api.Data
             _mapper = mapper;
         }
 
-        public async Task<User> Login(string username, string password)
+        public async Task<User> SignIn(string username, string password)
         {
             var user = username.Contains('@') ?
            await _context.Users.FirstOrDefaultAsync(userDB => userDB.Email == username) :
@@ -48,7 +48,7 @@ namespace grad_proj_api.Data
             }
         }
 
-        public async Task<User> Register(User user, string password)
+        public async Task<User> SignUp(User user, string password)
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -91,12 +91,9 @@ namespace grad_proj_api.Data
             return false;
 
         }
-        public async Task<List<Country>> GetCountries()
-        {
-            return await _context.Countries.ToListAsync();
-        }
 
-        public async Task<User> GoogleLogin(GoogleJsonWebSignature.Payload payload)
+
+        public async Task<User> GoogleSignIn(GoogleJsonWebSignature.Payload payload)
         {
             var user = await _context.Users.FirstOrDefaultAsync(userDB => userDB.Email == payload.Email);
             if (user != null && user.CreatedWithGoogle == false)

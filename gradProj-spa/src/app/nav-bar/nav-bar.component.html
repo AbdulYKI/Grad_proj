@@ -33,14 +33,14 @@
                 <a class="nav-link" [routerLink]="['./home']">Home </a>
               </li>
               <li
-                *ngIf="loggedIn()"
+                *ngIf="signedIn()"
                 class="nav-item pl-q ml-0  ml-md-1 ml-lg-4"
                 routerLinkActive="active"
               >
-                <a class="nav-link " [routerLink]="['/profile']">Profile</a>
+                <a class="nav-link " [routerLink]="['/user/edit']">Profile</a>
               </li>
             </ul>
-            <ul *ngIf="!loggedIn()" class="navbar-nav ml-auto py-0 py-md-0">
+            <ul *ngIf="!signedIn()" class="navbar-nav ml-auto py-0 py-md-0">
               <li
                 class="nav-item pl-q  ml-0  ml-md-1 ml-lg-4"
                 routerLinkActive="active"
@@ -52,7 +52,7 @@
               </li>
             </ul>
 
-            <ul *ngIf="loggedIn()" class="navbar-nav ml-auto py-0 py-md-0">
+            <ul *ngIf="signedIn()" class="navbar-nav ml-auto py-0 py-md-0">
               <img [src]="photoUrl || defaultPhoto" class="thumbnail" />
               <li class="nav-item  pl-q ml-0 ml-md-1" ngbDropdown>
                 <a
@@ -69,11 +69,11 @@
                   ngbDropdownMenu
                   class="dropdown-menu"
                 >
-                  <a ngbDropdownItem [routerLink]="['/profile']"
+                  <a ngbDropdownItem [routerLink]="['/user/edit']"
                     >Edit Profile</a
                   >
-                  <a ngbDropdownItem style="cursor: pointer" (click)="logOut()"
-                    >Log Out</a
+                  <a ngbDropdownItem style="cursor: pointer" (click)="signOut()"
+                    >Sign Out</a
                   >
                 </div>
               </li>

@@ -1,6 +1,6 @@
 import { User } from "./../models/User";
 import { Router } from "@angular/router";
-import { AlertifyService } from "./../services/Alertify.service";
+import { AlertifyService } from "./../services/alertify.service";
 import { AuthService } from "./../services/auth.service";
 import { environment } from "./../../environments/environment";
 import { Component, OnInit } from "@angular/core";
@@ -16,7 +16,7 @@ import {
   styleUrls: ["./sign-in.component.css"]
 })
 export class SignInComponent implements OnInit {
-  loginForm: FormGroup;
+  signInForm: FormGroup;
   fbLogo: string = environment.fbLogo;
   instagramLogo: string = environment.instagramLogo;
   googleLogo: string = environment.googleLogo;
@@ -32,18 +32,18 @@ export class SignInComponent implements OnInit {
   splash = document.getElementById("splash");
   ngOnInit(): void {
     this.readyScreen();
-    this.loginForm = this.formBuilder.group({
+    this.signInForm = this.formBuilder.group({
       username: ["", [Validators.required]],
       password: ["", [Validators.required]]
     });
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) {
+    if (this.signInForm.invalid) {
       return;
     } else {
-      const user: User = Object.assign({}, this.loginForm.value);
-      this.authService.login(user).subscribe(
+      const user: User = Object.assign({}, this.signInForm.value);
+      this.authService.signIn(user).subscribe(
         next => {
           this.alertifyService.success("Logged In Successfully");
         },
@@ -61,10 +61,10 @@ export class SignInComponent implements OnInit {
   }
 
   get username() {
-    return this.loginForm.get("username");
+    return this.signInForm.get("username");
   }
   get password() {
-    return this.loginForm.get("password");
+    return this.signInForm.get("password");
   }
   checkLoading(): string {
     if (this.loaded === true) {

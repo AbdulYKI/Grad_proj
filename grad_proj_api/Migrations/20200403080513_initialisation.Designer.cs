@@ -9,8 +9,8 @@ using grad_proj_api.Data;
 namespace grad_proj_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200326212329_Initialisation")]
-    partial class Initialisation
+    [Migration("20200403080513_initialisation")]
+    partial class initialisation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,6 +100,20 @@ namespace grad_proj_api.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("grad_proj_api.Models.ProgrammingLanguage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProgrammingLanguages");
+                });
+
             modelBuilder.Entity("grad_proj_api.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -158,6 +172,21 @@ namespace grad_proj_api.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("grad_proj_api.Models.UserProgrammingLanguage", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProgrammingLanguageId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "ProgrammingLanguageId");
+
+                    b.HasIndex("ProgrammingLanguageId");
+
+                    b.ToTable("UserProgrammingLanguages");
+                });
+
             modelBuilder.Entity("grad_proj_api.Models.Message", b =>
                 {
                     b.HasOne("grad_proj_api.Models.User", "Recipient")
@@ -188,6 +217,21 @@ namespace grad_proj_api.Migrations
                         .WithMany("Users")
                         .HasForeignKey("CountryNumericCode")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("grad_proj_api.Models.UserProgrammingLanguage", b =>
+                {
+                    b.HasOne("grad_proj_api.Models.ProgrammingLanguage", "ProgrammingLanguage")
+                        .WithMany("Users")
+                        .HasForeignKey("ProgrammingLanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("grad_proj_api.Models.User", "User")
+                        .WithMany("UserProgrammingLanguages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

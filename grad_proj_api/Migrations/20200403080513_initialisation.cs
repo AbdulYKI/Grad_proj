@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace grad_proj_api.Migrations
 {
-    public partial class Initialisation : Migration
+    public partial class initialisation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,19 @@ namespace grad_proj_api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.NumericCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProgrammingLanguages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProgrammingLanguages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,6 +121,30 @@ namespace grad_proj_api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserProgrammingLanguages",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false),
+                    ProgrammingLanguageId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserProgrammingLanguages", x => new { x.UserId, x.ProgrammingLanguageId });
+                    table.ForeignKey(
+                        name: "FK_UserProgrammingLanguages_ProgrammingLanguages_ProgrammingLanguageId",
+                        column: x => x.ProgrammingLanguageId,
+                        principalTable: "ProgrammingLanguages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserProgrammingLanguages_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Meessages_RecipientId",
                 table: "Meessages",
@@ -125,6 +162,11 @@ namespace grad_proj_api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserProgrammingLanguages_ProgrammingLanguageId",
+                table: "UserProgrammingLanguages",
+                column: "ProgrammingLanguageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_CountryNumericCode",
                 table: "Users",
                 column: "CountryNumericCode");
@@ -137,6 +179,12 @@ namespace grad_proj_api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Photos");
+
+            migrationBuilder.DropTable(
+                name: "UserProgrammingLanguages");
+
+            migrationBuilder.DropTable(
+                name: "ProgrammingLanguages");
 
             migrationBuilder.DropTable(
                 name: "Users");

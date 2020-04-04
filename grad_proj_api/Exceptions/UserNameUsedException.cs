@@ -1,10 +1,8 @@
-namespace grad_proj_api.Exceptions
-{
+namespace grad_proj_api.Exceptions {
     [System.Serializable]
-    public class UserNameUsedException : System.Exception
-    {
+    public class UsernameUsedException : System.Exception {
 
-        public UserNameUsedException(string message) : base(message) { }
+        public UsernameUsedException (string message) : base (message) { }
 
     }
 }

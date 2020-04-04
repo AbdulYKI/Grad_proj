@@ -74,28 +74,28 @@ input[type="number"]:focus,
   width: 80px;
 }
 
-.login-logo {
+.sign-up-logo {
   width: 140px;
 }
 
-.login-title {
+.sign-up-title {
   margin-top: 14px;
   font-size: 24px;
 }
 
-.login-subtitle {
+.sign-up-subtitle {
   margin-top: 35px;
   color: #9d9e9d;
 }
 
-.login-form {
+.sign-up-form {
   margin-top: 45px;
 }
-.login-body {
+.sign-up-body {
   margin-top: 35px;
 }
 
-.register-button {
+.sign-up-button {
   display: block;
   width: 100%;
   padding: 15px 0;
@@ -105,7 +105,7 @@ input[type="number"]:focus,
   border-radius: 3px;
   font-size: 14px;
 }
-.login-footer {
+.sign-in-footer {
   margin-top: -6px;
   color: #9d9e9d;
   text-align: center;
@@ -165,7 +165,7 @@ input[type="number"]:focus,
   color: #9d9e9d;
 }
 
-.link-register {
+.link-sign-in {
   color: #d68206;
 }
 

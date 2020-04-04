@@ -1,7 +1,10 @@
+.my-select {
+  padding: 0px;
+}
 .container {
   color: #8888;
 }
-.multiselect-dropdown {
+.cuppa-dropdown {
   width: 70% !important;
   margin: auto !important;
 }
@@ -34,6 +37,13 @@
     width: 50%;
     height: 100%;
   }
+}
+.alert-danger {
+  height: 32px;
+  line-height: 7px;
+
+  width: 70% !important;
+  margin: auto !important;
 }
 
 .Active {

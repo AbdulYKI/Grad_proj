@@ -1,5 +1,5 @@
 import { Router } from "@angular/router";
-import { AlertifyService } from "./../services/Alertify.service";
+import { AlertifyService } from "./../services/alertify.service";
 import { AuthService } from "./../services/auth.service";
 import { Component, OnInit, HostListener } from "@angular/core";
 import { environment } from "src/environments/environment";
@@ -38,10 +38,10 @@ export class NavBarComponent implements OnInit {
       return "start-header";
     }
   }
-  loggedIn() {
-    return this.authService.loggedIn();
+  signedIn() {
+    return this.authService.signedIn();
   }
-  logOut() {
+  signOut() {
     localStorage.removeItem(environment.tokenName);
     localStorage.removeItem("info");
     this.authService.currentUser = null;
