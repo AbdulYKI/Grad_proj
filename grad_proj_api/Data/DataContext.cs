@@ -10,12 +10,16 @@ namespace grad_proj_api.Data {
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Message> Meessages { get; set; }
-
+        public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+        public DbSet<UserProgrammingLanguage> UserProgrammingLanguages { get; set; }
         protected override void OnModelCreating (ModelBuilder modelBuilder) {
             //tell EF what is the primary key
 
             modelBuilder.Entity<Country> ()
                 .HasKey (k => new { k.NumericCode });
+
+            modelBuilder.Entity<UserProgrammingLanguage> ()
+                .HasKey (upl => new { upl.UserId, upl.ProgrammingLanguageId });
 
             //explains the relationship between the likee in the likes table and the likers in the user table
 
@@ -33,7 +37,14 @@ namespace grad_proj_api.Data {
                 .WithMany (C => C.Users)
                 .OnDelete (DeleteBehavior.Restrict)
                 .HasForeignKey (u => u.CountryNumericCode);
-
+            modelBuilder.Entity<UserProgrammingLanguage> ()
+                .HasOne (u => u.User)
+                .WithMany (pl => pl.UserProgrammingLanguages)
+                .HasForeignKey (u => u.UserId);
+            modelBuilder.Entity<UserProgrammingLanguage> ()
+                .HasOne (pl => pl.ProgrammingLanguage)
+                .WithMany (u => u.Users)
+                .HasForeignKey (pl => pl.ProgrammingLanguageId);
         }
     }
 

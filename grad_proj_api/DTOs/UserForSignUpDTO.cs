@@ -5,10 +5,10 @@ using grad_proj_api.Helpers;
 
 namespace grad_proj_api.DTOs
 {
-    public class UserForRegisterDTO
+    public class UserForSignUpDTO
     {
         [Required]
-        [CustomValidation(typeof(UserForRegisterDTO), "ValidateUsername")]
+        [CustomValidation(typeof(UserForSignUpDTO), "ValidateUsername")]
         public string Username { get; set; }
         public static ValidationResult ValidateUsername(string userName, ValidationContext context)
         {
@@ -22,7 +22,7 @@ namespace grad_proj_api.DTOs
         }
 
         [Required]
-        [CustomValidation(typeof(UserForRegisterDTO), "ValidateEmail")]
+        [CustomValidation(typeof(UserForSignUpDTO), "ValidateEmail")]
         public string Email { get; set; }
         public static ValidationResult ValidateEmail(string email, ValidationContext context)
         {
@@ -36,7 +36,7 @@ namespace grad_proj_api.DTOs
         }
 
         [Required]
-        [CustomValidation(typeof(UserForRegisterDTO), "ValidatePassword")]
+        [CustomValidation(typeof(UserForSignUpDTO), "ValidatePassword")]
 
         public string Password { get; set; }
         public static ValidationResult ValidatePassword(string email, ValidationContext context)
@@ -52,7 +52,7 @@ namespace grad_proj_api.DTOs
 
         public DateTime CreatedUTC { get; set; }
         public DateTime LastActiveUTC { get; set; }
-        public UserForRegisterDTO()
+        public UserForSignUpDTO()
         {
             LastActiveUTC = DateTime.UtcNow;
             CreatedUTC = DateTime.UtcNow;

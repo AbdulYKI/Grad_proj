@@ -18,7 +18,7 @@ import { MustMatch } from "../helper/must-match.validator";
 import { User } from "../models/User";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
-import { AlertifyService } from "../services/Alertify.service";
+import { AlertifyService } from "../services/alertify.service";
 
 @Component({
   selector: "app-sign-up",
@@ -26,7 +26,7 @@ import { AlertifyService } from "../services/Alertify.service";
   styleUrls: ["./sign-up.component.css"]
 })
 export class SignUpComponent implements OnInit {
-  registerForm: FormGroup;
+  signupForm: FormGroup;
 
   logo: string = environment.logo;
   fbLogo: string = environment.fbLogo;
@@ -44,7 +44,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
     this.readyScreen();
 
-    this.registerForm = this.formBuilder.group(
+    this.signupForm = this.formBuilder.group(
       {
         email: [
           "",
@@ -78,19 +78,19 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.registerForm.invalid) {
+    if (this.signupForm.invalid) {
       return;
     } else {
-      const user: User = Object.assign({}, this.registerForm.value);
-      this.authService.register(user).subscribe(
+      const user: User = Object.assign({}, this.signupForm.value);
+      this.authService.signUp(user).subscribe(
         () => {
-          this.alertifyService.success("Registered Successfully");
+          this.alertifyService.success("Signed up successfully");
         },
         error => {
           this.alertifyService.error(error);
         },
         () => {
-          this.authService.login(user).subscribe(
+          this.authService.signIn(user).subscribe(
             () => this.router.navigate([""]),
             error => {
               this.alertifyService.error(error);
@@ -114,19 +114,19 @@ export class SignUpComponent implements OnInit {
   }
 
   get email(): AbstractControl {
-    return this.registerForm.get("email");
+    return this.signupForm.get("email");
   }
   get username(): AbstractControl {
-    return this.registerForm.get("username");
+    return this.signupForm.get("username");
   }
   get password(): AbstractControl {
-    return this.registerForm.get("password");
+    return this.signupForm.get("password");
   }
   get confirmPassword(): AbstractControl {
-    return this.registerForm.get("confirmPassword");
+    return this.signupForm.get("confirmPassword");
   }
   get gender(): AbstractControl {
-    return this.registerForm.get("gender");
+    return this.signupForm.get("gender");
   }
   get GenderEnum() {
     return GenderEnum;

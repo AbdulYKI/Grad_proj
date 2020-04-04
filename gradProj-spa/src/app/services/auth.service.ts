@@ -19,8 +19,8 @@ export class AuthService {
   changeMemeberPhotoUrl(photoUrl: string) {
     this.photoUrl.next(photoUrl);
   }
-  login(model: User) {
-    return this.http.post(this.baseUrl + "login", model).pipe(
+  signIn(model: User) {
+    return this.http.post(this.baseUrl + "sign-in", model).pipe(
       map((user: any) => {
         if (user) {
           localStorage.setItem("info", JSON.stringify(user.info));
@@ -32,10 +32,10 @@ export class AuthService {
       })
     );
   }
-  register(model: User) {
-    return this.http.post(this.baseUrl + "register", model);
+  signUp(model: User) {
+    return this.http.post(this.baseUrl + "sign-up", model);
   }
-  loggedIn() {
+  signedIn() {
     const token = localStorage.getItem(environment.tokenName);
     return !this.jwtHelper.isTokenExpired(token);
   }

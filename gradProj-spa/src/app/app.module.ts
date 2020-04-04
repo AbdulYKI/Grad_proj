@@ -1,3 +1,5 @@
+import { UserService } from "src/app/services/user.service";
+import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
 import { environment } from "src/environments/environment";
 import { MyRoutes } from "./routes.routing";
 import { JwtModule } from "@auth0/angular-jwt";
@@ -11,18 +13,20 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule } from "@angular/common/http";
 import { NgxTinymceModule } from "ngx-tinymce";
+import { AngularMultiSelectModule } from "angular2-multiselect-dropdown";
 /*-------------------------------------------------------------------------------------------------*/
 import { AppComponent } from "./app.component";
 import { SignInComponent } from "./sign-in/sign-in.component";
-import { ProfileComponent } from "./profile/profile.component";
+import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 import { LoadingCompComponent } from "./loading-comp/loading-comp.component";
 import { AuthService } from "./services/auth.service";
-import { AlertifyService } from "./services/Alertify.service";
+import { AlertifyService } from "./services/alertify.service";
 import { SignUpComponent } from "./sign-up/sign-up.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { AuthGuard } from "./guards/auth.guard";
 import { PreventUnsavedChangesGuard } from "./guards/prevent-unsaved-changes.guard";
+import { ErrorInterceptorProvider } from "./services/Interceptor.service";
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
 }
@@ -34,7 +38,7 @@ export function tokenGetter() {
     HomeComponent,
     NotFoundComponent,
     NavBarComponent,
-    ProfileComponent,
+    EditProfileComponent,
     LoadingCompComponent
   ],
   imports: [
@@ -56,13 +60,17 @@ export function tokenGetter() {
         whitelistedDomains: ["localhost:5000"]
       }
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularMultiSelectModule
   ],
   providers: [
     AuthService,
     AlertifyService,
     PreventUnsavedChangesGuard,
-    AuthGuard
+    AuthGuard,
+    UserService,
+    EditProfileResolver,
+    ErrorInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { AlertifyService } from "./../services/Alertify.service";
+import { AlertifyService } from "./../services/alertify.service";
 import { AuthService } from "./../services/auth.service";
 import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     private router: Router
   ) {}
   canActivate(): boolean {
-    if (this.auth.loggedIn()) {
+    if (this.auth.signedIn()) {
       return true;
     }
     this.alertify.warning("Please make sure you are signed in.");

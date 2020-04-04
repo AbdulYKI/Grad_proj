@@ -1,22 +1,26 @@
 using System;
+using System.Collections.Generic;
 using grad_proj_api.Helpers;
 
-namespace grad_proj_api.DTOs
-{
-    public class UserToReturnDTO
-    {
+namespace grad_proj_api.DTOs {
+    public class UserToReturnDTO {
         public int Id { get; set; }
         public string Username { get; set; }
-
+        public string Email { get; set; }
         public GenderEnum Gender { get; set; }
-
-        public int? Age { get; set; }
-
-        public string KnownAs { get; set; }
+        public string SchoolName { get; set; }
+        public string CompanyName { get; set; }
         public DateTime CreatedUTC { get; set; }
         public DateTime? LastActiveUTC { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Description { get; set; }
+        public string CountryName { get; set; }
+        public int? Age { get; set; }
+        public int? CountryNumericCode { get; set; }
+        public List<int> ProgrammingLanguagesIds { get; set; }
         public string PhotoUrl { get; set; }
+        public string CountryAlpha2Code { get; set; }
     }
 }

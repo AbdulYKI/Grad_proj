@@ -1,2 +1,12 @@
 git log --all --decorate --oneline --graph
 git branch -f b1 b2
+
+whenever you start working:
+git fetch ==> gives you latest HEADs of branches
+git rebase master ==> gives you the changes made on the master
+
+whenever you are done:
+stage + commit 
+git rebase master ==> gives you the changes made on the master
+then create a pull request and merge it with the master.
+

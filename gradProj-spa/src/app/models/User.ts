@@ -1,5 +1,5 @@
 import { GenderEnum } from "./../helper/gender.enum";
-//for login always use username
+//for signIn always use username
 export class User {
   username: string;
   confirmPassword: string;
@@ -8,7 +8,7 @@ export class User {
   photoUrl: string;
   firstName: string;
   lastName: string;
-  Gender: GenderEnum;
+  gender: GenderEnum;
   dateOfBirth: Date;
   lastActiveUtc: Date;
   description: string;
@@ -16,4 +16,6 @@ export class User {
   companyName: string;
   schoolName: string;
   countryNumericCode: number;
+  countryAlpha2Code: string;
+  programmingLanguagesIds: number[];
 }

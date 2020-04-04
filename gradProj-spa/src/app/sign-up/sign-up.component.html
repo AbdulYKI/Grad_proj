@@ -4,19 +4,19 @@
       <div [ngClass]="checkLoading()">
         <img class="splash-logo" [src]="logo" alt="Alpha Logo" />
       </div>
-      <div class="login">
-        <div class="login-header">
+      <div class="sign-up">
+        <div class="sign-up-header">
           <div>
-            <img class="login-logo" [src]="logo" alt="Alpha Logo" />
+            <img class="sign-up-logo" [src]="logo" alt="Alpha Logo" />
           </div>
-          <div class="login-subtitle">Sign up to continue</div>
+          <div class="sign-up-subtitle">Sign up to continue</div>
         </div>
-        <div class="login-body">
+        <div class="sign-up-body">
           <!--Form Here -->
-          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
               <!--Email  -->
-              <label class="form-label" for="login-email">Email</label>
+              <label class="form-label" for="sign-up-email">Email</label>
               <input
                 formControlName="email"
                 class="form-control"
@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
               <!--Email  -->
-              <label class="form-label" for="login-email">Username</label>
+              <label class="form-label" for="sign-up-email">Username</label>
               <input
                 matInput
                 formControlName="username"
@@ -64,7 +64,7 @@
             </div>
             <div class="form-group">
               <!--Password  -->
-              <label class="form-label" for="login-password">Password</label>
+              <label class="form-label" for="sign-up-password">Password</label>
               <input
                 matInput
                 formControlName="password"
@@ -92,7 +92,7 @@
             </div>
             <div class="form-group">
               <!--Password  -->
-              <label class="form-label" for="login-password"
+              <label class="form-label" for="sign-up-password"
                 >Confirm Password</label
               >
               <input
@@ -132,13 +132,13 @@
             </div>
 
             <div class="form-group">
-              <!--Login Btn  -->
+              <!--sign-in Btn  -->
               <button
-                class="form-button register-button"
+                class="form-button sign-up-button"
                 type="submit"
                 [disabled]="
-                  (registerForm.invalid && registerForm.touched) ||
-                  !registerForm.touched
+                  (signupForm.invalid && signupForm.touched) ||
+                  !signupForm.touched
                 "
               >
                 Sign Up
@@ -155,15 +155,14 @@
           <img [src]="googleLogo" alt="google" />
           <img [src]="instagramLogo" alt="instagram" />
         </div>
-        <div class="login-footer">
+        <div class="sign-in-footer">
           Already User?&nbsp;&nbsp;<a
-            class="link link-register"
-            routerLink="/login"
-            >Login</a
+            class="link link-sign-in"
+            routerLink="/sign-in"
+            >sign-in</a
           >
         </div>
       </div>
     </div>
   </div>
 </div>
-{{ symbols }}

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div *ngIf="false" class="col-lg-3">
-        <div class="list-group" style="padding-bottom:15px;">
+        <div class="list-group" style="padding-bottom: 15px;">
           <div class="card">
             <div class="card-body pr-0">
               <p>
@@ -48,7 +48,7 @@
                   class="nav-link"
                   [class.Active]="isActive('btn6')"
                   (click)="setActive('btn6')"
-                  ><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a
+                  ><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out</a
                 >
               </div>
             </div>
@@ -56,7 +56,7 @@
         </div>
       </div>
 
-      <div *ngIf="editForm.dirty !== null && editForm.dirty" class="col-lg-12 ">
+      <div *ngIf="editForm?.touched && editForm?.dirty" class="col-lg-12">
         <div class="alert alert-info">
           <strong>Information:</strong>
           Changes were made to your profile, any unsaved changes will be gone !
@@ -71,24 +71,22 @@
                   <div class="overlay">
                     <input type="file" /><i class="fas fa-plus"></i>
                   </div>
-                  <img
-                    src="https://powerviewltd.com/wp-content/uploads/2018/03/profile-img-1.jpg"
-                  />
+                  <img [src]="defaultPhoto" />
                 </div>
               </div>
 
               <div class="col-6 col-md-6 m-auto user-info p-0">
-                <h4>Sara Alexender</h4>
-                <p>New York,Usa</p>
+                <h4>{{ user.username }}</h4>
+                <p>{{ user.email }}</p>
               </div>
 
               <form
                 #editForm="ngForm"
                 id="editForm"
-                [formGroup]="editProfileForm"
+                [formGroup]="editFormGroup"
                 (ngSubmit)="onSubmit()"
               >
-                <div class="container  profile-input">
+                <div class="container profile-input">
                   <div class="row">
                     <div class="form-group col-md-6">
                       <label class="form-label">First Name</label>
@@ -132,6 +130,21 @@
                           </button>
                         </div>
                       </div>
+                      <div
+                        class="alert alert-danger"
+                        *ngIf="
+                          DateOfBirth?.hasError('underAge') &&
+                          !DateOfBirth?.hasError('ngbDate')
+                        "
+                      >
+                        User must be 8+ years old
+                      </div>
+                      <div
+                        class="alert alert-danger"
+                        *ngIf="DateOfBirth?.hasError('ngbDate')"
+                      >
+                        Invalid date
+                      </div>
                     </div>
                     <div class="form-group col-md-6">
                       <label class="form-label" for="companyName">
@@ -157,22 +170,40 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label class="form-label" for="country">Country</label>
+                      <label class="form-label" for="countryNumericCode"
+                        >Country</label
+                      >
                       <div class="input-group">
                         <select
-                          formControlName="country"
-                          class="form-control"
-                          [style.padding]="0"
+                          formControlName="countryNumericCode"
+                          class="form-control my-select"
+                          (ngModelChange)="onChange($event)"
                         >
                           <option [ngValue]="null" disabled hidden selected>
                             Select your country...
                           </option>
-                          <option [ngValue]="1">Iraq</option>
-                          <option [ngValue]="2">Jordan</option>
-                          <option [ngValue]="3">Country</option>
+                          <option
+                            *ngFor="let country of countriesDataSource"
+                            [ngValue]="country.numericCode"
+                            >{{ country.name }}</option
+                          >
                         </select>
                         <div class="input-group-append">
-                          <span class="input-group-text"> flag </span>
+                          <span
+                            class="input-group-text"
+                            *ngIf="flagClass == null"
+                          >
+                            <span> &nbsp;</span>
+                          </span>
+                          <span
+                            *ngIf="flagClass != null"
+                            class="input-group-text"
+                            style="padding: 0px; padding-left: 1px;"
+                          >
+                            <ul class="f32" style="padding: 0px; margin: 0px;">
+                              <span [className]="flagClass"></span>
+                            </ul>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -181,11 +212,28 @@
                       <label class="form-label">
                         Programming Languages
                       </label>
-                      <ng-multiselect-dropdown
-                        [settings]="dropdownSettings"
-                        [data]="dropdownList"
+                      <angular2-multiselect
+                        [settings]="programmingLanguagesDropDownSettings"
+                        [data]="programmingLanguagesDataSource"
+                        formControlName="programmingLanguages"
+                        [(ngModel)]="selectedProgrammingLanguages"
                       >
-                      </ng-multiselect-dropdown>
+                      </angular2-multiselect>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label" for="gender">Gender</label>
+                      <select
+                        placeholder="Select your gender"
+                        formControlName="gender"
+                        class="form-control my-select"
+                      >
+                        <option [ngValue]="null" disabled hidden selected>
+                          Select your gender...
+                        </option>
+                        <option [ngValue]="GenderEnum.Male">Male</option>
+                        <option [ngValue]="GenderEnum.Female">Female</option>
+                        <option [ngValue]="GenderEnum.Other">Other</option>
+                      </select>
                     </div>
 
                     <div class="form-group col-md-12">
@@ -206,9 +254,7 @@
                   <div class="btn-save">
                     <button
                       class="form-button"
-                      [disabled]="
-                        (editForm.invalid && editForm.dirty) || !editForm.dirty
-                      "
+                      [disabled]="editForm?.invalid || !editForm?.touched"
                       type="submit"
                     >
                       Save Changes
@@ -224,3 +270,4 @@
     </div>
   </div>
 </div>
+{{ DateOfBirth?.errors | json }}
