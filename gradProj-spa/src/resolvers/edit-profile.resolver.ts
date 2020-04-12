@@ -1,3 +1,4 @@
+import { SharedService } from "./../app/services/shared.service";
 import { Country } from "./../app/models/country";
 import { ProgrammingLanguage } from "./../app/models/programming-language";
 import { AuthService } from "./../app/services/auth.service";
@@ -16,52 +17,57 @@ export class EditProfileResolver implements Resolve<EditProfileResolverData> {
     private alertifyService: AlertifyService,
     private router: Router,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sharedService: SharedService
   ) {}
 
   resolve(snapShot: ActivatedRouteSnapshot): any {
     const user: Observable<User> = this.userService
       .getUser(this.authService.decodedToken.nameid)
       .pipe(
-        catchError(error => {
-          this.alertifyService.error("Problem in retreving data");
-          this.router.navigate([""]);
+        catchError((error) => {
+          this.HandleError();
           return of(null);
         })
       );
-    const programmingLanguages: Observable<ProgrammingLanguage[]> = this.userService
-      .getProgrammingLanguages()
-      .pipe(
-        catchError(error => {
-          this.alertifyService.error("Problem in retreving data");
-          this.router.navigate([""]);
-          return of(null);
-        })
-      );
-    const countries: Observable<Country[]> = this.userService
-      .getCountries()
-      .pipe(
-        catchError(error => {
-          this.alertifyService.error("Problem in retreving data");
-          this.router.navigate([""]);
-          return of(null);
-        })
-      );
+    const programmingLanguages: Observable<
+      ProgrammingLanguage[]
+    > = this.userService.getProgrammingLanguages().pipe(
+      catchError((error) => {
+        this.HandleError();
+        return of(null);
+      })
+    );
+    const countries: Observable<
+      Country[]
+    > = this.userService.getCountries().pipe(
+      catchError((error) => {
+        this.HandleError();
+        return of(null);
+      })
+    );
 
     const joinedResponses = forkJoin([
       user,
       programmingLanguages,
-      countries
+      countries,
     ]).pipe(
-      map(allResponses => {
+      map((allResponses) => {
         console.log(allResponses);
         return {
           user: allResponses[0],
           programmingLanguages: allResponses[1],
-          countries: allResponses[2]
+          countries: allResponses[2],
         };
       })
     );
     return joinedResponses;
+  }
+  get Lexicon() {
+    return this.sharedService.Lexicon;
+  }
+  HandleError() {
+    this.alertifyService.error(this.Lexicon.retrievingDataErrorMessage);
+    this.router.navigate([""]);
   }
 }

@@ -1,3 +1,4 @@
+import { SharedService } from "./services/shared.service";
 import { UserService } from "src/app/services/user.service";
 import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
 import { environment } from "src/environments/environment";
@@ -27,6 +28,7 @@ import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { AuthGuard } from "./guards/auth.guard";
 import { PreventUnsavedChangesGuard } from "./guards/prevent-unsaved-changes.guard";
 import { ErrorInterceptorProvider } from "./services/Interceptor.service";
+import { FooterComponent } from "./footer/footer.component";
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
 }
@@ -39,12 +41,13 @@ export function tokenGetter() {
     NotFoundComponent,
     NavBarComponent,
     EditProfileComponent,
-    LoadingCompComponent
+    LoadingCompComponent,
+    FooterComponent,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
     NgxTinymceModule.forRoot({
-      baseURL: "./assets/tinymce/"
+      baseURL: "./assets/tinymce/",
     }),
     BrowserModule,
     FontAwesomeModule,
@@ -57,11 +60,11 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
         blacklistedRoutes: ["localhost:5000/api/auth"],
-        whitelistedDomains: ["localhost:5000"]
-      }
+        whitelistedDomains: ["localhost:5000"],
+      },
     }),
     BrowserAnimationsModule,
-    AngularMultiSelectModule
+    AngularMultiSelectModule,
   ],
   providers: [
     AuthService,
@@ -70,8 +73,9 @@ export function tokenGetter() {
     AuthGuard,
     UserService,
     EditProfileResolver,
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
+    SharedService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,12 +1,14 @@
+import { SharedService } from "./../services/shared.service";
 import { Injectable } from "@angular/core";
 import { CanDeactivate } from "@angular/router";
 
 @Injectable()
 export class PreventUnsavedChangesGuard implements CanDeactivate<any> {
+  constructor(private sharedService: SharedService) {}
   canDeactivate(component: any): boolean {
-    if (component.editForm?.dirty && component.editForm?.touched) {
+    if (component.editForm?.dirty) {
       return confirm(
-        "Any unsaved changes won't be commited,are you sure you want to continue?"
+        this.sharedService.Lexicon.preventUnsavedChangesGuardMessage
       );
     }
     return true;

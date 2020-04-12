@@ -7,11 +7,11 @@
             <div class="card-body pr-0">
               <p>
                 <span id="btnToggleSideBar" (click)="ToggleSideBar()">
-                  <i class="fas fa-bars"></i> User Dashboard
+                  <i class="fas fa-bars"></i> {{ Lexicon.userDashboard }}
                 </span>
               </p>
               <div [ngbCollapse]="isCollapsed" id="menulinks">
-                <h3>User Dashboard</h3>
+                <h3>{{ Lexicon.userDashboard }}</h3>
                 <a
                   class="nav-link"
                   [class.Active]="isActive('btn1')"
@@ -56,10 +56,10 @@
         </div>
       </div>
 
-      <div *ngIf="editForm?.touched && editForm?.dirty" class="col-lg-12">
+      <div *ngIf="editForm?.dirty" [ngClass]="FormClasses" class="col-lg-12">
         <div class="alert alert-info">
-          <strong>Information:</strong>
-          Changes were made to your profile, any unsaved changes will be gone !
+          <strong>{{ Lexicon.information }}</strong>
+          {{ Lexicon.changeAlert }}
         </div>
       </div>
       <div class="col-lg-12">
@@ -69,7 +69,7 @@
               <div class="col-5 col-md-5 user-img">
                 <div class="fix_overlay">
                   <div class="overlay">
-                    <input type="file" /><i class="fas fa-plus"></i>
+                    <input type="file" /> <fa-icon [icon]="FaPlus"></fa-icon>
                   </div>
                   <img [src]="defaultPhoto" />
                 </div>
@@ -85,11 +85,14 @@
                 id="editForm"
                 [formGroup]="editFormGroup"
                 (ngSubmit)="onSubmit()"
+                [ngClass]="FormClasses"
               >
                 <div class="container profile-input">
                   <div class="row">
                     <div class="form-group col-md-6">
-                      <label class="form-label">First Name</label>
+                      <label [ngClass]="FormLabelClasses">{{
+                        Lexicon.firstName
+                      }}</label>
                       <input
                         class="form-control"
                         type="text"
@@ -97,7 +100,9 @@
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <label class="form-label">Last Name</label>
+                      <label [ngClass]="FormLabelClasses">{{
+                        Lexicon.lastName
+                      }}</label>
                       <input
                         class="form-control"
                         type="text"
@@ -105,7 +110,9 @@
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <label class="form-label">Date of Birth</label>
+                      <label [ngClass]="FormLabelClasses">{{
+                        Lexicon.dateOfBirth
+                      }}</label>
                       <div class="input-group">
                         <input
                           class="form-control"
@@ -126,7 +133,7 @@
                             (click)="datePicker.toggle()"
                             type="button"
                           >
-                            <fa-icon [icon]="faCalender"></fa-icon>
+                            <fa-icon [icon]="FaCalendar"></fa-icon>
                           </button>
                         </div>
                       </div>
@@ -137,18 +144,18 @@
                           !DateOfBirth?.hasError('ngbDate')
                         "
                       >
-                        User must be 8+ years old
+                        {{ Lexicon.underAgeError }}
                       </div>
                       <div
                         class="alert alert-danger"
                         *ngIf="DateOfBirth?.hasError('ngbDate')"
                       >
-                        Invalid date
+                        {{ Lexicon.invalidDate }}
                       </div>
                     </div>
                     <div class="form-group col-md-6">
-                      <label class="form-label" for="companyName">
-                        Company Name
+                      <label [ngClass]="FormLabelClasses" for="companyName">
+                        {{ Lexicon.companyName }}
                       </label>
                       <input
                         class="form-control"
@@ -159,8 +166,8 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label class="form-label" for="schoolName">
-                        School Name
+                      <label [ngClass]="FormLabelClasses" for="schoolName">
+                        {{ Lexicon.schoolName }}
                       </label>
                       <input
                         class="form-control"
@@ -170,8 +177,10 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label class="form-label" for="countryNumericCode"
-                        >Country</label
+                      <label
+                        [ngClass]="FormLabelClasses"
+                        for="countryNumericCode"
+                        >{{ Lexicon.country }}</label
                       >
                       <div class="input-group">
                         <select
@@ -180,7 +189,7 @@
                           (ngModelChange)="onChange($event)"
                         >
                           <option [ngValue]="null" disabled hidden selected>
-                            Select your country...
+                            {{ Lexicon.countrySelectPlaceHolder }}
                           </option>
                           <option
                             *ngFor="let country of countriesDataSource"
@@ -197,10 +206,9 @@
                           </span>
                           <span
                             *ngIf="flagClass != null"
-                            class="input-group-text"
-                            style="padding: 0px; padding-left: 1px;"
+                            class="input-group-text flag-span"
                           >
-                            <ul class="f32" style="padding: 0px; margin: 0px;">
+                            <ul class="f32 flag-ul">
                               <span [className]="flagClass"></span>
                             </ul>
                           </span>
@@ -209,43 +217,53 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label class="form-label">
-                        Programming Languages
+                      <label [ngClass]="FormLabelClasses">
+                        {{ Lexicon.programmingLanguages }}
                       </label>
                       <angular2-multiselect
                         [settings]="programmingLanguagesDropDownSettings"
                         [data]="programmingLanguagesDataSource"
                         formControlName="programmingLanguages"
                         [(ngModel)]="selectedProgrammingLanguages"
+                        (onSelectAll)="onSelectAll($event)"
+                        (onDeSelectAll)="onDeSelectAll($event)"
                       >
                       </angular2-multiselect>
                     </div>
                     <div class="form-group col-md-6">
-                      <label class="form-label" for="gender">Gender</label>
+                      <label [ngClass]="FormLabelClasses" for="gender">{{
+                        Lexicon.gender
+                      }}</label>
                       <select
                         placeholder="Select your gender"
                         formControlName="gender"
                         class="form-control my-select"
                       >
                         <option [ngValue]="null" disabled hidden selected>
-                          Select your gender...
+                          {{ Lexicon.genderSelectPlaceHolder }}
                         </option>
-                        <option [ngValue]="GenderEnum.Male">Male</option>
-                        <option [ngValue]="GenderEnum.Female">Female</option>
-                        <option [ngValue]="GenderEnum.Other">Other</option>
+                        <option [ngValue]="GenderEnum.Male">{{
+                          Lexicon.male
+                        }}</option>
+                        <option [ngValue]="GenderEnum.Female">{{
+                          Lexicon.female
+                        }}</option>
+                        <option [ngValue]="GenderEnum.Other">{{
+                          Lexicon.other
+                        }}</option>
                       </select>
                     </div>
 
                     <div class="form-group col-md-12">
-                      <label class="form-label" for="description">
-                        Description
+                      <label [ngClass]="FormLabelClasses" for="description">
+                        {{ Lexicon.description }}
                       </label>
                       <textarea
                         class="form-control"
                         type="text"
                         rows="6"
                         formControlName="description"
-                        placeholder="Write about yourself..."
+                        [placeholder]="Lexicon.descriptionPlaceHolder"
                       >
                       </textarea>
                     </div>
@@ -254,10 +272,10 @@
                   <div class="btn-save">
                     <button
                       class="form-button"
-                      [disabled]="editForm?.invalid || !editForm?.touched"
+                      [disabled]="editForm?.invalid || !editForm?.dirty"
                       type="submit"
                     >
-                      Save Changes
+                      {{ Lexicon.saveButtonText }}
                     </button>
                   </div>
                 </div>
@@ -270,4 +288,3 @@
     </div>
   </div>
 </div>
-{{ DateOfBirth?.errors | json }}

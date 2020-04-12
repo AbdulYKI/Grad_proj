@@ -1,3 +1,6 @@
+import { CustomDatePicker } from "./../helper/custom-date-picker";
+import { LanguageEnum } from "./../helper/language.enum";
+import { SharedService } from "./../services/shared.service";
 import { NgbDatePickerValue } from "./../helper/ngb-date-picker-value";
 import { EditProfileResolverData } from "./../helper/edit-profile-resolver-data";
 import { ProgrammingLanguage } from "./../models/programming-language";
@@ -19,7 +22,7 @@ import {
   Validators,
   NgForm,
 } from "@angular/forms";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Subject } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { UserService } from "../services/user.service";
@@ -30,24 +33,28 @@ import { GenderEnum } from "../helper/gender.enum";
 import { Country } from "../models/country";
 import { environment } from "src/environments/environment";
 
+import { NgbDatepickerI18n } from "@ng-bootstrap/ng-bootstrap";
+
 @Component({
   selector: "app-edit-profile",
   templateUrl: "./edit-profile.component.html",
   styleUrls: ["./edit-profile.component.css"],
   encapsulation: ViewEncapsulation.None,
+  providers: [{ provide: NgbDatepickerI18n, useClass: CustomDatePicker }],
 })
 export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   isCollapsed = true;
   @ViewChild("datePicker")
   datePicker: any;
   destroy: Subject<boolean> = new Subject<boolean>();
-  faCalender = faCalendar;
+
   minDate: NgbDatePickerValue;
   maxDate: NgbDatePickerValue;
   displayMonths = 1;
   user: User;
   navigation = "select";
   showWeekNumbers = false;
+  programmingLanguagesPlaceHolder: string;
   outsideDays = "visible";
   activeButton = "btn1";
   defaultPhoto = environment.defaultPhoto;
@@ -55,13 +62,14 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   flagClass: string;
   selectedProgrammingLanguages: ProgrammingLanguage[] = [];
   countriesDataSource: Country[] = [];
-  programmingLanguagesDropDownSettings = {};
+  programmingLanguagesDropDownSettings: any;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private userService: UserService,
     private alertifyService: AlertifyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sharedService: SharedService
   ) {
     this.minDate = new NgbDatePickerValue(
       new Date(Date.now()).getFullYear() - 100,
@@ -84,7 +92,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   ngOnInit(): void {
+    this.sharedService.currentLanguage.subscribe((language) => {
+      this.setProgrammingLanguagesDropDownOptions();
+    });
     this.BuildProfileFormGroup();
+    this.programmingLanguagesPlaceHolder = this.Lexicon.programmingLanguagesPlaceHolder;
     this.route.data.subscribe(
       (data: { EditProfileResolverData: EditProfileResolverData }) => {
         this.user = data.EditProfileResolverData.user;
@@ -105,13 +117,16 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       labelKey: "name",
       searchBy: ["name"],
       singleSelection: false,
-      text: "Select Languages",
-      selectAllText: "Select All",
-      unSelectAllText: "UnSelect All",
+      text: this.Lexicon.programmingLanguagesPlaceHolder,
+      selectAllText: this.Lexicon.selectAll,
+      unSelectAllText: this.Lexicon.unselectAll,
       enableSearchFilter: true,
       badgeShowLimit: 2,
       classes: "multiselect-dropdown",
       lazyLoading: true,
+      filterSelectAllText: this.Lexicon.filterSelectAll,
+      filterUnSelectAllText: this.Lexicon.filterUnSelectAll,
+      searchPlaceholderText: this.Lexicon.searchPlaceholder,
     };
   }
 
@@ -183,7 +198,9 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         .pipe(takeUntil(this.destroy))
         .subscribe(
           (next) => {
-            this.alertifyService.success("Updated successfully!");
+            this.alertifyService.success(
+              this.Lexicon.updatedSuccessfullyMessage
+            );
             // I need to save the DateOfBirth value so I can use it after resetting the form
             const dateOfBirthValue = this.DateOfBirth.value;
             this.editForm.reset(user);
@@ -243,11 +260,42 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   get GenderEnum() {
     return GenderEnum;
   }
-  onItemSelect() {}
+
   onChange(selectedCountryNumericCode: number) {
     const country = this.countriesDataSource.find(
       (c) => c.numericCode === selectedCountryNumericCode
     );
     this.flagClass = "flag " + country.alpha2Code.toLowerCase();
+  }
+  get Lexicon() {
+    return this.sharedService.Lexicon;
+  }
+  get FaPlus() {
+    return faPlus;
+  }
+  get FaCalendar() {
+    return faCalendar;
+  }
+  get FormLabelClasses() {
+    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
+      return "form-label";
+    } else {
+      return "form-label form-label-rtl";
+    }
+  }
+  get FormClasses() {
+    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
+      return "";
+    } else {
+      return "rtl";
+    }
+  }
+  onSelectAll(newProgrammingLanguages: ProgrammingLanguage[]) {
+    this.selectedProgrammingLanguages = newProgrammingLanguages;
+  }
+  onDeSelectAll(event: any) {
+    this.editForm.form.controls.programmingLanguages.markAsDirty();
+    this.editForm.form.controls.programmingLanguages.markAsTouched();
+    this.selectedProgrammingLanguages = [];
   }
 }

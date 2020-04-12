@@ -3,6 +3,7 @@
 @import "../node_modules/alertifyjs/build/css/alertify.min.css";
 @import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
 @import "../src/assets/flags.css";
+@import "../node_modules/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css";
 @import "../node_modules/angular2-multiselect-dropdown/themes/default.theme.css";
 
 .form-button:enabled {

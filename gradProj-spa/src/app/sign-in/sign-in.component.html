@@ -1,5 +1,5 @@
 <div class="background mt-4">
-  <div class="container">
+  <div [ngClass]="ContainerClasses">
     <div class="screen">
       <div [ngClass]="checkLoading()">
         <img class="splash-logo" [src]="logo" alt="Alpha Logo" />
@@ -9,7 +9,7 @@
           <div>
             <img class="sign-in-logo" [src]="logo" alt="Alpha Logo" />
           </div>
-          <div class="sign-in-subtitle">Sign in to continue</div>
+          <div class="sign-in-subtitle">{{ Lexicon.signInFormSubtitle }}</div>
         </div>
         <div class="sign-in-body">
           <!--Form Here -->
@@ -17,7 +17,7 @@
             <div class="form-group">
               <!--Email  -->
               <label class="form-label" for="sign-in-email">
-                Email or Username
+                {{ Lexicon.usernameOrEmail }}
               </label>
               <input
                 matInput
@@ -35,13 +35,15 @@
                 class="alert alert-danger"
               >
                 <small *ngIf="username.errors?.required">
-                  Email or Username Is Requried !
+                  {{ Lexicon.usernameOrEmailRequiredErrorMessage }}
                 </small>
               </div>
             </div>
             <div class="form-group">
               <!--Password  -->
-              <label class="form-label" for="sign-in-password">Password</label>
+              <label class="form-label" for="sign-in-password">
+                {{ Lexicon.password }}</label
+              >
               <input
                 matInput
                 formControlName="password"
@@ -58,12 +60,14 @@
                 class="alert alert-danger"
               >
                 <small *ngIf="password.errors?.required">
-                  Password is Requried !
+                  {{ Lexicon.passwordRequiredErrorMessage }}
                 </small>
               </div>
             </div>
             <div class="form-group link-forgot-container">
-              <a class="forgot link link-forgot" href="#">Forgot Password?</a>
+              <a class="forgot link link-forgot" href="#">{{
+                Lexicon.forgotPassword
+              }}</a>
             </div>
             <div class="form-group">
               <!--sign-in Btn  -->
@@ -75,7 +79,7 @@
                 "
                 type="submit"
               >
-                Sign in
+                {{ Lexicon.signIn }}
               </button>
             </div>
           </form>
@@ -87,11 +91,12 @@
           <img [src]="instagramLogo" alt="instagram" />
         </div>
         <div class="sign-in-footer">
-          New user?&nbsp;&nbsp;<a
+          {{ Lexicon.newUser }}&nbsp;&nbsp;<a
             class="link link-sign-up"
             routerLink="/sign-up"
-            >create Account</a
           >
+            {{ Lexicon.createAccount }}
+          </a>
         </div>
       </div>
     </div>
