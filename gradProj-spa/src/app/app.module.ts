@@ -20,6 +20,7 @@ import { AppComponent } from "./app.component";
 import { SignInComponent } from "./sign-in/sign-in.component";
 import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 import { LoadingCompComponent } from "./loading-comp/loading-comp.component";
+import { TextEditorComponent } from './text-editor/text-editor.component';
 import { AuthService } from "./services/auth.service";
 import { AlertifyService } from "./services/alertify.service";
 import { SignUpComponent } from "./sign-up/sign-up.component";
@@ -29,6 +30,8 @@ import { AuthGuard } from "./guards/auth.guard";
 import { PreventUnsavedChangesGuard } from "./guards/prevent-unsaved-changes.guard";
 import { ErrorInterceptorProvider } from "./services/Interceptor.service";
 import { FooterComponent } from "./footer/footer.component";
+import { PostComponent } from './post/post.component';
+
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
 }
@@ -43,6 +46,8 @@ export function tokenGetter() {
     EditProfileComponent,
     LoadingCompComponent,
     FooterComponent,
+    TextEditorComponent,
+    PostComponent
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),

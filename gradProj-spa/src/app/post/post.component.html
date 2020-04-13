@@ -1,0 +1,12 @@
+<div class="container">
+<div class="btn-post "><button (click)="showEditor()"  class="btn float-right">New<i class="fas fa-plus ml-2"></i></button></div>
+<div class="clear"></div>
+<div class="editor" [class.show]="status">
+    <div class="post_cansel">
+        <button class="btn cansel" (click)="canselEditor()">Cansel</button>
+    <button class="btn post">Post <i class="fab fa-telegram-plane"></i></button>
+    </div>
+    <app-text-editor></app-text-editor>
+</div>
+
+</div>

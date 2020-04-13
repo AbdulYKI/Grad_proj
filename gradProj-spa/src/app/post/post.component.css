@@ -1,0 +1,80 @@
+.clear{
+    clear: both;
+}
+.btn-post button{
+    margin: 20px 25px;
+    background-color:#ffff ;
+    color: #f17548;
+    border-color: #f17548;
+    opacity: 1;
+    width: 90px;
+    outline: none;
+    transition-duration: 0.4s;
+}
+.btn-post button:hover{
+
+background-color: #f17548;
+color: white;
+opacity: 0.9;
+border: 1px solid #f17548;
+
+}
+.editor
+{
+    -webkit-transition: 0.4s all !important;
+    -o-transition: 0.4s all !important;
+     transition: 0.4s all !important;
+    position: fixed;
+    bottom: 0;
+    opacity: 0;
+    left: 0;
+    width: 100%;
+    z-index: 147;
+    min-height: 0 ;
+    height: 0 ;
+    -webkit-box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.15);
+    -webkit-transition: -webkit-box-shadow 0.4s;
+    transition: -webkit-box-shadow 0.4s;
+    -o-transition: box-shadow 0.4s;
+    transition: box-shadow 0.4s;
+    transition: box-shadow 0.4s, -webkit-box-shadow 0.4s;
+}
+.show{
+    opacity: 1;
+    min-height: 200px;
+    height: 70vh;}
+    .post_cansel{
+    text-align: right;
+    margin: 20px 10px;
+    }
+    .post_cansel button
+    {
+        margin-left: 15px;
+    }
+    .post_cansel .cansel{
+        background-color: #ffffff;
+        color: #90a4ae;
+        outline: none;
+        transition-duration: 0.4s;
+        border-color: #cfd8dc;
+    }
+    .post_cansel .cansel:hover
+    {
+        background-color: #90a4ae47;
+    color: #999;
+    outline: none;
+    transition-duration: 0.4s;
+    border-color: #e3e4e4;
+    }
+    .post_cansel .post{
+        color: white;
+        outline: none;
+        transition-duration: 0.4s;
+        background-color: #f17548;
+        border-color: #f17548;
+        opacity: 1;
+    }
+    .post_cansel .post:hover{
+        opacity: 0.8;
+    }

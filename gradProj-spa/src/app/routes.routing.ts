@@ -7,6 +7,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthGuard } from "./guards/auth.guard";
 import { PreventUnsavedChangesGuard } from "./guards/prevent-unsaved-changes.guard";
 import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
+import { PostComponent } from './post/post.component';
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: "sign-up",
     component: SignUpComponent,
+  },
+  {
+    path: "add-post",
+    component: PostComponent,
   },
   { path: "**", redirectTo: "home", pathMatch: "full" },
 ];
