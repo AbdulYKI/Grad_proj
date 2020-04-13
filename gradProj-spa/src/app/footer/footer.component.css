@@ -1,0 +1,19 @@
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e6eaea;
+  background-color: #f2f2f2 !important;
+}
+.container {
+  color: #171515f2;
+}
+a {
+  cursor: pointer;
+}
+.ar {
+  float: right;
+}
+.en {
+  float: left;
+}

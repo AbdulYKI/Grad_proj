@@ -1,5 +1,5 @@
 <div class="background mt-4">
-  <div class="container">
+  <div [ngClass]="ContainerClasses">
     <div class="screen p-3 mt-2 mb-2">
       <div [ngClass]="checkLoading()">
         <img class="splash-logo" [src]="logo" alt="Alpha Logo" />
@@ -9,14 +9,16 @@
           <div>
             <img class="sign-up-logo" [src]="logo" alt="Alpha Logo" />
           </div>
-          <div class="sign-up-subtitle">Sign up to continue</div>
+          <div class="sign-up-subtitle">{{ Lexicon.signUpFormSubtitle }}</div>
         </div>
         <div class="sign-up-body">
           <!--Form Here -->
           <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
               <!--Email  -->
-              <label class="form-label" for="sign-up-email">Email</label>
+              <label class="form-label" for="sign-up-email">{{
+                Lexicon.email
+              }}</label>
               <input
                 formControlName="email"
                 class="form-control"
@@ -25,20 +27,23 @@
                 required
               />
               <div
-                *ngIf="email.errors && email.touched"
+                *ngIf="Email.errors && Email.touched"
                 class="alert alert-danger"
               >
-                <small *ngIf="email.hasError('pattern')"
-                  >Error in email pattern</small
-                >
-                <small *ngIf="email.errors?.required">Email is required</small>
+                <small *ngIf="Email.hasError('pattern')">{{
+                  Lexicon.emailPatternErrorMessage
+                }}</small>
+                <small *ngIf="Email.errors?.required">{{
+                  Lexicon.emailRequiredErrorMessage
+                }}</small>
               </div>
             </div>
             <div class="form-group">
               <!--Email  -->
-              <label class="form-label" for="sign-up-email">Username</label>
+              <label class="form-label" for="sign-up-email">{{
+                Lexicon.username
+              }}</label>
               <input
-                matInput
                 formControlName="username"
                 class="form-control"
                 type="text"
@@ -46,25 +51,34 @@
                 required
               />
               <div
-                *ngIf="username.errors && username.touched"
+                *ngIf="Username.errors && Username.touched"
                 class="alert alert-danger"
               >
                 <small
                   *ngIf="
-                    username.hasError('minLength') ||
-                    username.hasError('maxLength') ||
-                    username.hasError('pattern')
+                    Username.hasError('minLength') ||
+                    Username.hasError('maxLength')
                   "
-                  >Username pattern error!
+                  >{{ Lexicon.usernameLengthErrorMessage }}
                 </small>
-                <small *ngIf="username.errors?.required"
-                  >UserName is Requried !</small
-                >
+                <small
+                  *ngIf="
+                    !Username.hasError('minLength') &&
+                    !Username.hasError('maxLength') &&
+                    Username.hasError('pattern')
+                  "
+                  >{{ Lexicon.usernamePatternErrorMessage }}
+                </small>
+                <small *ngIf="Username.errors?.required">
+                  {{ Lexicon.username }}
+                </small>
               </div>
             </div>
             <div class="form-group">
               <!--Password  -->
-              <label class="form-label" for="sign-up-password">Password</label>
+              <label class="form-label" for="sign-up-password">
+                {{ Lexicon.password }}
+              </label>
               <input
                 matInput
                 formControlName="password"
@@ -74,48 +88,49 @@
                 name="password"
               />
               <div
-                *ngIf="password.errors && password.touched"
+                *ngIf="Password.errors && Password.touched"
                 class="alert alert-danger"
               >
                 <small
                   *ngIf="
-                    password.hasError('minLength') ||
-                    password.hasError('maxLength') ||
-                    password.hasError('pattern')
+                    Password.hasError('minLength') ||
+                    Password.hasError('maxLength')
                   "
-                  >Password pattern error!
-                </small>
-                <small *ngIf="password.hasError('required')">
-                  Password is required !</small
                 >
+                  {{ Lexicon.passwordLengthErrorMessage }}
+                </small>
+                <small *ngIf="Password.hasError('required')">
+                  {{ Lexicon.passwordRequiredErrorMessage }}
+                </small>
               </div>
             </div>
             <div class="form-group">
               <!--Password  -->
-              <label class="form-label" for="sign-up-password"
-                >Confirm Password</label
-              >
+              <label class="form-label" for="sign-up-password">
+                {{ Lexicon.confirmPassword }}
+              </label>
               <input
-                matInput
                 formControlName="confirmPassword"
                 class="form-control"
                 placeholder="*****"
                 type="password"
               />
               <div
-                *ngIf="confirmPassword.errors && confirmPassword.touched"
+                *ngIf="ConfirmPassword.errors && ConfirmPassword.touched"
                 class="alert alert-danger"
               >
-                <small *ngIf="confirmPassword.errors?.mustMatch"
-                  >Error in Password , Not Match</small
-                >
-                <small *ngIf="confirmPassword.errors?.required"
-                  >Confirm Password is required !</small
-                >
+                <small *ngIf="ConfirmPassword.errors?.mustMatch">
+                  {{ Lexicon.confirmPasswordMismatchErrorMessage }}
+                </small>
+                <small *ngIf="ConfirmPassword.errors?.required">
+                  {{ Lexicon.confirmPasswordRequiredErrorMessage }}
+                </small>
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label" for="gender">Gender</label>
+              <label class="form-label" for="gender">{{
+                Lexicon.gender
+              }}</label>
               <select
                 placeholder="Select your gender"
                 formControlName="gender"
@@ -123,11 +138,15 @@
                 [style.padding]="0"
               >
                 <option [ngValue]="null" disabled hidden selected>
-                  Select your gender...
+                  {{ Lexicon.genderSelectPlaceHolder }}
                 </option>
-                <option [ngValue]="GenderEnum.Male">Male</option>
-                <option [ngValue]="GenderEnum.Female">Female</option>
-                <option [ngValue]="GenderEnum.Other">Other</option>
+                <option [ngValue]="GenderEnum.Male">{{ Lexicon.male }}</option>
+                <option [ngValue]="GenderEnum.Female">{{
+                  Lexicon.female
+                }}</option>
+                <option [ngValue]="GenderEnum.Other">{{
+                  Lexicon.other
+                }}</option>
               </select>
             </div>
 
@@ -141,13 +160,13 @@
                   !signupForm.touched
                 "
               >
-                Sign Up
+                {{ Lexicon.signUp }}
               </button>
             </div>
           </form>
         </div>
         <div class="text-center">
-          <span>OR</span>
+          <span>{{ Lexicon.or }}</span>
         </div>
         <!--Social Icons  -->
         <div class="social-icons">
@@ -156,11 +175,12 @@
           <img [src]="instagramLogo" alt="instagram" />
         </div>
         <div class="sign-in-footer">
-          Already User?&nbsp;&nbsp;<a
+          {{ Lexicon.alreadyAUser }}&nbsp;&nbsp;<a
             class="link link-sign-in"
             routerLink="/sign-in"
-            >sign-in</a
           >
+            {{ Lexicon.signIn }}
+          </a>
         </div>
       </div>
     </div>

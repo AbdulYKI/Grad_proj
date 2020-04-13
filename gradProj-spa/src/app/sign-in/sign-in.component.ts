@@ -1,3 +1,4 @@
+import { SharedService } from "./../services/shared.service";
 import { User } from "./../models/User";
 import { Router } from "@angular/router";
 import { AlertifyService } from "./../services/alertify.service";
@@ -8,12 +9,13 @@ import {
   FormGroup,
   FormControl,
   Validators,
-  FormBuilder
+  FormBuilder,
 } from "@angular/forms";
+import { LanguageEnum } from "../helper/language.enum";
 @Component({
   selector: "app-sign-in",
   templateUrl: "./sign-in.component.html",
-  styleUrls: ["./sign-in.component.css"]
+  styleUrls: ["./sign-in.component.css"],
 })
 export class SignInComponent implements OnInit {
   signInForm: FormGroup;
@@ -27,14 +29,15 @@ export class SignInComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private alertifyService: AlertifyService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) {}
   splash = document.getElementById("splash");
   ngOnInit(): void {
     this.readyScreen();
     this.signInForm = this.formBuilder.group({
       username: ["", [Validators.required]],
-      password: ["", [Validators.required]]
+      password: ["", [Validators.required]],
     });
   }
 
@@ -44,11 +47,13 @@ export class SignInComponent implements OnInit {
     } else {
       const user: User = Object.assign({}, this.signInForm.value);
       this.authService.signIn(user).subscribe(
-        next => {
-          this.alertifyService.success("Logged In Successfully");
+        (next) => {
+          this.alertifyService.success(
+            this.Lexicon.signedInSuccessFullyMessage
+          );
         },
-        error =>
-          this.alertifyService.error("Username or Password Is Incorrect"),
+        (error) =>
+          this.alertifyService.error(this.Lexicon.signedInFailedMessage),
         () => {
           this.router.navigate(["/members"]);
         }
@@ -71,6 +76,16 @@ export class SignInComponent implements OnInit {
       return "splash out";
     } else {
       return "splash";
+    }
+  }
+  get Lexicon() {
+    return this.sharedService.Lexicon;
+  }
+  get ContainerClasses() {
+    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
+      return "container";
+    } else {
+      return "container rtl";
     }
   }
 }

@@ -147,7 +147,7 @@ input[type="file"] {
   margin: auto;
 }
 
-.profile-input .row div label {
+.form-label {
   text-align: start;
   margin-bottom: 8px;
   margin-left: 15%;
@@ -171,4 +171,77 @@ input[type="file"] {
 }
 textarea {
   resize: none;
+}
+.form-label-rtl {
+  margin-left: 0%;
+  margin-right: 15%;
+}
+.user-img-rtl {
+  margin-left: 0%;
+  margin-right: auto;
+}
+
+/* fix unwanted white space in rtl for the date picker*/
+.rtl .dropdown-menu,
+[dir="rtl"] .dropdown-menu {
+  right: 0;
+  left: inherit;
+  right: initial;
+  text-align: right;
+}
+
+/*fix the padding in months and weeks in rtl for the date picker*/
+.rtl .custom-select,
+[dir="rtl"] .custom-select {
+  padding: -0.625rem 0.75rem 0.375rem 1.75rem;
+}
+
+/*fix the mutliselect angle position for rtl*/
+.rtl .selected-list .c-angle-down,
+.selected-list .c-angle-up {
+  position: absolute;
+  right: 93% !important;
+}
+
+/* fix multiselect popup triangle position for rtl*/
+
+.arrow-down,
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-bottom: 15px solid #fff;
+  margin-left: 0px;
+  position: absolute;
+  right: 90%;
+  top: 0;
+}
+
+/* keep the direction of languages' names ltr since they are in english*/
+.pure-checkbox input[type="checkbox"] + label {
+  direction: ltr !important;
+}
+/* keep the direction of languages' names ltr since they are in english in selected tags*/
+.selected-list .c-list .c-token .c-label {
+  direction: ltr !important;
+}
+/* rtl for the (x) button in multiselect */
+.rtl .list-filter .c-clear {
+  position: absolute;
+  top: 6px;
+  right: 80%;
+}
+
+/*keep the selects inside the date popup the same*/
+ngb-datepicker-navigation-select > .custom-select {
+  padding: 0 0.5rem !important;
+}
+.flag-span {
+  padding: 0px;
+  padding-left: 1px;
+}
+.flag-ul {
+  padding: 0px;
+  margin: 0px;
 }

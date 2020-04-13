@@ -3,11 +3,15 @@ import { AlertifyService } from "./../services/alertify.service";
 import { AuthService } from "./../services/auth.service";
 import { Component, OnInit, HostListener } from "@angular/core";
 import { environment } from "src/environments/environment";
+import { SharedService } from "../services/shared.service";
+import { LanguageEnum } from "../helper/language.enum";
+import { englishLexicon } from "../helper/english.lexicon";
+import { arabicLexicon } from "../helper/arabic.lexicon";
 
 @Component({
   selector: "app-nav-bar",
   templateUrl: "./nav-bar.component.html",
-  styleUrls: ["./nav-bar.component.css"]
+  styleUrls: ["./nav-bar.component.css"],
 })
 export class NavBarComponent implements OnInit {
   isMenuCollapsed = true;
@@ -17,7 +21,8 @@ export class NavBarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private alertifyService: AlertifyService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {}
@@ -46,11 +51,28 @@ export class NavBarComponent implements OnInit {
     localStorage.removeItem("info");
     this.authService.currentUser = null;
     this.authService.decodedToken = null;
-    this.alertifyService.message("Good Bye");
+    this.alertifyService.message(this.Lexicon.signedOutMessage);
     this.router.navigate(["./"]);
   }
 
-  get name() {
+  get Name() {
     return this.authService.decodedToken.unique_name;
+  }
+  get Lexicon() {
+    return this.sharedService.Lexicon;
+  }
+  get ContainerClasses() {
+    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
+      return "container";
+    } else {
+      return "container rtl";
+    }
+  }
+  get SideSectionClasses() {
+    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
+      return "side-section nav-item ml-0 ml-md-2 ml-lg-4";
+    } else {
+      return "side-section-rtl nav-item ml-0 ml-md-2 ml-lg-4";
+    }
   }
 }

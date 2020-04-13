@@ -1,8 +1,8 @@
 <nav
-  class="bg-light  navbar-expand-md start-header start-style  fixed-top"
+  class="bg-light navbar-expand-md start-header start-style fixed-top"
   [ngClass]="onScroll()"
 >
-  <div class="container">
+  <div [ngClass]="ContainerClasses">
     <div class="row">
       <div class="col-12">
         <nav class="navbar navbar-light bg-light navbar-expand-md">
@@ -26,55 +26,64 @@
           <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed">
             <ul class="navbar-nav ml-0 py-0 py-md-0">
               <li
-                class="nav-item   pl-q ml-0  ml-md-1 ml-lg-4"
+                [ngClass]="SideSectionClasses"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
               >
-                <a class="nav-link" [routerLink]="['./home']">Home </a>
+                <a class="nav-link" [routerLink]="['./home']"
+                  >{{ Lexicon.home }}
+                </a>
               </li>
               <li
                 *ngIf="signedIn()"
-                class="nav-item pl-q ml-0  ml-md-1 ml-lg-4"
+                [ngClass]="SideSectionClasses"
                 routerLinkActive="active"
               >
-                <a class="nav-link " [routerLink]="['/user/edit']">Profile</a>
+                <a class="nav-link" [routerLink]="['/user/edit']">{{
+                  Lexicon.profile
+                }}</a>
               </li>
             </ul>
             <ul *ngIf="!signedIn()" class="navbar-nav ml-auto py-0 py-md-0">
-              <li
-                class="nav-item pl-q  ml-0  ml-md-1 ml-lg-4"
-                routerLinkActive="active"
-              >
-                <a class="nav-link" [routerLink]="['/sign-up']">Sign Up </a>
+              <li routerLinkActive="active" [ngClass]="SideSectionClasses">
+                <a class="nav-link" [routerLink]="['/sign-up']">{{
+                  Lexicon.signUp
+                }}</a>
               </li>
-              <li class="nav-item pl-q ml-0 ml-md-1" routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['/sign-in']">Sign In</a>
+              <li [ngClass]="SideSectionClasses" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/sign-in']">{{
+                  Lexicon.signIn
+                }}</a>
               </li>
             </ul>
 
             <ul *ngIf="signedIn()" class="navbar-nav ml-auto py-0 py-md-0">
               <img [src]="photoUrl || defaultPhoto" class="thumbnail" />
-              <li class="nav-item  pl-q ml-0 ml-md-1" ngbDropdown>
+              <li ngbDropdown [ngClass]="SideSectionClasses">
                 <a
                   id="navbarDropdown1"
-                  class=" nav-link dropdown-toggle"
-                  style="cursor: pointer"
+                  class="nav-link dropdown-toggle"
+                  style="cursor: pointer;"
                   ngbDropdownToggle
                   role="button"
                 >
-                  {{ name }}
+                  {{ Name }}
                 </a>
                 <div
                   aria-labelledby="navbarDropdown1"
                   ngbDropdownMenu
                   class="dropdown-menu"
                 >
-                  <a ngbDropdownItem [routerLink]="['/user/edit']"
-                    >Edit Profile</a
+                  <a ngbDropdownItem [routerLink]="['/user/edit']">{{
+                    Lexicon.editProfile
+                  }}</a>
+                  <a
+                    ngbDropdownItem
+                    style="cursor: pointer;"
+                    (click)="signOut()"
                   >
-                  <a ngbDropdownItem style="cursor: pointer" (click)="signOut()"
-                    >Sign Out</a
-                  >
+                    {{ Lexicon.signOut }}
+                  </a>
                 </div>
               </li>
             </ul>
