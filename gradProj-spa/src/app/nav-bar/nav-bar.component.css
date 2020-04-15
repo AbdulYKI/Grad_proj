@@ -54,37 +54,16 @@
 .nav-link {
   color: #212121 !important;
   font-weight: 500;
-  transition: all 200ms linear;
+  transition: all 50ms ease-in;
 }
 .nav-item:hover .nav-link {
   color: #f17548 !important;
+  border-bottom: 2px solid #f17548;
 }
-.nav-item.active .nav-link {
+.nav-item.active {
   color: #777 !important;
 }
-.nav-link {
-  position: relative;
-  padding: 5px 0 !important;
-  display: inline-block;
-}
-.nav-item:after {
-  position: absolute;
-  bottom: 5%;
-  left: 4%;
-  width: 100%;
-  height: 2px;
-  content: "";
-  background-color: #f17548;
-  opacity: 0;
-  transition: all 200ms linear;
-}
-.nav-item:hover:after {
-  bottom: 0;
-  opacity: 1;
-}
-.nav-item.active:hover:after {
-  opacity: 0;
-}
+
 .nav-item {
   position: relative;
   transition: all 200ms linear;
