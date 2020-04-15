@@ -54,12 +54,32 @@
 .nav-link {
   color: #212121 !important;
   font-weight: 500;
-  transition: all 50ms ease-in;
+  position: relative;
+  text-decoration: none;
 }
 .nav-item:hover .nav-link {
   color: #f17548 !important;
-  border-bottom: 2px solid #f17548;
 }
+.nav-item:hover .nav-link:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+.nav-link:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  background-color: #f17548;
+  transition: all 0.3s ease-in-out 0s;
+}
+
 .nav-item.active {
   color: #777 !important;
 }
