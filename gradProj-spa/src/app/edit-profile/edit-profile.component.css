@@ -17,6 +17,13 @@
     display: none;
     /*hide Toggle btn  in sidebar  in large screen*/
   }
+  .user-img{
+    float: right;
+  }
+
+  .user-info{
+    float: left;
+  }
   .user-img img {
     width: 35%;
   }

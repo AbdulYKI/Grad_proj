@@ -1,3 +1,6 @@
+.container{
+    min-height: calc(100vh - 95px);
+}
 .clear{
     clear: both;
 }
@@ -43,7 +46,10 @@ border: 1px solid #f17548;
 .show{
     opacity: 1;
     min-height: 200px;
-    height: 70vh;}
+    height: 88vh;
+background-color: white;
+}
+
     .post_cansel{
     text-align: right;
     margin: 20px 10px;

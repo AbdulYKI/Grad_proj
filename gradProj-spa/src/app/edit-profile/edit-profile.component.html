@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="container">
+  <div>
     <div class="row">
       <div *ngIf="false" class="col-lg-3">
         <div class="list-group" style="padding-bottom: 15px;">
@@ -65,21 +65,6 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <div class="row">
-              <div class="col-5 col-md-5 user-img">
-                <div class="fix_overlay">
-                  <div class="overlay">
-                    <input type="file" /> <fa-icon [icon]="FaPlus"></fa-icon>
-                  </div>
-                  <img [src]="defaultPhoto" />
-                </div>
-              </div>
-
-              <div class="col-6 col-md-6 m-auto user-info p-0">
-                <h4>{{ user.username }}</h4>
-                <p>{{ user.email }}</p>
-              </div>
-
               <form
                 #editForm="ngForm"
                 id="editForm"
@@ -89,6 +74,19 @@
               >
                 <div class="container profile-input">
                   <div class="row">
+                    <div class="col-5 col-md-5 user-img float-right">
+                      <div class="fix_overlay">
+                        <div class="overlay">
+                          <input type="file" /> <fa-icon [icon]="FaPlus"></fa-icon>
+                        </div>
+                        <img [src]="defaultPhoto" />
+                      </div>
+                    </div>
+
+                    <div class="col-6 col-md-6 m-auto user-info p-0 float-left">
+                      <h4>{{ user.username }}</h4>
+                      <p>{{ user.email }}</p>
+                    </div>
                     <div class="form-group col-md-6">
                       <label [ngClass]="FormLabelClasses">{{
                         Lexicon.firstName
@@ -281,7 +279,6 @@
                 </div>
                 <!--End Container-->
               </form>
-            </div>
           </div>
         </div>
       </div>
