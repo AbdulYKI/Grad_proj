@@ -1,3 +1,4 @@
+import { environment } from "./../../environments/environment";
 import { CustomDatePicker } from "./../helper/custom-date-picker";
 import { LanguageEnum } from "./../helper/language.enum";
 import { SharedService } from "./../services/shared.service";
@@ -22,7 +23,7 @@ import {
   Validators,
   NgForm,
 } from "@angular/forms";
-import { faCalendar, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Subject } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { UserService } from "../services/user.service";
@@ -31,9 +32,13 @@ import { AuthService } from "../services/auth.service";
 import { takeUntil } from "rxjs/operators";
 import { GenderEnum } from "../helper/gender.enum";
 import { Country } from "../models/country";
-import { environment } from "src/environments/environment";
+import {
+  NgbDatepickerI18n,
+  NgbModalOptions,
+  NgbModal,
+} from "@ng-bootstrap/ng-bootstrap";
 
-import { NgbDatepickerI18n } from "@ng-bootstrap/ng-bootstrap";
+import { PhotoUploaderComponent } from "../photo-uploader/photo-uploader.component";
 
 @Component({
   selector: "app-edit-profile",
@@ -47,9 +52,10 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("datePicker")
   datePicker: any;
   destroy: Subject<boolean> = new Subject<boolean>();
-
+  photoExtensions = ["jpeg", "jpg", "gif", "png"];
   minDate: NgbDatePickerValue;
   maxDate: NgbDatePickerValue;
+  chosenphoto: File = null;
   displayMonths = 1;
   user: User;
   navigation = "select";
@@ -57,11 +63,12 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   programmingLanguagesPlaceHolder: string;
   outsideDays = "visible";
   activeButton = "btn1";
-  defaultPhoto = environment.defaultPhoto;
+  photoUrl = "";
   programmingLanguagesDataSource: ProgrammingLanguage[] = [];
   flagClass: string;
   selectedProgrammingLanguages: ProgrammingLanguage[] = [];
   countriesDataSource: Country[] = [];
+  modalOption: NgbModalOptions = {};
   programmingLanguagesDropDownSettings: any;
   constructor(
     private formBuilder: FormBuilder,
@@ -69,7 +76,8 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     private userService: UserService,
     private alertifyService: AlertifyService,
     private authService: AuthService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private modalService: NgbModal
   ) {
     this.minDate = new NgbDatePickerValue(
       new Date(Date.now()).getFullYear() - 100,
@@ -92,6 +100,9 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   ngOnInit(): void {
+    this.authService.currentPhotoUrl.subscribe((newPhotoUrl) => {
+      this.photoUrl = newPhotoUrl;
+    });
     this.sharedService.currentLanguage.subscribe((language) => {
       this.setProgrammingLanguagesDropDownOptions();
     });
@@ -100,6 +111,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.route.data.subscribe(
       (data: { EditProfileResolverData: EditProfileResolverData }) => {
         this.user = data.EditProfileResolverData.user;
+        this.photoUrl = this.user.photoUrl || environment.defaultPhoto;
         this.setProfileFormData();
         this.setProgrammingLanguagesDataSource(
           data.EditProfileResolverData.programmingLanguages
@@ -141,6 +153,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       countryNumericCode: [null],
       programmingLanguages: [[]],
       gender: [null],
+      photo: ["", []],
     });
   }
   private setProgrammingLanguagesDataSource(
@@ -204,6 +217,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
             // I need to save the DateOfBirth value so I can use it after resetting the form
             const dateOfBirthValue = this.DateOfBirth.value;
             this.editForm.reset(user);
+            this.Photo.reset("");
             this.DateOfBirth.reset(dateOfBirthValue);
           },
           (error) => this.alertifyService.error(error)
@@ -212,6 +226,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   private getNewUserData() {
     const user: User = Object.assign({}, this.editFormGroup.value);
+    user.photoFile = this.chosenphoto;
     user.programmingLanguagesIds = (this.editFormGroup.value
       .programmingLanguages as ProgrammingLanguage[]).map(({ id }) => id);
     if (this.DateOfBirth.value == null) {
@@ -270,8 +285,8 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   get Lexicon() {
     return this.sharedService.Lexicon;
   }
-  get FaPlus() {
-    return faPlus;
+  get FaCamera() {
+    return faCamera;
   }
   get FaCalendar() {
     return faCalendar;
@@ -285,9 +300,9 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   get FormClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
-      return "";
+      return "form";
     } else {
-      return "rtl";
+      return "form rtl";
     }
   }
   onSelectAll(newProgrammingLanguages: ProgrammingLanguage[]) {
@@ -297,5 +312,42 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.editForm.form.controls.programmingLanguages.markAsDirty();
     this.editForm.form.controls.programmingLanguages.markAsTouched();
     this.selectedProgrammingLanguages = [];
+  }
+  get DateOfBirthClasses() {
+    if (this.DateOfBirth.errors && this.DateOfBirth.touched) {
+      return "form-control is-invalid";
+    } else {
+      return "form-control";
+    }
+  }
+  fileChangeEvent(event: any) {
+    const newphoto = event.target.files[0];
+    this.Photo.setValidators([
+      FileValidator.fileExtensions(this.photoExtensions),
+      FileValidator.fileMaxSize(4000000, newphoto),
+      FileValidator.fileMinSize(1, newphoto),
+    ]);
+    this.Photo.updateValueAndValidity();
+    if (!this.Photo.invalid) {
+      this.chosenphoto = newphoto;
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.photoUrl = event.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+  get Photo() {
+    return this.editFormGroup.get("photo");
+  }
+
+  openImageUploaderModal() {
+    this.modalOption.backdrop = "static";
+    this.modalOption.keyboard = false;
+    const modalRef = this.modalService.open(
+      PhotoUploaderComponent,
+      this.modalOption
+    );
+    modalRef.componentInstance.photoUrl = this.user.photoUrl;
   }
 }
