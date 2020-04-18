@@ -17,6 +17,22 @@
     display: none;
     /*hide Toggle btn  in sidebar  in large screen*/
   }
+
+  .user-img{
+    float: right;
+  }
+
+  .user-info{
+    float: left;
+  }
+  .user-img img {
+    width: 35%;
+  }
+  .overlay {
+    width: 35%;
+    height: 100%;
+  }
+
 }
 @media screen and (max-width: 991px) {
   #btnToggleSideBar {

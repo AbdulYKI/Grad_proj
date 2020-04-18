@@ -1,18 +1,118 @@
-.footer {
-  width: 100%;
+
+footer{
   position: relative;
-  border-top: 1px solid #e6eaea;
-  background-color: #f2f2f2 !important;
+ background-color: #131c28;
+ overflow: hidden;
+ background-image: linear-gradient(to bottom, #9a9a9a, #000000);
+     }
+.social-icons{
+ background-color: black;
+
 }
-.container {
-  color: #171515f2;
+.social-icons .social-ul{
+    list-style: none;
+ margin: 0 auto;
+ text-align: center;
+ padding: 20px 20px;
 }
-a {
-  cursor: pointer;
+.social-icons .social-ul li{
+ display: inline-block;
+ width: 40px;
+ cursor: pointer;
+ margin: 0px 6px;
+ padding: 0px;
 }
-.ar {
-  float: right;
+
+.social-icons .social-ul li a:hover img {
+-moz-transform: rotate(360deg);
+-webkit-transform: rotate(360deg);
+-ms--transform: rotate(360deg);
+transform: rotate(360deg);
+-webkit-transition: all 0.6s;
+-moz-transition: all 0.6s;
+-o-transition: all 0.6s;
+-ms-transition: all 0.6s;
+transition: all 0.6s;
 }
-.en {
-  float: left;
+
+/*=====footer start here *=====*/
+.footer-nav .level-1{
+list-style: none;
+padding: 25px 25px;
 }
+.footer-nav .level-2{
+ list-style: none;
+ padding: 0px;
+}
+.footer-nav h6{
+ margin-bottom: .9rem;
+ line-height: normal;
+ color: #fff;
+ font-size: 16px;
+ font-weight: 600;
+ text-decoration: none;
+}
+.footer-nav .level-2 li{
+ margin: 8px 0px;
+}
+.footer-nav .level-2 li a{
+  color: #949292;
+ display: inline-block;
+ font-size: 16px;
+ font-weight: normal;
+ line-height: 1.15;
+ white-space: normal;
+ cursor: pointer;
+ text-decoration: none;
+  -webkit-transition: all 0.6s;
+-moz-transition: all 0.6s;
+-o-transition: all 0.6s;
+-ms-transition: all 0.6s;
+transition: all 0.6s;
+}
+.footer-nav .level-2 li a:hover{
+ color: white;
+}
+.footer-nav .logo-footer{
+ width: 165px;
+ height: auto;
+ }
+
+.footer-nav .about-company{
+ color: white;
+ font-weight: 400;
+ padding: 8px;
+ margin: 0px;
+}
+.footer-text{
+ text-align: center;
+ padding: 24px 0px;
+ border-top: 1px solid white;
+}
+.footer-text .flag{
+ width: 100%;
+ list-style: none;
+ color: white;
+}
+.footer-text .flag li{
+ display: inline-block;
+}
+.footer-text .flag li a{
+display: block;
+ text-decoration: none;
+ padding: 5px 10px;
+ line-height: 1;
+}
+
+.footer-text .flag li a span{
+margin-left: 8px;
+cursor: pointer;
+}
+/* === Media query to fix some things === */
+@media (max-width: 600px) {
+ .footer-nav {
+ text-align: center;
+ margin: 0 auto;
+ padding: 0px;
+             }
+             }
