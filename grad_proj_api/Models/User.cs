@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using grad_proj_api.Helpers;
 
-namespace grad_proj_api.Models {
-    public class User {
+namespace grad_proj_api.Models
+{
+    public class User
+    {
         public int Id { get; set; }
         public string Username { get; set; }
         public string FirstName { get; set; }
@@ -22,6 +24,7 @@ namespace grad_proj_api.Models {
         public Country Country { get; set; }
         public int? CountryNumericCode { get; set; }
         public Photo Photo { get; set; }
+
         public ICollection<UserProgrammingLanguage> UserProgrammingLanguages { get; set; }
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessagesReceived { get; set; }

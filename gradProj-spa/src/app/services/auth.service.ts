@@ -20,6 +20,8 @@ export class AuthService {
   constructor(private http: HttpClient) {}
   changeMemeberPhotoUrl(photoUrl: string) {
     this.photoUrl.next(photoUrl);
+    this.currentUser.photoUrl = photoUrl;
+    localStorage.setItem("info", JSON.stringify(this.currentUser));
   }
   signIn(model: User) {
     return this.http.post(this.baseUrl + "sign-in", model).pipe(

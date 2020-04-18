@@ -10,7 +10,7 @@ namespace grad_proj_api.DTOs {
         public string Username { get; set; }
         public static ValidationResult ValidateUsername (string userName, ValidationContext context) {
 
-            Regex regex = new Regex (@"^[a-zA-Z0-9_\.\-]{8,20}$");
+            Regex regex = new Regex (@"^[a-zA-Z0-9_\-\.~!\#\$%^&\*\+=`\|\\\(\)\{\}\[\]:;'<>,\.\?\/]{8,20}");
             if (regex.IsMatch (userName)) { return ValidationResult.Success; } else { return new ValidationResult (null); }
 
         }

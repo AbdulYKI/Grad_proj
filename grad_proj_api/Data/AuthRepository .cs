@@ -24,8 +24,8 @@ namespace grad_proj_api.Data
         public async Task<User> SignIn(string username, string password)
         {
             var user = username.Contains('@') ?
-           await _context.Users.FirstOrDefaultAsync(userDB => userDB.Email == username) :
-          await _context.Users.FirstOrDefaultAsync(userDB => userDB.Username == username);
+           await _context.Users.Include(p => p.Photo).FirstOrDefaultAsync(userDB => userDB.Email == username) :
+          await _context.Users.Include(p => p.Photo).FirstOrDefaultAsync(userDB => userDB.Username == username);
 
             if (user == null || !VerifyPasswordHash(password, user.PasswordSalt, user.PasswordHash)) { return null; }
 

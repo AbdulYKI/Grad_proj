@@ -1,3 +1,4 @@
+import { Country } from "./../models/country";
 import { environment } from "./../../environments/environment";
 import { Observable, observable } from "rxjs";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
@@ -7,7 +8,7 @@ import { map } from "rxjs/operators";
 import { ProgrammingLanguage } from "../models/programming-language";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class UserService {
   baseUrl: string = environment.apiUrl + "user/";
@@ -25,7 +26,7 @@ export class UserService {
       this.baseUrl + "programming-languages"
     );
   }
-  getCountries() {
-    return this.http.get(this.baseUrl + "Countries");
+  getCountries(): Observable<Country> {
+    return this.http.get<Country>(this.baseUrl + "Countries");
   }
 }

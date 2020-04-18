@@ -10,6 +10,7 @@ import {
   FormControl,
   Validators,
   FormBuilder,
+  AbstractControl,
 } from "@angular/forms";
 import { LanguageEnum } from "../helper/language.enum";
 @Component({
@@ -65,10 +66,10 @@ export class SignInComponent implements OnInit {
     setTimeout(() => (this.loaded = true), 1100);
   }
 
-  get username() {
+  get Username() {
     return this.signInForm.get("username");
   }
-  get password() {
+  get Password() {
     return this.signInForm.get("password");
   }
   checkLoading(): string {
@@ -86,6 +87,13 @@ export class SignInComponent implements OnInit {
       return "container";
     } else {
       return "container rtl";
+    }
+  }
+  formControlClasses(control: AbstractControl) {
+    if (control.errors && control.touched) {
+      return "form-control is-invalid";
+    } else {
+      return "form-control";
     }
   }
 }

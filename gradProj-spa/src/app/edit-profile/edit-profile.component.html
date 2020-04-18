@@ -1,288 +1,299 @@
 <div class="container">
-  <div class="container">
-    <div class="row">
-      <div *ngIf="false" class="col-lg-3">
-        <div class="list-group" style="padding-bottom: 15px;">
-          <div class="card">
-            <div class="card-body pr-0">
-              <p>
-                <span id="btnToggleSideBar" (click)="ToggleSideBar()">
-                  <i class="fas fa-bars"></i> {{ Lexicon.userDashboard }}
-                </span>
-              </p>
-              <div [ngbCollapse]="isCollapsed" id="menulinks">
-                <h3>{{ Lexicon.userDashboard }}</h3>
-                <a
-                  class="nav-link"
-                  [class.Active]="isActive('btn1')"
-                  (click)="setActive('btn1')"
-                  ><i class="far fa-user"></i> User info
-                </a>
-                <a
-                  class="nav-link"
-                  [class.Active]="isActive('btn2')"
-                  (click)="setActive('btn2')"
-                  ><i class="far fa-heart"></i> Favourites
-                </a>
-                <a
-                  class="nav-link"
-                  [class.Active]="isActive('btn3')"
-                  (click)="setActive('btn3')"
-                >
-                  <i class="far fa-star"></i>
-                  Watchlist
-                </a>
-                <a
-                  class="nav-link"
-                  [class.Active]="isActive('btn4')"
-                  (click)="setActive('btn4')"
-                  ><i class="fas fa-cog"></i> Settings</a
-                >
-                <a
-                  class="nav-link"
-                  [class.Active]="isActive('btn5')"
-                  (click)="setActive('btn5')"
-                  ><i class="far fa-bell"></i> Notifications</a
-                >
-                <a
-                  class="nav-link"
-                  [class.Active]="isActive('btn6')"
-                  (click)="setActive('btn6')"
-                  ><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out</a
-                >
-              </div>
+  <!-- <div class="row">
+    <div *ngIf="false" class="col-lg-3">
+      <div class="list-group" style="padding-bottom: 15px;">
+        <div class="card">
+          <div class="card-body pr-0">
+            <p>
+              <span id="btnToggleSideBar" (click)="ToggleSideBar()">
+                <i class="fas fa-bars"></i> {{ Lexicon.userDashboard }}
+              </span>
+            </p>
+            <div [ngbCollapse]="isCollapsed" id="menulinks">
+              <h3>{{ Lexicon.userDashboard }}</h3>
+              <a
+                class="nav-link"
+                [class.Active]="isActive('btn1')"
+                (click)="setActive('btn1')"
+                ><i class="far fa-user"></i> User info
+              </a>
+              <a
+                class="nav-link"
+                [class.Active]="isActive('btn2')"
+                (click)="setActive('btn2')"
+                ><i class="far fa-heart"></i> Favourites
+              </a>
+              <a
+                class="nav-link"
+                [class.Active]="isActive('btn3')"
+                (click)="setActive('btn3')"
+              >
+                <i class="far fa-star"></i>
+                Watchlist
+              </a>
+              <a
+                class="nav-link"
+                [class.Active]="isActive('btn4')"
+                (click)="setActive('btn4')"
+                ><i class="fas fa-cog"></i> Settings</a
+              >
+              <a
+                class="nav-link"
+                [class.Active]="isActive('btn5')"
+                (click)="setActive('btn5')"
+                ><i class="far fa-bell"></i> Notifications</a
+              >
+              <a
+                class="nav-link"
+                [class.Active]="isActive('btn6')"
+                (click)="setActive('btn6')"
+                ><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out</a
+              >
             </div>
           </div>
         </div>
       </div>
+    </div> -->
 
-      <div *ngIf="editForm?.dirty" [ngClass]="FormClasses" class="col-lg-12">
-        <div class="alert alert-info">
-          <strong>{{ Lexicon.information }}</strong>
-          {{ Lexicon.changeAlert }}
-        </div>
-      </div>
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-body">
+  <div *ngIf="editForm?.dirty" [ngClass]="FormClasses" class="col-lg-12">
+    <div class="alert alert-info">
+      <strong>{{ Lexicon.information }}</strong>
+      {{ Lexicon.changeAlert }}
+    </div>
+  </div>
+
+  <div
+    *ngIf="editForm?.dirty && Photo.invalid"
+    [ngClass]="FormClasses"
+    class="col-lg-12"
+  >
+    <div class="alert alert-danger">
+      <strong>{{ Photo.errors | json }}</strong>
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <form
+          #editForm="ngForm"
+          id="editForm"
+          [formGroup]="editFormGroup"
+          (ngSubmit)="onSubmit()"
+          [ngClass]="FormClasses"
+        >
+          <div class="img-row-col">
             <div class="row">
-              <div class="col-5 col-md-5 user-img">
-                <div class="fix_overlay">
-                  <div class="overlay">
-                    <input type="file" /> <fa-icon [icon]="FaPlus"></fa-icon>
+              <div class="col-6 col-md-6">
+                <div class="card text-white">
+                  <img class="card-img" [src]="photoUrl" alt="Card image" />
+                  <div
+                    class="card-img-overlay"
+                    (click)="openImageUploaderModal()"
+                  >
+                    <fa-icon [icon]="FaCamera"></fa-icon>
                   </div>
-                  <img [src]="defaultPhoto" />
                 </div>
               </div>
-
-              <div class="col-6 col-md-6 m-auto user-info p-0">
+              <div class="col-5 col-md-5 m-auto user-info p-0">
                 <h4>{{ user.username }}</h4>
                 <p>{{ user.email }}</p>
               </div>
+            </div>
 
-              <form
-                #editForm="ngForm"
-                id="editForm"
-                [formGroup]="editFormGroup"
-                (ngSubmit)="onSubmit()"
-                [ngClass]="FormClasses"
-              >
-                <div class="container profile-input">
-                  <div class="row">
-                    <div class="form-group col-md-6">
-                      <label [ngClass]="FormLabelClasses">{{
-                        Lexicon.firstName
-                      }}</label>
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="firstName"
-                      />
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label [ngClass]="FormLabelClasses">{{
-                        Lexicon.lastName
-                      }}</label>
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="lastName"
-                      />
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label [ngClass]="FormLabelClasses">{{
-                        Lexicon.dateOfBirth
-                      }}</label>
-                      <div class="input-group">
-                        <input
-                          class="form-control"
-                          formControlName="dateOfBirth"
-                          [minDate]="minDate"
-                          [maxDate]="maxDate"
-                          [displayMonths]="displayMonths"
-                          [navigation]="navigation"
-                          [outsideDays]="outsideDays"
-                          [showWeekNumbers]="showWeekNumbers"
-                          ngbDatepicker
-                          (click)="datePicker.toggle()"
-                          #datePicker="ngbDatepicker"
-                        />
-                        <div class="input-group-append">
-                          <button
-                            class="btn btn-outline-secondary"
-                            (click)="datePicker.toggle()"
-                            type="button"
-                          >
-                            <fa-icon [icon]="FaCalendar"></fa-icon>
-                          </button>
-                        </div>
-                      </div>
-                      <div
-                        class="alert alert-danger"
-                        *ngIf="
-                          DateOfBirth?.hasError('underAge') &&
-                          !DateOfBirth?.hasError('ngbDate')
-                        "
+            <div class="container profile-input">
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label [ngClass]="FormLabelClasses">{{
+                    Lexicon.firstName
+                  }}</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    formControlName="firstName"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label [ngClass]="FormLabelClasses">{{
+                    Lexicon.lastName
+                  }}</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    formControlName="lastName"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label [ngClass]="FormLabelClasses">{{
+                    Lexicon.dateOfBirth
+                  }}</label>
+                  <div class="input-group">
+                    <input
+                      [ngClass]="DateOfBirthClasses"
+                      formControlName="dateOfBirth"
+                      [minDate]="minDate"
+                      [maxDate]="maxDate"
+                      [displayMonths]="displayMonths"
+                      [navigation]="navigation"
+                      [outsideDays]="outsideDays"
+                      [showWeekNumbers]="showWeekNumbers"
+                      ngbDatepicker
+                      (click)="datePicker.toggle()"
+                      #datePicker="ngbDatepicker"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-outline-secondary"
+                        (click)="datePicker.toggle()"
+                        type="button"
                       >
-                        {{ Lexicon.underAgeError }}
-                      </div>
-                      <div
-                        class="alert alert-danger"
-                        *ngIf="DateOfBirth?.hasError('ngbDate')"
-                      >
-                        {{ Lexicon.invalidDate }}
-                      </div>
+                        <fa-icon [icon]="FaCalendar"></fa-icon>
+                      </button>
                     </div>
-                    <div class="form-group col-md-6">
-                      <label [ngClass]="FormLabelClasses" for="companyName">
-                        {{ Lexicon.companyName }}
-                      </label>
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="companyName"
-                        placeholder=""
-                      />
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label [ngClass]="FormLabelClasses" for="schoolName">
-                        {{ Lexicon.schoolName }}
-                      </label>
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="schoolName"
-                      />
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label
-                        [ngClass]="FormLabelClasses"
-                        for="countryNumericCode"
-                        >{{ Lexicon.country }}</label
-                      >
-                      <div class="input-group">
-                        <select
-                          formControlName="countryNumericCode"
-                          class="form-control my-select"
-                          (ngModelChange)="onChange($event)"
-                        >
-                          <option [ngValue]="null" disabled hidden selected>
-                            {{ Lexicon.countrySelectPlaceHolder }}
-                          </option>
-                          <option
-                            *ngFor="let country of countriesDataSource"
-                            [ngValue]="country.numericCode"
-                            >{{ country.name }}</option
-                          >
-                        </select>
-                        <div class="input-group-append">
-                          <span
-                            class="input-group-text"
-                            *ngIf="flagClass == null"
-                          >
-                            <span> &nbsp;</span>
-                          </span>
-                          <span
-                            *ngIf="flagClass != null"
-                            class="input-group-text flag-span f32"
-                          >
-                            <span [className]="flagClass"></span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label [ngClass]="FormLabelClasses">
-                        {{ Lexicon.programmingLanguages }}
-                      </label>
-                      <angular2-multiselect
-                        [settings]="programmingLanguagesDropDownSettings"
-                        [data]="programmingLanguagesDataSource"
-                        formControlName="programmingLanguages"
-                        [(ngModel)]="selectedProgrammingLanguages"
-                        (onSelectAll)="onSelectAll($event)"
-                        (onDeSelectAll)="onDeSelectAll($event)"
-                      >
-                      </angular2-multiselect>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label [ngClass]="FormLabelClasses" for="gender">{{
-                        Lexicon.gender
-                      }}</label>
-                      <select
-                        placeholder="Select your gender"
-                        formControlName="gender"
-                        class="form-control my-select"
-                      >
-                        <option [ngValue]="null" disabled hidden selected>
-                          {{ Lexicon.genderSelectPlaceHolder }}
-                        </option>
-                        <option [ngValue]="GenderEnum.Male">{{
-                          Lexicon.male
-                        }}</option>
-                        <option [ngValue]="GenderEnum.Female">{{
-                          Lexicon.female
-                        }}</option>
-                        <option [ngValue]="GenderEnum.Other">{{
-                          Lexicon.other
-                        }}</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                      <label [ngClass]="FormLabelClasses" for="description">
-                        {{ Lexicon.description }}
-                      </label>
-                      <textarea
-                        class="form-control"
-                        type="text"
-                        rows="6"
-                        formControlName="description"
-                        [placeholder]="Lexicon.descriptionPlaceHolder"
-                      >
-                      </textarea>
-                    </div>
-                  </div>
-
-                  <div class="btn-save">
-                    <button
-                      class="form-button"
-                      [disabled]="editForm?.invalid || !editForm?.dirty"
-                      type="submit"
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="
+                        DateOfBirth?.hasError('underAge') &&
+                        !DateOfBirth?.hasError('ngbDate')
+                      "
                     >
-                      {{ Lexicon.saveButtonText }}
-                    </button>
+                      {{ Lexicon.underAgeError }}
+                    </div>
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="DateOfBirth?.hasError('ngbDate')"
+                    >
+                      {{ Lexicon.invalidDate }}
+                    </div>
                   </div>
                 </div>
-                <!--End Container-->
-              </form>
+                <div class="form-group col-md-6">
+                  <label [ngClass]="FormLabelClasses" for="companyName">
+                    {{ Lexicon.companyName }}
+                  </label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    formControlName="companyName"
+                    placeholder=""
+                  />
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label [ngClass]="FormLabelClasses" for="schoolName">
+                    {{ Lexicon.schoolName }}
+                  </label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    formControlName="schoolName"
+                  />
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label
+                    [ngClass]="FormLabelClasses"
+                    for="countryNumericCode"
+                    >{{ Lexicon.country }}</label
+                  >
+                  <div class="input-group">
+                    <select
+                      formControlName="countryNumericCode"
+                      class="form-control my-select"
+                      (ngModelChange)="onChange($event)"
+                    >
+                      <option [ngValue]="null" disabled hidden selected>
+                        {{ Lexicon.countrySelectPlaceHolder }}
+                      </option>
+                      <option
+                        *ngFor="let country of countriesDataSource"
+                        [ngValue]="country.numericCode"
+                        >{{ Lexicon[country.alpha2Code] }}</option
+                      >
+                    </select>
+                    <div class="input-group-append">
+                      <span class="input-group-text" *ngIf="flagClass == null">
+                        <span> &nbsp;</span>
+                      </span>
+                      <span
+                        *ngIf="flagClass != null"
+                        class="input-group-text flag-span f32"
+                      >
+                        <span [className]="flagClass"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label [ngClass]="FormLabelClasses">
+                    {{ Lexicon.programmingLanguages }}
+                  </label>
+                  <angular2-multiselect
+                    [settings]="programmingLanguagesDropDownSettings"
+                    [data]="programmingLanguagesDataSource"
+                    formControlName="programmingLanguages"
+                    [(ngModel)]="selectedProgrammingLanguages"
+                    (onSelectAll)="onSelectAll($event)"
+                    (onDeSelectAll)="onDeSelectAll($event)"
+                  >
+                  </angular2-multiselect>
+                </div>
+                <div class="form-group col-md-6">
+                  <label [ngClass]="FormLabelClasses" for="gender">{{
+                    Lexicon.gender
+                  }}</label>
+                  <select
+                    placeholder="Select your gender"
+                    formControlName="gender"
+                    class="form-control my-select"
+                  >
+                    <option [ngValue]="null" disabled hidden selected>
+                      {{ Lexicon.genderSelectPlaceHolder }}
+                    </option>
+                    <option [ngValue]="GenderEnum.Male">{{
+                      Lexicon.male
+                    }}</option>
+                    <option [ngValue]="GenderEnum.Female">{{
+                      Lexicon.female
+                    }}</option>
+                    <option [ngValue]="GenderEnum.Other">{{
+                      Lexicon.other
+                    }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <label [ngClass]="FormLabelClasses" for="description">
+                    {{ Lexicon.description }}
+                  </label>
+                  <textarea
+                    class="form-control"
+                    type="text"
+                    rows="6"
+                    formControlName="description"
+                    [placeholder]="Lexicon.descriptionPlaceHolder"
+                  >
+                  </textarea>
+                </div>
+              </div>
+
+              <div class="btn-save">
+                <button
+                  class="form-button"
+                  [disabled]="editForm?.invalid || !editForm?.dirty"
+                  type="submit"
+                >
+                  {{ Lexicon.saveButtonText }}
+                </button>
+              </div>
             </div>
+            <!--End Container-->
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
+
+{{ editForm?.invalid | json }}
+{{ DateOfBirth?.errors | json }}

@@ -31,6 +31,7 @@ import { PreventUnsavedChangesGuard } from "./guards/prevent-unsaved-changes.gua
 import { ErrorInterceptorProvider } from "./services/Interceptor.service";
 import { FooterComponent } from "./footer/footer.component";
 import { PostComponent } from "./post/post.component";
+import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
@@ -48,6 +49,7 @@ export function tokenGetter() {
     FooterComponent,
     TextEditorComponent,
     PostComponent,
+    PhotoUploaderComponent,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),

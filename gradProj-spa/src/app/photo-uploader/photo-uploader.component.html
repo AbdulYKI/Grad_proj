@@ -1,0 +1,40 @@
+<div [ngClass]="RtlClass">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ Lexicon.changePhoto }}</h4>
+    <button
+      [disabled]="uploadingFlag"
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModal()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <img
+          *ngIf="!uploadingFlag"
+          class="img"
+          [src]="photoUrl || defaultPhoto"
+        />
+        <div class="img-overlay" *ngIf="uploadingFlag">
+          <img src="../../assets/svg-loaders/rings.svg" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <label class="btn btn-outline-warning m-auto" ngbAutofocus>
+      <fa-icon [icon]="FaImage"></fa-icon>
+      {{ Lexicon.uploadPhoto }}
+      <input
+        type="file"
+        hidden
+        (change)="fileChangeEvent($event)"
+        [disabled]="uploadingFlag"
+      />
+    </label>
+  </div>
+</div>

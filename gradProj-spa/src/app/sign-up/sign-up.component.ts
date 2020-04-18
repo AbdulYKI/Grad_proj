@@ -147,4 +147,11 @@ export class SignUpComponent implements OnInit {
       return "container rtl";
     }
   }
+  formControlClasses(control: AbstractControl) {
+    if (control.errors && control.touched) {
+      return "form-control is-invalid";
+    } else {
+      return "form-control";
+    }
+  }
 }

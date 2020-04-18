@@ -20,7 +20,7 @@
                 {{ Lexicon.usernameOrEmail }}
               </label>
               <input
-                matInput
+                [ngClass]="formControlClasses(Username)"
                 formControlName="username"
                 class="form-control"
                 type="text"
@@ -29,14 +29,14 @@
               />
               <div
                 *ngIf="
-                  username.errors &&
-                  (username.errors?.invalid || username.touched)
+                  Username.errors &&
+                  (Username.errors?.invalid || Username.touched)
                 "
-                class="alert alert-danger"
+                class="invalid-feedback"
               >
-                <small *ngIf="username.errors?.required">
+                <span *ngIf="Username.errors?.required">
                   {{ Lexicon.usernameOrEmailRequiredErrorMessage }}
-                </small>
+                </span>
               </div>
             </div>
             <div class="form-group">
@@ -45,7 +45,7 @@
                 {{ Lexicon.password }}</label
               >
               <input
-                matInput
+                [ngClass]="formControlClasses(Password)"
                 formControlName="password"
                 class="form-control"
                 placeholder="*****"
@@ -54,14 +54,14 @@
               />
               <div
                 *ngIf="
-                  password.errors &&
-                  (password.errors.invalid || password.touched)
+                  Password.errors &&
+                  (Password.errors.invalid || Password.touched)
                 "
-                class="alert alert-danger"
+                class="invalid-feedback"
               >
-                <small *ngIf="password.errors?.required">
+                <span *ngIf="Password.errors?.required">
                   {{ Lexicon.passwordRequiredErrorMessage }}
-                </small>
+                </span>
               </div>
             </div>
             <div class="form-group link-forgot-container">
