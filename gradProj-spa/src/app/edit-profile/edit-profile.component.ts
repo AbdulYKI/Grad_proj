@@ -320,23 +320,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       return "form-control";
     }
   }
-  fileChangeEvent(event: any) {
-    const newphoto = event.target.files[0];
-    this.Photo.setValidators([
-      FileValidator.fileExtensions(this.photoExtensions),
-      FileValidator.fileMaxSize(4000000, newphoto),
-      FileValidator.fileMinSize(1, newphoto),
-    ]);
-    this.Photo.updateValueAndValidity();
-    if (!this.Photo.invalid) {
-      this.chosenphoto = newphoto;
-      const reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.photoUrl = event.target.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  }
+
   get Photo() {
     return this.editFormGroup.get("photo");
   }
