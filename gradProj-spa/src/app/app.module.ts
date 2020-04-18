@@ -13,14 +13,14 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule } from "@angular/common/http";
-import { NgxTinymceModule } from "ngx-tinymce";
+import { EditorModule, TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { AngularMultiSelectModule } from "angular2-multiselect-dropdown";
 /*-------------------------------------------------------------------------------------------------*/
 import { AppComponent } from "./app.component";
 import { SignInComponent } from "./sign-in/sign-in.component";
 import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 import { LoadingCompComponent } from "./loading-comp/loading-comp.component";
-import { TextEditorComponent } from './text-editor/text-editor.component';
+import { TextEditorComponent } from "./text-editor/text-editor.component";
 import { AuthService } from "./services/auth.service";
 import { AlertifyService } from "./services/alertify.service";
 import { SignUpComponent } from "./sign-up/sign-up.component";
@@ -30,7 +30,7 @@ import { AuthGuard } from "./guards/auth.guard";
 import { PreventUnsavedChangesGuard } from "./guards/prevent-unsaved-changes.guard";
 import { ErrorInterceptorProvider } from "./services/Interceptor.service";
 import { FooterComponent } from "./footer/footer.component";
-import { PostComponent } from './post/post.component';
+import { PostComponent } from "./post/post.component";
 
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
@@ -47,13 +47,11 @@ export function tokenGetter() {
     LoadingCompComponent,
     FooterComponent,
     TextEditorComponent,
-    PostComponent
+    PostComponent,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
-    NgxTinymceModule.forRoot({
-      baseURL: "./assets/tinymce/",
-    }),
+    EditorModule,
     BrowserModule,
     FontAwesomeModule,
     NgbModule,
@@ -80,6 +78,7 @@ export function tokenGetter() {
     EditProfileResolver,
     ErrorInterceptorProvider,
     SharedService,
+    { provide: TINYMCE_SCRIPT_SRC, useValue: "tinymce/tinymce.min.js" },
   ],
   bootstrap: [AppComponent],
 })

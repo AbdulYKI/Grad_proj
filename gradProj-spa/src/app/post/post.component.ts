@@ -1,22 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { SharedService } from "./../services/shared.service";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+  selector: "app-post",
+  templateUrl: "./post.component.html",
+  styleUrls: ["./post.component.css"],
 })
 export class PostComponent implements OnInit {
   status: boolean = false;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private sharedService: SharedService) {
+    // this.sharedService.currentLanguage.subscribe((lang) => {
+    //   if (this.status) {
+    //     this.cancelEditor();
+    //   }
+    // });
   }
-  showEditor(){
+
+  ngOnInit(): void {}
+  showEditor() {
     this.status = true;
   }
-  canselEditor(){
+  hideEditor() {
     this.status = false;
   }
-
 }
