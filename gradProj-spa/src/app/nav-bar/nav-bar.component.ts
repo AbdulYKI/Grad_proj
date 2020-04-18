@@ -1,7 +1,12 @@
 import { Router } from "@angular/router";
 import { AlertifyService } from "./../services/alertify.service";
 import { AuthService } from "./../services/auth.service";
-import { Component, OnInit, HostListener } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ViewEncapsulation,
+} from "@angular/core";
 import { environment } from "src/environments/environment";
 import { SharedService } from "../services/shared.service";
 import { LanguageEnum } from "../helper/language.enum";
@@ -25,9 +30,13 @@ export class NavBarComponent implements OnInit {
     private sharedService: SharedService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.currentPhotoUrl.subscribe((newPhotoUrl) => {
+      this.photoUrl = newPhotoUrl;
+    });
+  }
 
-  ToggleMenuCollapsed() {
+  toggleMenuCollapsed() {
     this.isMenuCollapsed = !this.isMenuCollapsed;
   }
 
@@ -74,5 +83,8 @@ export class NavBarComponent implements OnInit {
     } else {
       return "side-section-rtl nav-item ml-0 ml-md-2 ml-lg-4";
     }
+  }
+  closeCollapse() {
+    this.isMenuCollapsed = true;
   }
 }

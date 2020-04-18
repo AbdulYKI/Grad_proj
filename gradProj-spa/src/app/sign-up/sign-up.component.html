@@ -21,21 +21,21 @@
               }}</label>
               <input
                 formControlName="email"
-                class="form-control"
+                [ngClass]="formControlClasses(Email)"
                 type="email"
                 placeholder="eg. example@email.com"
                 required
               />
               <div
                 *ngIf="Email.errors && Email.touched"
-                class="alert alert-danger"
+                class="invalid-feedback"
               >
-                <small *ngIf="Email.hasError('pattern')">{{
+                <span *ngIf="Email.hasError('pattern')">{{
                   Lexicon.emailPatternErrorMessage
-                }}</small>
-                <small *ngIf="Email.errors?.required">{{
+                }}</span>
+                <span *ngIf="Email.errors?.required">{{
                   Lexicon.emailRequiredErrorMessage
-                }}</small>
+                }}</span>
               </div>
             </div>
             <div class="form-group">
@@ -45,33 +45,33 @@
               }}</label>
               <input
                 formControlName="username"
-                class="form-control"
+                [ngClass]="formControlClasses(Username)"
                 type="text"
                 placeholder="eg. username123"
                 required
               />
               <div
                 *ngIf="Username.errors && Username.touched"
-                class="alert alert-danger"
+                class="invalid-feedback"
               >
-                <small
+                <span
                   *ngIf="
-                    Username.hasError('minLength') ||
-                    Username.hasError('maxLength')
+                    Username.hasError('minlength') ||
+                    Username.hasError('maxlength')
                   "
                   >{{ Lexicon.usernameLengthErrorMessage }}
-                </small>
-                <small
+                </span>
+                <span
                   *ngIf="
-                    !Username.hasError('minLength') &&
-                    !Username.hasError('maxLength') &&
+                    !Username.hasError('minlength') &&
+                    !Username.hasError('maxlength') &&
                     Username.hasError('pattern')
                   "
                   >{{ Lexicon.usernamePatternErrorMessage }}
-                </small>
-                <small *ngIf="Username.errors?.required">
+                </span>
+                <span *ngIf="Username.errors?.required">
                   {{ Lexicon.usernameRequiredErrorMessage }}
-                </small>
+                </span>
               </div>
             </div>
             <div class="form-group">
@@ -82,26 +82,26 @@
               <input
                 matInput
                 formControlName="password"
-                class="form-control"
+                [ngClass]="formControlClasses(Password)"
                 placeholder="*****"
                 type="password"
                 name="password"
               />
               <div
                 *ngIf="Password.errors && Password.touched"
-                class="alert alert-danger"
+                class="invalid-feedback"
               >
-                <small
+                <span
                   *ngIf="
-                    Password.hasError('minLength') ||
-                    Password.hasError('maxLength')
+                    Password.hasError('minlength') ||
+                    Password.hasError('maxlength')
                   "
                 >
                   {{ Lexicon.passwordLengthErrorMessage }}
-                </small>
-                <small *ngIf="Password.hasError('required')">
+                </span>
+                <span *ngIf="Password.hasError('required')">
                   {{ Lexicon.passwordRequiredErrorMessage }}
-                </small>
+                </span>
               </div>
             </div>
             <div class="form-group">
@@ -111,20 +111,20 @@
               </label>
               <input
                 formControlName="confirmPassword"
-                class="form-control"
+                [ngClass]="formControlClasses(ConfirmPassword)"
                 placeholder="*****"
                 type="password"
               />
               <div
                 *ngIf="ConfirmPassword.errors && ConfirmPassword.touched"
-                class="alert alert-danger"
+                class="invalid-feedback"
               >
-                <small *ngIf="ConfirmPassword.errors?.mustMatch">
+                <span *ngIf="ConfirmPassword.errors?.mustMatch">
                   {{ Lexicon.confirmPasswordMismatchErrorMessage }}
-                </small>
-                <small *ngIf="ConfirmPassword.errors?.required">
+                </span>
+                <span *ngIf="ConfirmPassword.errors?.required">
                   {{ Lexicon.confirmPasswordRequiredErrorMessage }}
-                </small>
+                </span>
               </div>
             </div>
             <div class="form-group">

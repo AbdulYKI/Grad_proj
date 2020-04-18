@@ -17,6 +17,7 @@
     display: none;
     /*hide Toggle btn  in sidebar  in large screen*/
   }
+
   .user-img{
     float: right;
   }
@@ -31,25 +32,13 @@
     width: 35%;
     height: 100%;
   }
+
 }
 @media screen and (max-width: 991px) {
   #btnToggleSideBar {
     display: block;
     /*show Toggle btn  in sidebar ==> in small screen*/
   }
-  .user-img img {
-    width: 50%;
-  }
-  .overlay {
-    width: 50%;
-    height: 100%;
-  }
-}
-.alert-danger {
-  height: 32px;
-  line-height: 3;
-  width: 70% !important;
-  margin: auto !important;
 }
 
 .Active {
@@ -82,32 +71,17 @@
 .fa-bars {
   cursor: pointer;
 }
-.user-img {
-  padding: 0px;
-}
 
-.fix_overlay {
-  padding: 0px;
-  position: relative;
-  display: contents;
-}
-.user-img img {
-  box-shadow: 0px 0px 17px 0px #777676;
-  border-radius: 50%;
-  cursor: pointer;
-  display: block;
-  border: 3px solid white;
-  margin-left: auto;
-}
 .overlay {
-  position: absolute;
-  right: 0;
-  top: 0;
   background-color: #000000bd;
+  display: none;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
   border-radius: 50%;
-  -webkit-transition: 0.5s ease;
-  transition: 0.5s ease;
-  opacity: 0;
 }
 
 .user-info h4 {
@@ -134,7 +108,7 @@ input[type="file"] {
   top: 24%;
   z-index: 10;
 }
-.fa-plus {
+.fa-camera {
   position: absolute;
   left: 45%;
   top: 45%;
@@ -182,10 +156,6 @@ textarea {
   margin-left: 0%;
   margin-right: 15%;
 }
-.user-img-rtl {
-  margin-left: 0%;
-  margin-right: auto;
-}
 
 /* fix unwanted white space in rtl for the date picker*/
 .rtl .dropdown-menu,
@@ -193,7 +163,7 @@ textarea {
   right: 0;
   left: inherit;
   right: initial;
-  text-align: right;
+  text-align: right !important;
 }
 
 /*fix the padding in months and weeks in rtl for the date picker*/
@@ -250,4 +220,39 @@ ngb-datepicker-navigation-select > .custom-select {
 .flag-span {
   padding: 0px;
   padding-left: 1px;
+}
+
+.img-row-col img {
+  border-radius: 50%;
+}
+.rtl .img-row-col .row .col-6.col-md-6 .card {
+  float: left;
+}
+.img-row-col .row .col-6.col-md-6 .card {
+  min-width: 137.5px;
+  max-width: 150px;
+  max-height: 150px;
+  min-height: 137.5px;
+  float: right;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0px 0px 17px 0px #777676;
+}
+.img-row-col .row .col-6.col-md-6 .card .card-img {
+  border-radius: 50%;
+  max-width: 150px;
+  max-height: 150px;
+  max-height: 150px;
+  min-height: 137.5px;
+}
+
+.img-row-col .row .col-6.col-md-6 .card .card-img-overlay {
+  opacity: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+.img-row-col .row .col-6.col-md-6 .card:hover .card-img-overlay {
+  opacity: 0.7;
+  background-color: #777;
 }

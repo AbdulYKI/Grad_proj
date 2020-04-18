@@ -9,7 +9,7 @@ using grad_proj_api.Data;
 namespace grad_proj_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200403080513_initialisation")]
+    [Migration("20200417234510_initialisation")]
     partial class initialisation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
