@@ -8,6 +8,8 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { environment } from "src/environments/environment";
 import { Photo } from "../models/photo";
 import { LanguageEnum } from "../helper/language.enum";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/internal/operators/takeUntil";
 
 @Component({
   selector: "app-photo-uploader",
@@ -22,6 +24,7 @@ export class PhotoUploaderComponent implements OnInit {
     private authService: AuthService,
     private sharedService: SharedService
   ) {}
+  destroy: Subject<boolean> = new Subject<boolean>();
   // has to be null or I can't access it from outside
   photoUrl: string = null;
   defaultPhoto = environment.defaultPhoto;
@@ -43,6 +46,7 @@ export class PhotoUploaderComponent implements OnInit {
       formData.append("file", newPhoto, newPhoto.name);
       this.photoService
         .uploadPhoto(this.authService.decodedToken.nameid as number, newPhoto)
+        .pipe(takeUntil(this.destroy))
         .subscribe(
           (photo: Photo) => {
             this.authService.changeMemeberPhotoUrl(photo.url);
@@ -105,5 +109,10 @@ export class PhotoUploaderComponent implements OnInit {
       return "rtl";
     }
     return "";
+  }
+
+  ngOnDestroy() {
+    this.destroy.next(true);
+    this.destroy.unsubscribe();
   }
 }

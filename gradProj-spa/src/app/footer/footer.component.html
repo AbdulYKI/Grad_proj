@@ -1,82 +1,104 @@
-<footer>
-<div class="social-icons">
-<div class="container">
-    <div class="row">
-<ul class="social-ul">
-    <li class="col-12"><a><img src="../../assets/social-icons/facebook.svg"></a></li>
-    <li class="col-12"><a><img src="../../assets/social-icons/twitter.svg"></a></li>
-    <li class="col-12"><a><img src="../../assets/social-icons/youtube.svg"></a></li>
-    <li class="col-12"><a><img src="../../assets/social-icons/telegram.svg"></a></li>
-    <li class="col-12"><a><img src="../../assets/social-icons/linked-in.svg"></a></li>
-    </ul>
-    </div>
-    </div>
-</div>
+<footer [ngClass]="RtlClass">
+  <div class="social-icons">
     <div class="container">
+      <div class="row">
+        <ul class="social-ul">
+          <li class="col-12">
+            <a><img src="../../assets/social-icons/facebook.svg" /></a>
+          </li>
+          <li class="col-12">
+            <a><img src="../../assets/social-icons/twitter.svg" /></a>
+          </li>
+          <li class="col-12">
+            <a><img src="../../assets/social-icons/youtube.svg" /></a>
+          </li>
+          <li class="col-12">
+            <a><img src="../../assets/social-icons/telegram.svg" /></a>
+          </li>
+          <li class="col-12">
+            <a><img src="../../assets/social-icons/linked-in.svg" /></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
     <div class="row">
-    <div class="col-12">
-    <ul class="footer-nav">
-    <div class="row">
-    <li class="col-lg-3 col-md-4 col-12 level-1 ">
-    <h6>GradProj Company </h6>
-    <ul class="level-2">
-    <img class="logo-footer" src="../../assets/icons/logo.png">
-    <li><a><fa-icon [icon]="faMapMarker"></fa-icon> Amman - Jordan</a></li>
-    <li><a><fa-icon [icon]="faPhone"></fa-icon> 077xxxxxx</a></li>
-    <li><a><fa-icon [icon]="faAt"></fa-icon> Gradproj@company.com</a></li>
-    </ul>
-    </li>
-        <li class="col-lg-3 col-md-4 col-12 level-1" >
-    <h6>Problems</h6>
-    <ul class="level-2">
-    <li><a>Problem 1</a></li>
-    <li><a>Problem 1</a></li>
-    <li><a>Problem 1</a></li>
-    <li><a>Problem 1</a></li>
-    </ul>
-    </li>
-     <li class="col-lg-3 col-md-4 col-12 level-1">
-    <h6>Posts</h6>
-    <ul class="level-2">
-    <li><a>Add post</a></li>
-    <li><a>Search Post</a></li>
-    <li><a>Post 1</a></li>
-    <li><a>Post 2</a></li>
-    </ul>
-    </li>
+      <div class="col-12">
+        <ul class="footer-nav">
+          <div class="row">
+            <li class="col-lg-3 col-md-4 col-12 level-1">
+              <h6>{{ Lexicon.projectName }}</h6>
+              <ul class="level-2">
+                <img class="logo-footer" src="../../assets/icons/logo.png" />
+                <li>
+                  <a
+                    ><fa-icon [icon]="FaMapMarker"></fa-icon>
+                    {{ Lexicon.projectLocation }}</a
+                  >
+                </li>
+                <li>
+                  <a><fa-icon [icon]="FaPhone"></fa-icon> 077xxxxxx</a>
+                </li>
+                <li>
+                  <a><fa-icon [icon]="FaAt"></fa-icon> Gradproj@company.com</a>
+                </li>
+              </ul>
+            </li>
 
-    <li class="col-lg-3 col-md-4 col-12 level-1">
-    <h6>About GradProj</h6>
-    <ul class="level-2">
-    <li><a>Why GradProj</a></li>
-    <li><a>Profile Company</a></li>
-    <li><a>Misson And Value</a></li>
-    <li><a>Regulation</a></li>
-    </ul>
-    </li>
-    </div>
-    </ul>
+            <li class="col-lg-3 col-md-4 col-12 level-1">
+              <h6>{{ Lexicon.about }} {{ Lexicon.projectName }}</h6>
+              <ul class="level-2">
+                <li>
+                  <a
+                    >{{ Lexicon.why }} {{ Lexicon.projectName
+                    }}{{ Lexicon.questionMark }}</a
+                  >
+                </li>
 
+                <li>
+                  <a>{{ Lexicon.mission }}</a>
+                </li>
+                <li>
+                  <a>{{ Lexicon.regulation }}</a>
+                </li>
+              </ul>
+            </li>
+          </div>
+        </ul>
+      </div>
+      <div class="col-12">
+        <div class="footer-text">
+          <ul class="flag">
+            <li>
+              <a>
+                <img
+                  src="https://fxriver.com/wp-content/uploads/flags/jordan_flag_300 (1).png"
+                />
+                <span
+                  (click)="changeLanguage(LanguageEnum.Arabic)"
+                  class="ar"
+                  lang="ar"
+                  >العربية</span
+                >
+              </a>
+            </li>
+            <li>
+              <a>
+                <img
+                  src="https://fxriver.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.png"
+                />
+                <span
+                  (click)="changeLanguage(LanguageEnum.English)"
+                  class="en"
+                  lang="ar"
+                  >English</span
+                >
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="col-12">
-    <div class="footer-text">
-    <ul class="flag">
-    <li>
-    <a>
-    <img src="https://fxriver.com/wp-content/uploads/flags/jordan_flag_300 (1).png">
-    <span (click)="changeLanguage(LanguageEnum.Arabic)" class="ar" lang="ar">العربية</span>
-    </a>
-    </li>
-     <li>
-    <a>
-    <img src="https://fxriver.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.png">
-    <span (click)="changeLanguage(LanguageEnum.English)" class="en"  lang="ar">English</span>
-    </a>
-    </li>
-    </ul>
-
-    </div>
-    </div>
-    </div>
-    </div>
+  </div>
 </footer>

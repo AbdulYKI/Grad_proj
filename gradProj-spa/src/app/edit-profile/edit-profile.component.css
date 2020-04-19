@@ -18,11 +18,11 @@
     /*hide Toggle btn  in sidebar  in large screen*/
   }
 
-  .user-img{
+  .user-img {
     float: right;
   }
 
-  .user-info{
+  .user-info {
     float: left;
   }
   .user-img img {
@@ -32,7 +32,6 @@
     width: 35%;
     height: 100%;
   }
-
 }
 @media screen and (max-width: 991px) {
   #btnToggleSideBar {

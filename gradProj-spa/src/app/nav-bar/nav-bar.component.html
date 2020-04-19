@@ -30,7 +30,7 @@
                   class="nav-link"
                   routerLinkActive="active"
                   [routerLink]="['./home']"
-                  (click)="toggleMenuCollapsed()"
+                  (click)="closeCollapse()"
                   >{{ Lexicon.home }}
                 </a>
               </li>
@@ -42,6 +42,16 @@
                   (click)="closeCollapse()"
                   >{{ Lexicon.profile }}</a
                 >
+              </li>
+              <li [ngClass]="SideSectionClasses">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  [routerLink]="['/add-post']"
+                  (click)="closeCollapse()"
+                >
+                  {{ Lexicon.posts }}
+                </a>
               </li>
             </ul>
             <ul *ngIf="!signedIn()" class="navbar-nav ml-auto py-0 py-md-0">

@@ -1,17 +1,19 @@
-<div class="container">
+<div [ngClass]="ContainerClasses">
   <div class="btn-post">
     <button (click)="showEditor()" class="btn float-right">
-      New<i class="fas fa-plus ml-2"></i>
+      {{ Lexicon.new }} <fa-icon [icon]="FaPlus"></fa-icon>
     </button>
   </div>
 
-  <div class="editor" [class.show]="status">
-    <div class="post_cancel">
-      <button class="btn cancel" (click)="hideEditor()">Cancel</button>
+  <div class="editor" [class.show]="showEditorFlag">
+    <div class="editor_header">
+      <button class="btn cancel" (click)="hideEditor()">
+        {{ Lexicon.cancel }} <fa-icon [icon]="FaTimes"></fa-icon>
+      </button>
       <button class="btn post">
-        Post <i class="fab fa-telegram-plane"></i>
+        {{ Lexicon.create }} <fa-icon [icon]="FaPaperPlane"></fa-icon>
       </button>
     </div>
-    <app-text-editor *ngIf="status"></app-text-editor>
+    <app-text-editor *ngIf="showEditorFlag"></app-text-editor>
   </div>
 </div>
