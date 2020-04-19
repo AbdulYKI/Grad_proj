@@ -1,5 +1,11 @@
 import { SharedService } from "./../services/shared.service";
 import { Component, OnInit } from "@angular/core";
+import {
+  faPlus,
+  faPaperPlane,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
+import { LanguageEnum } from "../helper/language.enum";
 
 @Component({
   selector: "app-post",
@@ -7,21 +13,33 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./post.component.css"],
 })
 export class PostComponent implements OnInit {
-  status: boolean = false;
+  showEditorFlag = false;
 
-  constructor(private sharedService: SharedService) {
-    // this.sharedService.currentLanguage.subscribe((lang) => {
-    //   if (this.status) {
-    //     this.cancelEditor();
-    //   }
-    // });
+  constructor(private sharedService: SharedService) {}
+  get FaPlus() {
+    return faPlus;
   }
-
+  get FaPaperPlane() {
+    return faPaperPlane;
+  }
+  get FaTimes() {
+    return faTimes;
+  }
   ngOnInit(): void {}
   showEditor() {
-    this.status = true;
+    this.showEditorFlag = true;
   }
   hideEditor() {
-    this.status = false;
+    this.showEditorFlag = false;
+  }
+
+  get Lexicon() {
+    return this.sharedService.Lexicon;
+  }
+  get ContainerClasses() {
+    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+      return "container rtl";
+    }
+    return "container";
   }
 }

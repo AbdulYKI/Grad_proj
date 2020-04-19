@@ -332,6 +332,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       PhotoUploaderComponent,
       this.modalOption
     );
-    modalRef.componentInstance.photoUrl = this.user.photoUrl;
+    modalRef.componentInstance.photoUrl = this.photoUrl;
   }
 }
