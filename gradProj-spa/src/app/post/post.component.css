@@ -11,11 +11,19 @@
   outline: none;
   transition-duration: 0.4s;
 }
-.btn-post button:hover {
-  background-color: #f17548;
-  color: white;
-  opacity: 0.9;
-  border: 1px solid #f17548;
+.btn-post{
+    width: 100%;
+    text-align: right;
+}
+.btn-post button{
+    margin: 20px 25px;
+    background-color:#ffff ;
+    color: #f17548;
+    border-color: #f17548;
+    opacity: 1;
+    width: 90px;
+    outline: none;
+    transition-duration: 0.4s;
 }
 .editor {
   -webkit-transition: 0.4s all !important;
@@ -80,3 +88,120 @@
 .editor_header .cancel {
   float: right;
 }
+
+    .post_cansel{
+    text-align: right;
+    margin: 20px 10px;
+    }
+    .post_cansel button
+    {
+        margin-left: 15px;
+    }
+    .post_cansel .cansel{
+        background-color: #ffffff;
+        color: #90a4ae;
+        outline: none;
+        transition-duration: 0.4s;
+        border-color: #cfd8dc;
+    }
+    .post_cansel .cansel:hover
+    {
+        background-color: #90a4ae47;
+    color: #999;
+    outline: none;
+    transition-duration: 0.4s;
+    border-color: #e3e4e4;
+    }
+    .post_cansel .post{
+        color: white;
+        outline: none;
+        transition-duration: 0.4s;
+        background-color: #f17548;
+        border-color: #f17548;
+        opacity: 1;
+    }
+    .post_cansel .post:hover{
+        opacity: 0.8;
+    }
+
+
+   /*======= Post Test =============*/
+   .post-user{
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #0000000d;
+   }
+
+.poster-img{
+    text-align: center;
+    padding: 20px 0px;
+    background-color: #5453532e;
+}
+.poster-img img {
+    width: 125px;
+    border: 5px solid white;
+    cursor: pointer;
+    border-radius: 125px;
+    opacity: 0.7;
+    transition: 0.4s ease-in-out;
+}
+.poster-img img:hover {
+    opacity: 1;
+}
+.post-info{
+    padding: 20px 34px;
+}
+.title-post  a{
+
+        color: black;
+        font-weight: 500;
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+        text-transform: capitalize;
+        cursor: pointer;
+        text-decoration: none;
+        transition: 0.5s ease-in-out;
+}
+.title-post  a:hover{
+    color: skyblue;
+}
+
+ .careup, .caerdown{
+    font-size: 28px;
+    vertical-align: sub;
+
+}
+.careup{
+    color: green;
+}
+.caerdown{
+    color: red;
+}
+.rank_view span{
+    margin-right: 25px;
+    }
+.create span ,  .rank_view span{
+    font-size: 14px;
+    font-weight: 300;
+    color: #666666;
+    padding: 4px;
+}
+.categ span {
+    background-color: gainsboro;
+    padding: 1px 6px;
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #666666;
+    padding: 4px;
+}
+@media (max-width: 768px) {
+
+    .post-info{
+        text-align: center;
+    }
+    .rank_view span{
+        margin-right: 10px;
+        }
+ }
