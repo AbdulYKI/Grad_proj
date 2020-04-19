@@ -5,7 +5,6 @@
     </button>
   </div>
 <div class="container">
-<div class="btn-post "><button (click)="showEditor()"  class="btn">New<i class="fas fa-plus ml-2"></i></button></div>
 <div class="content-post">
 <div class="container">
 <div class="post-user" *ngFor="let post of post_list">
@@ -27,14 +26,6 @@
 
 </div>
 </div>
-</div>
-<div class="clear"></div>
-<div class="editor" [class.show]="status">
-    <div class="post_cansel">
-        <button class="btn cansel" (click)="canselEditor()">Cansel</button>
-    <button class="btn post">Post <i class="fab fa-telegram-plane"></i></button>
-    </div>
-    <app-text-editor></app-text-editor>
 </div>
 
   <div class="editor" [class.show]="showEditorFlag">

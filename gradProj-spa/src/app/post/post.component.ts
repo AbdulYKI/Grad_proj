@@ -6,8 +6,6 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { LanguageEnum } from "../helper/language.enum";
-
-import { Component, OnInit } from '@angular/core';
 import {faEye,faCaretUp,faCaretDown } from "@fortawesome/free-solid-svg-icons";
 @Component({
   selector: "app-post",
