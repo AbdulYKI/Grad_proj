@@ -1,0 +1,16 @@
+<div [ngClass]="ContainerClasses">
+  <div class="btn-new">
+    <button (click)="showEditor()" class="btn">
+      {{ Lexicon.new }} <fa-icon [icon]="FaPlus"></fa-icon>
+    </button>
+  </div>
+  <div class="clear"></div>
+  <app-single-post-card></app-single-post-card>
+  <div class="editor" [class.show]="showEditorFlag">
+    <app-add-post
+      #addPostComponent
+      (editorClosedEvent)="hideEditor()"
+      *ngIf="showEditorFlag"
+    ></app-add-post>
+  </div>
+</div>

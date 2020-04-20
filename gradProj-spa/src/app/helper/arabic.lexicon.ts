@@ -346,4 +346,7 @@ export const arabicLexicon = {
   create: "إنشاء",
   new: "جديد",
   cancel: "إلغاء",
+  title: "العنوان",
+  titleLengthErrorMessage: "العنوان يجيب أن يكون ما بين 20-400 حرف",
+  titleIsRequiredErrorMessage: "العنوان مطلوب",
 };

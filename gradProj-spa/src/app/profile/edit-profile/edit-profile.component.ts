@@ -1,11 +1,11 @@
-import { environment } from "./../../environments/environment";
-import { CustomDatePicker } from "./../helper/custom-date-picker";
-import { LanguageEnum } from "./../helper/language.enum";
-import { SharedService } from "./../services/shared.service";
-import { NgbDatePickerValue } from "./../helper/ngb-date-picker-value";
-import { EditProfileResolverData } from "./../helper/edit-profile-resolver-data";
-import { ProgrammingLanguage } from "./../models/programming-language";
-import { User } from "./../models/User";
+import { environment } from "../../../environments/environment";
+import { CustomDatePicker } from "../../helper/custom-date-picker";
+import { LanguageEnum } from "../../helper/language.enum";
+import { SharedService } from "../../services/shared.service";
+import { NgbDatePickerValue } from "../../helper/ngb-date-picker-value";
+import { EditProfileResolverData } from "../../helper/edit-profile-resolver-data";
+import { ProgrammingLanguage } from "../../models/programming-language";
+import { User } from "../../models/User";
 import {
   Component,
   OnInit,
@@ -26,19 +26,19 @@ import {
 import { faCalendar, faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Subject } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { UserService } from "../services/user.service";
-import { AlertifyService } from "../services/alertify.service";
-import { AuthService } from "../services/auth.service";
+import { UserService } from "../../services/user.service";
+import { AlertifyService } from "../../services/alertify.service";
+import { AuthService } from "../../services/auth.service";
 import { takeUntil } from "rxjs/operators";
-import { GenderEnum } from "../helper/gender.enum";
-import { Country } from "../models/country";
+import { GenderEnum } from "../../helper/gender.enum";
+import { Country } from "../../models/country";
 import {
   NgbDatepickerI18n,
   NgbModalOptions,
   NgbModal,
 } from "@ng-bootstrap/ng-bootstrap";
 
-import { PhotoUploaderComponent } from "../photo-uploader/photo-uploader.component";
+import { PhotoUploaderComponent } from "../../photo-uploader/photo-uploader.component";
 
 @Component({
   selector: "app-edit-profile",

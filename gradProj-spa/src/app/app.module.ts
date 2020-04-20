@@ -18,21 +18,22 @@ import { AngularMultiSelectModule } from "angular2-multiselect-dropdown";
 /*-------------------------------------------------------------------------------------------------*/
 import { AppComponent } from "./app.component";
 import { SignInComponent } from "./sign-in/sign-in.component";
-import { EditProfileComponent } from "./edit-profile/edit-profile.component";
+import { EditProfileComponent } from "./profile/edit-profile/edit-profile.component";
 import { LoadingCompComponent } from "./loading-comp/loading-comp.component";
-import { TextEditorComponent } from "./text-editor/text-editor.component";
+import { AddPostComponent } from "./posts/add-post/add-post.component";
 import { AuthService } from "./services/auth.service";
 import { AlertifyService } from "./services/alertify.service";
 import { SignUpComponent } from "./sign-up/sign-up.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { AuthGuard } from "./guards/auth.guard";
-import { PreventUnsavedChangesGuard } from "./guards/prevent-unsaved-changes.guard";
+import { PreventUnsavedChangesGuardForEditProfile } from "./guards/prevent-unsaved-changes-for-edit-profile.guard";
 import { ErrorInterceptorProvider } from "./services/Interceptor.service";
 import { FooterComponent } from "./footer/footer.component";
-import { PostComponent } from "./post/post.component";
-import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
-import { SinglePostCardComponent } from './single-post-card/single-post-card.component';
+import { PostsListComponent } from "./posts/posts-list/posts-list.component";
+import { PhotoUploaderComponent } from "./photo-uploader/photo-uploader.component";
+import { SinglePostCardComponent } from "./posts/single-post-card/single-post-card.component";
+import { PreventUnsavedChangesGuardForCreatePost } from "./guards/prevent-unsaved-changes-for-create-post.guard";
 
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
@@ -48,8 +49,8 @@ export function tokenGetter() {
     EditProfileComponent,
     LoadingCompComponent,
     FooterComponent,
-    TextEditorComponent,
-    PostComponent,
+    AddPostComponent,
+    PostsListComponent,
     PhotoUploaderComponent,
     SinglePostCardComponent,
   ],
@@ -76,7 +77,8 @@ export function tokenGetter() {
   providers: [
     AuthService,
     AlertifyService,
-    PreventUnsavedChangesGuard,
+    PreventUnsavedChangesGuardForEditProfile,
+    PreventUnsavedChangesGuardForCreatePost,
     AuthGuard,
     UserService,
     EditProfileResolver,
