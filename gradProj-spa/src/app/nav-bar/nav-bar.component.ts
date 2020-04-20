@@ -21,6 +21,7 @@ import { arabicLexicon } from "../helper/arabic.lexicon";
 export class NavBarComponent implements OnInit {
   isMenuCollapsed = true;
   scrolled = 0;
+  logoUrl = environment.logo;
   photoUrl: string;
   defaultPhoto = environment.defaultPhoto;
   constructor(

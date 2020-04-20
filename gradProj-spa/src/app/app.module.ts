@@ -32,6 +32,7 @@ import { ErrorInterceptorProvider } from "./services/Interceptor.service";
 import { FooterComponent } from "./footer/footer.component";
 import { PostComponent } from "./post/post.component";
 import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
+import { SinglePostCardComponent } from './single-post-card/single-post-card.component';
 
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
@@ -50,6 +51,7 @@ export function tokenGetter() {
     TextEditorComponent,
     PostComponent,
     PhotoUploaderComponent,
+    SinglePostCardComponent,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),

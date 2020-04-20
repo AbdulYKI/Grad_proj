@@ -1,0 +1,78 @@
+.post-user {
+  margin: 30px auto;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: #0000000d;
+}
+
+.poster-img {
+  text-align: center;
+  padding: 20px 0px;
+  background-color: #5453532e;
+}
+.poster-img img {
+  width: 125px;
+  border: 5px solid white;
+  cursor: pointer;
+  border-radius: 125px;
+  opacity: 0.7;
+  transition: 0.4s ease-in-out;
+}
+.poster-img img:hover {
+  opacity: 1;
+}
+.post-info {
+  padding: 20px 34px;
+}
+.title-post a {
+  color: black;
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.5s ease-in-out;
+}
+.title-post a:hover {
+  color: skyblue;
+}
+
+.up-votes-arrow,
+.down-votes-arrow {
+  font-size: 28px;
+  vertical-align: sub;
+}
+.up-votes-arrow {
+  color: green;
+}
+.down-votes-arrow {
+  color: red;
+}
+.rank-section span {
+  margin-right: 25px;
+}
+.date-section span,
+.rank-section span {
+  font-size: 14px;
+  font-weight: 300;
+  color: #666666;
+  padding: 4px;
+}
+.tag-section span {
+  background-color: gainsboro;
+  padding: 1px 6px;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #666666;
+  padding: 4px;
+}
+@media (max-width: 768px) {
+  .post-info {
+    text-align: center;
+  }
+  .rank_view span {
+    margin-right: 10px;
+  }
+}
