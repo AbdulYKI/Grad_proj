@@ -41,6 +41,11 @@ export class AuthService {
   }
   signedIn() {
     const token = localStorage.getItem(environment.tokenName);
-    return !this.jwtHelper.isTokenExpired(token);
+    if (this.jwtHelper.isTokenExpired(token)) {
+      localStorage.removeItem(environment.tokenName);
+      localStorage.removeItem("info");
+      return false;
+    }
+    return true;
   }
 }

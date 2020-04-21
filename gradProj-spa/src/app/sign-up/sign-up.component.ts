@@ -1,3 +1,5 @@
+import { ServerError } from "./../models/server-error";
+import { ExceptionEnum } from "./../helper/exception.enum";
 import { SharedService } from "./../services/shared.service";
 import { Patterns } from "./../helper/patterns";
 import { GenderEnum } from "./../helper/gender.enum";
@@ -35,7 +37,7 @@ export class SignUpComponent implements OnInit {
   symbols: string = " _-.~!@#$%^&*+=`|(){}[]:;'<>,.?/]";
   instagramLogo: string = environment.instagramLogo;
   googleLogo: string = environment.googleLogo;
-
+  serverError: ServerError = new ServerError();
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
@@ -90,12 +92,23 @@ export class SignUpComponent implements OnInit {
           this.alertifyService.success(this.Lexicon.signedUpSucessFullyMessage);
         },
         (error) => {
-          this.alertifyService.error(error);
+          if (typeof error === "number") {
+            if (error === ExceptionEnum.EmailUsedException) {
+              this.serverError.message = "emailUsedErrorMessage";
+              this.serverError.controllerName = "email";
+            } else if (error === ExceptionEnum.UsernameUsedException) {
+              this.serverError.message = "usernameUsedErrorMessage";
+              this.serverError.controllerName = "username";
+            }
+          } else {
+            this.alertifyService.error(error);
+          }
         },
         () => {
           this.authService.signIn(user).subscribe(
             () => this.router.navigate([""]),
             (error) => {
+              console.log(error);
               this.alertifyService.error(error);
             }
           );
