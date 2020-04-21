@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="post-user" *ngFor="let post of post_list">
+    <div class="row">
+      <div class="col-md-3 col-12 poster-img">
+        <img [src]="post.imgUrl" />
+      </div>
+      <div class="col-md-9 col-12 post-info">
+        <h5 class="post-title">
+          <a routerLink="">{{ post.title }}</a>
+        </h5>
+        <div class="date-section">
+          <span>{{ post.username }} created at :</span
+          ><span class="date">{{ post.yyyy }}</span
+          ><span>{{ post.hours }}</span>
+        </div>
+        <div class="rank-section">
+          <span
+            ><fa-icon class="eye-icon" [icon]="FaEye"></fa-icon> {{ post.view }}
+          </span>
+          <span
+            ><fa-icon [class]="post.status" [icon]="FaCaretUp"></fa-icon>
+            {{ post.rank }}</span
+          >
+        </div>
+        <div class="tag-section">
+          <span>{{ post.category1 }}</span> <span>{{ post.category2 }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

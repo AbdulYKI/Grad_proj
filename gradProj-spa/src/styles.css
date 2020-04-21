@@ -7,16 +7,24 @@
 @import "../node_modules/angular2-multiselect-dropdown/themes/default.theme.css";
 
 .form-button:enabled {
-  background-color: #d68206;
-  cursor: pointer;
+  background-color: #f17548 !important;
+  cursor: pointer !important;
   -webkit-transition: background-color 500ms linear;
   -ms-transition: background-color 500ms linear;
   transition: background-color 1000ms linear;
+  opacity: 1;
+  color: white;
 }
 .form-button:disabled {
-  background-color: #989494;
-  cursor: auto;
+  background-color: #989494 !important;
+  border-color: #989494 !important;
+  cursor: auto !important;
+  color: white;
   -webkit-transition: background-color 500ms linear;
   -ms-transition: background-color 500ms linear;
   transition: background-color 500ms linear;
+  opacity: 1;
+}
+.form-button:hover {
+  opacity: 0.8;
 }

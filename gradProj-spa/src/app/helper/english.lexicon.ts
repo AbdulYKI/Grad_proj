@@ -348,4 +348,9 @@ export const englishLexicon = {
   create: "Create",
   new: "New",
   cancel: "Cancel",
+  title: "Title",
+  titleLengthErrorMessage: "Title Must Be Between 20-400 characters",
+  titleIsRequiredErrorMessage: "Title Is Required",
+  emailUsedErrorMessage: "Email Is Used",
+  usernameUsedErrorMessage: "Username Is Used",
 };

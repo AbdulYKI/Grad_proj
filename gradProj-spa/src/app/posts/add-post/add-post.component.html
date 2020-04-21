@@ -1,0 +1,53 @@
+<div [ngClass]="EditorHeaderClasses">
+  <button class="btn cancel" (click)="hideEditor()">
+    {{ Lexicon.cancel }} <fa-icon [icon]="FaTimes"></fa-icon>
+  </button>
+
+  <form (ngSubmit)="onSubmit()" id="postForm" #postForm="ngForm">
+    <button class="btn form-button" type="submit" [disabled]="postForm.invalid">
+      {{ Lexicon.create }} <fa-icon [icon]="FaPaperPlane"></fa-icon>
+    </button>
+    <div class="title">
+      <div class="input-group">
+        {{ Lexicon.title }}
+        <input
+          id="title"
+          [(ngModel)]="post.title"
+          type="text"
+          minlength="20"
+          name="title"
+          maxlength="400"
+          #title="ngModel"
+          required
+          class="form-control ml-2 mr-2"
+          [class.is-invalid]="title.errors && title.touched"
+        />
+        <div
+          *ngIf="title.getError('required') && title.touched"
+          class="invalid-feedback"
+        >
+          {{ Lexicon.titleIsRequiredErrorMessage }}
+        </div>
+        <div
+          *ngIf="
+            title.getError('minlength') ||
+            (title.getError('minlength') &&
+              !title.getError('required') &&
+              title.touched)
+          "
+          class="invalid-feedback"
+        >
+          {{ Lexicon.titleLengthErrorMessage }}
+        </div>
+      </div>
+    </div>
+
+    <editor
+      #tinymce
+      required
+      [(ngModel)]="post.htmlContent"
+      name="htmlContent"
+      [init]="config"
+    ></editor>
+  </form>
+</div>
