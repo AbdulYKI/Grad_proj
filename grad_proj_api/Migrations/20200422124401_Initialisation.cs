@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace grad_proj_api.Migrations
 {
-    public partial class initialisation : Migration
+    public partial class Initialisation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,12 +49,13 @@ namespace grad_proj_api.Migrations
                     Gender = table.Column<int>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
-                    CreatedUTC = table.Column<DateTime>(nullable: false),
-                    LastActiveUTC = table.Column<DateTime>(nullable: true),
+                    CreatedUtc = table.Column<DateTime>(nullable: false),
+                    LastActiveUtc = table.Column<DateTime>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     CompanyName = table.Column<string>(nullable: true),
                     SchoolName = table.Column<string>(nullable: true),
-                    CountryNumericCode = table.Column<int>(nullable: true)
+                    CountryNumericCode = table.Column<int>(nullable: true),
+                    IsAdmin = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,8 +78,8 @@ namespace grad_proj_api.Migrations
                     RecipientId = table.Column<int>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     IsRead = table.Column<bool>(nullable: false),
-                    DateRead = table.Column<DateTime>(nullable: true),
-                    MessageSent = table.Column<DateTime>(nullable: false),
+                    DateReadUtc = table.Column<DateTime>(nullable: true),
+                    MessageSentUtc = table.Column<DateTime>(nullable: false),
                     SenderDeleted = table.Column<bool>(nullable: false),
                     RecipientDeleted = table.Column<bool>(nullable: false)
                 },
@@ -107,7 +108,7 @@ namespace grad_proj_api.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Url = table.Column<string>(nullable: true),
                     PublicId = table.Column<string>(nullable: true),
-                    DateAdded = table.Column<DateTime>(nullable: false),
+                    DateAddedUtc = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -116,6 +117,35 @@ namespace grad_proj_api.Migrations
                     table.ForeignKey(
                         name: "FK_Photos_Users_UserId",
                         column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    CreatorId = table.Column<int>(nullable: false),
+                    AdminId = table.Column<int>(nullable: true),
+                    DateAddedUtc = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_Users_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Posts_Users_CreatorId",
+                        column: x => x.CreatorId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -136,14 +166,91 @@ namespace grad_proj_api.Migrations
                         column: x => x.ProgrammingLanguageId,
                         principalTable: "ProgrammingLanguages",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserProgrammingLanguages_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "DownVotedPosts",
+                columns: table => new
+                {
+                    PostId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DownVotedPosts", x => new { x.UserId, x.PostId });
+                    table.ForeignKey(
+                        name: "FK_DownVotedPosts_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DownVotedPosts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UpVotedPosts",
+                columns: table => new
+                {
+                    PostId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UpVotedPosts", x => new { x.UserId, x.PostId });
+                    table.ForeignKey(
+                        name: "FK_UpVotedPosts_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UpVotedPosts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ViewedPosts",
+                columns: table => new
+                {
+                    PostId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ViewedPosts", x => new { x.UserId, x.PostId });
+                    table.ForeignKey(
+                        name: "FK_ViewedPosts_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ViewedPosts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DownVotedPosts_PostId",
+                table: "DownVotedPosts",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meessages_RecipientId",
@@ -162,6 +269,21 @@ namespace grad_proj_api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Posts_AdminId",
+                table: "Posts",
+                column: "AdminId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_CreatorId",
+                table: "Posts",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UpVotedPosts_PostId",
+                table: "UpVotedPosts",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserProgrammingLanguages_ProgrammingLanguageId",
                 table: "UserProgrammingLanguages",
                 column: "ProgrammingLanguageId");
@@ -170,10 +292,18 @@ namespace grad_proj_api.Migrations
                 name: "IX_Users_CountryNumericCode",
                 table: "Users",
                 column: "CountryNumericCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ViewedPosts_PostId",
+                table: "ViewedPosts",
+                column: "PostId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "DownVotedPosts");
+
             migrationBuilder.DropTable(
                 name: "Meessages");
 
@@ -181,10 +311,19 @@ namespace grad_proj_api.Migrations
                 name: "Photos");
 
             migrationBuilder.DropTable(
+                name: "UpVotedPosts");
+
+            migrationBuilder.DropTable(
                 name: "UserProgrammingLanguages");
 
             migrationBuilder.DropTable(
+                name: "ViewedPosts");
+
+            migrationBuilder.DropTable(
                 name: "ProgrammingLanguages");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using grad_proj_api.Helpers;
 
-namespace grad_proj_api.Models
-{
-    public class User
-    {
+namespace grad_proj_api.Models {
+    public class User {
         public int Id { get; set; }
+
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -16,8 +15,8 @@ namespace grad_proj_api.Models
         public GenderEnum Gender { get; set; }
         public string Email { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public DateTime CreatedUTC { get; set; }
-        public DateTime? LastActiveUTC { get; set; }
+        public DateTime CreatedUtc { get; set; }
+        public DateTime? LastActiveUtc { get; set; }
         public string Description { get; set; }
         public string CompanyName { get; set; }
         public string SchoolName { get; set; }
@@ -28,6 +27,11 @@ namespace grad_proj_api.Models
         public ICollection<UserProgrammingLanguage> UserProgrammingLanguages { get; set; }
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessagesReceived { get; set; }
+        public ICollection<ViewedPost> PostsViewed { get; set; }
+        public ICollection<UpVotedPost> PostsUpVoted { get; set; }
+        public ICollection<DownVotedPost> PostsDownVoted { get; set; }
+
+        public bool IsAdmin { get; set; }
 
     }
 }

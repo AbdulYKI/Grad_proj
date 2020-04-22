@@ -1,7 +1,5 @@
-namespace grad_proj_api.DTOs
-{
-    public class UserForGoogleSignInDTO
-    {
+namespace grad_proj_api.Dtos {
+    public class UserForGoogleSignInDto {
         public string IdToken { get; set; }
 
     }

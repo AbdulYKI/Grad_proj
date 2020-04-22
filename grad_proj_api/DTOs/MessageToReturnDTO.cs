@@ -1,9 +1,7 @@
 using System;
 
-namespace grad_proj_api.DTOs
-{
-    public class MessageToReturnDTO
-    {
+namespace grad_proj_api.Dtos {
+    public class MessageToReturnDto {
         public int Id { get; set; }
 
         public int SenderId { get; set; }
@@ -18,9 +16,9 @@ namespace grad_proj_api.DTOs
 
         public bool IsRead { get; set; }
 
-        public DateTime? DateRead { get; set; }
+        public DateTime? DateReadUtc { get; set; }
 
-        public DateTime MessageSent { get; set; }
+        public DateTime MessageSentUtc { get; set; }
 
     }
 }

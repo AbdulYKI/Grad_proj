@@ -1,3 +1,4 @@
+import { Subject } from "rxjs";
 import { Router } from "@angular/router";
 import { AlertifyService } from "./../services/alertify.service";
 import { AuthService } from "./../services/auth.service";
@@ -12,6 +13,7 @@ import { SharedService } from "../services/shared.service";
 import { LanguageEnum } from "../helper/language.enum";
 import { englishLexicon } from "../helper/english.lexicon";
 import { arabicLexicon } from "../helper/arabic.lexicon";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-nav-bar",
@@ -23,6 +25,7 @@ export class NavBarComponent implements OnInit {
   scrolled = 0;
   logoUrl = environment.logo;
   photoUrl: string;
+  destroy: Subject<boolean> = new Subject<boolean>();
   defaultPhoto = environment.defaultPhoto;
   constructor(
     private authService: AuthService,
@@ -32,9 +35,11 @@ export class NavBarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.currentPhotoUrl.subscribe((newPhotoUrl) => {
-      this.photoUrl = newPhotoUrl;
-    });
+    this.authService.currentPhotoUrl
+      .pipe(takeUntil(this.destroy))
+      .subscribe((newPhotoUrl) => {
+        this.photoUrl = newPhotoUrl;
+      });
   }
 
   toggleMenuCollapsed() {
@@ -87,5 +92,9 @@ export class NavBarComponent implements OnInit {
   }
   closeCollapse() {
     this.isMenuCollapsed = true;
+  }
+  ngOnDestory() {
+    this.destroy.next(true);
+    this.destroy.unsubscribe();
   }
 }

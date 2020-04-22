@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using grad_proj_api.Data;
-using grad_proj_api.DTOs;
+using grad_proj_api.Dtos;
 using grad_proj_api.Exceptions;
 using grad_proj_api.Interfaces;
 using grad_proj_api.Models;
@@ -34,7 +34,7 @@ namespace DatingApp.API.Controllers {
         }
 
         [HttpPost ("sign-up")]
-        public async Task<IActionResult> SignUp (UserForSignUpDTO userForSignUpDTO) {
+        public async Task<IActionResult> SignUp (UserForSignUpDto userForSignUpDTO) {
 
             try {
                 userForSignUpDTO.Username = userForSignUpDTO.Username.ToLower ();
@@ -47,8 +47,7 @@ namespace DatingApp.API.Controllers {
                 var userTobeCreated = _mapper.Map<User> (userForSignUpDTO);
 
                 var createdUser = await _repo.SignUp (userTobeCreated, userForSignUpDTO.Password);
-
-                var userToReturn = _mapper.Map<UserToReturnDTO> (createdUser);
+                var userToReturn = _mapper.Map<UserToReturnDto> (createdUser);
 
                 return CreatedAtRoute ("get-user", new { controller = "user", id = createdUser.Id }, userToReturn);
 
@@ -63,7 +62,7 @@ namespace DatingApp.API.Controllers {
         }
 
         [HttpPost ("sign-in")]
-        public async Task<IActionResult> SignIn (UserForSignInDTO userForSignInDTO) {
+        public async Task<IActionResult> SignIn (UserForSignInDto userForSignInDTO) {
             try {
                 User user = user = await _repo.SignIn (userForSignInDTO.Username.ToLower (), userForSignInDTO.Password);
 
@@ -75,7 +74,7 @@ namespace DatingApp.API.Controllers {
 
                 var token = tokenHandler.CreateToken (tokenDescriptor);
 
-                var userToReturn = _mapper.Map<UserToReturnDTO> (user);
+                var userToReturn = _mapper.Map<UserToReturnDto> (user);
 
                 return Ok (new {
                     token = tokenHandler.WriteToken (token),
@@ -86,7 +85,7 @@ namespace DatingApp.API.Controllers {
         }
 
         [HttpPost ("sign-in/Google")]
-        public async Task<IActionResult> GoogleSignIn (UserForGoogleSignInDTO userForGoogleSignInDTO) {
+        public async Task<IActionResult> GoogleSignIn (UserForGoogleSignInDto userForGoogleSignInDTO) {
             try {
                 GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings ();
 
@@ -102,7 +101,7 @@ namespace DatingApp.API.Controllers {
 
                 var token = tokenHandler.CreateToken (tokenDescriptor);
 
-                var userToReturn = _mapper.Map<UserToReturnDTO> (user);
+                var userToReturn = _mapper.Map<UserToReturnDto> (user);
 
                 return Ok (new {
                     token = tokenHandler.WriteToken (token),

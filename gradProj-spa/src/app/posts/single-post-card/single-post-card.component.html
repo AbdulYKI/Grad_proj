@@ -1,30 +1,33 @@
 <div class="container">
-  <div class="post-user" *ngFor="let post of post_list">
-    <div class="row">
-      <div class="col-md-3 col-12 poster-img">
-        <img [src]="post.imgUrl" />
+  <div class="row post-user">
+    <div class="col-md-3 col-12 poster-img">
+      <img [src]="post.creatorPhotoUrl || defaulPhotoUrl" />
+    </div>
+    <div class="col-md-9 col-12 post-info">
+      <h5 class="post-title">
+        <a [routerLink]="['/post', post.id]">{{ post.title }}</a>
+      </h5>
+      <div class="date-section">
+        <span>{{ post.creatorUsername }} created at :</span
+        ><span class="date"></span><span>{{ post.dateAddedUtc }}</span>
       </div>
-      <div class="col-md-9 col-12 post-info">
-        <h5 class="post-title">
-          <a routerLink="">{{ post.title }}</a>
-        </h5>
-        <div class="date-section">
-          <span>{{ post.username }} created at :</span
-          ><span class="date">{{ post.yyyy }}</span
-          ><span>{{ post.hours }}</span>
-        </div>
-        <div class="rank-section">
-          <span
-            ><fa-icon class="eye-icon" [icon]="FaEye"></fa-icon> {{ post.view }}
-          </span>
-          <span
-            ><fa-icon [class]="post.status" [icon]="FaCaretUp"></fa-icon>
-            {{ post.rank }}</span
-          >
-        </div>
-        <div class="tag-section">
-          <span>{{ post.category1 }}</span> <span>{{ post.category2 }}</span>
-        </div>
+      <div class="count-section">
+        <span
+          ><fa-icon class="eye-icon" [icon]="FaEye"></fa-icon>
+          {{ post.viewersCount }}
+        </span>
+        <span
+          ><fa-icon class="fa-caret-up" [icon]="FaCaretUp"></fa-icon>
+          {{ post.upVotesCount }}</span
+        >
+        <span
+          ><fa-icon class="fa-caret-down" [icon]="FaCaretDown"></fa-icon>
+          {{ post.downVotesCount }}</span
+        >
+      </div>
+
+      <div class="tag-section">
+        <span>future tags</span>
       </div>
     </div>
   </div>

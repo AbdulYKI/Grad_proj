@@ -38,16 +38,15 @@
   color: skyblue;
 }
 
-.up-votes-arrow,
-.down-votes-arrow {
+.fa-caret-up {
+  color: green;
   font-size: 28px;
   vertical-align: sub;
 }
-.up-votes-arrow {
-  color: green;
-}
-.down-votes-arrow {
+.fa-caret-down {
   color: red;
+  font-size: 28px;
+  vertical-align: sub;
 }
 .rank-section span {
   margin-right: 25px;
