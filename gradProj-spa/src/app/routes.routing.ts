@@ -1,4 +1,4 @@
-import { ViewPostComponent } from "src/app/posts/view-post/view-post/view-post.component";
+import { ViewPostComponent } from "./posts/view-post/view-post.component";
 import { PostsListResolver } from "./../resolvers/posts-list.resolver";
 import { PreventUnsavedChangesGuardForCreatePost } from "./guards/prevent-unsaved-changes-for-create-post.guard";
 import { EditProfileComponent } from "./profile/edit-profile/edit-profile.component";

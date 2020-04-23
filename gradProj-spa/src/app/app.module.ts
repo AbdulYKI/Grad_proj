@@ -1,3 +1,5 @@
+import { HtmlSanitiser } from "./helper/html-sanitiser.pipe";
+import { ViewPostComponent } from "./posts/view-post/view-post.component";
 import { environment } from "src/environments/environment";
 import { MyRoutes } from "./routes.routing";
 import { JwtModule } from "@auth0/angular-jwt";
@@ -35,9 +37,8 @@ import { PostsListResolver } from "./../resolvers/posts-list.resolver";
 import { SharedService } from "./services/shared.service";
 import { UserService } from "src/app/services/user.service";
 import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
-import { ViewPostComponent } from "./posts/view-post/view-post/view-post.component";
 import { ViewPostResolver } from "src/resolvers/post-view.resolver";
-
+import { CommentSectionComponent } from "./posts/comment-section/comment-section.component";
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
 }
@@ -57,6 +58,8 @@ export function tokenGetter() {
     PhotoUploaderComponent,
     SinglePostCardComponent,
     ViewPostComponent,
+    CommentSectionComponent,
+    HtmlSanitiser,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
