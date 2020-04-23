@@ -1,14 +1,9 @@
 using System;
-
 using System.Security.Claims;
-
 using System.Threading.Tasks;
 using grad_proj_api.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
-
 using Microsoft.Extensions.DependencyInjection;
-
-
 
 namespace grad_proj_api.Helpers
 
@@ -18,26 +13,24 @@ namespace grad_proj_api.Helpers
 
     {
 
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public async Task OnActionExecutionAsync (ActionExecutingContext context, ActionExecutionDelegate next)
 
         {
             //the resultContext gives access to the token which in turn
             //gives access to the userId 
-            var resultContext = await next();
+            var resultContext = await next ();
 
+            var userId = int.Parse (resultContext.HttpContext.User
 
+                .FindFirst (ClaimTypes.NameIdentifier).Value);
 
-            var userId = int.Parse(resultContext.HttpContext.User
+            var repo = resultContext.HttpContext.RequestServices.GetService<IMainRepository> ();
 
-                .FindFirst(ClaimTypes.NameIdentifier).Value);
+            var user = await repo.GetUser (userId);
 
-            var repo = resultContext.HttpContext.RequestServices.GetService<IMainRepository>();
+            user.LastActiveUtc = DateTime.UtcNow;
 
-            var user = await repo.GetUser(userId);
-
-            user.LastActiveUTC = DateTime.UtcNow;
-
-            await repo.SaveAll();
+            await repo.SaveAll ();
 
         }
 

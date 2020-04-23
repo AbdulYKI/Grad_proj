@@ -1,14 +1,17 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 
 namespace grad_proj_api.Dtos {
-    public class PhotoForAddingDto {
+    public class PostForAddDto {
+        [Required]
+        [MinLength (40)]
+        public string Title { get; set; }
 
         [Required]
-        public IFormFile File { get; set; }
+        public string Content { get; set; }
+
         public DateTime DateAddedUtc { get; set; }
-        public PhotoForAddingDto () {
+        public PostForAddDto () {
             DateAddedUtc = DateTime.UtcNow;
         }
     }

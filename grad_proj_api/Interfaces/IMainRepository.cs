@@ -13,6 +13,7 @@ namespace grad_proj_api.Interfaces {
         Task<bool> SaveAll ();
         Task<Photo> GetPhoto (int id);
         Task<List<Country>> GetCountries ();
-
+        Task<Post> GetPost (int id);
+        Task<List<Post>> GetPosts ();
     }
 }

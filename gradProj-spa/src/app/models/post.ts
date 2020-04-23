@@ -1,8 +1,15 @@
 export class Post {
-  htmlContent: string;
+  content: string;
   title: string;
+  creatorPhotoUrl: string;
+  creatorUsername: string;
+  upVotesCount: number;
+  downVotesCount: number;
+  dateAddedUtc: Date;
+  viewersCount: number;
+  id;
   constructor() {
-    this.htmlContent = "";
+    this.content = "";
     this.title = "";
   }
 }

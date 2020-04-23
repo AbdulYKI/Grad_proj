@@ -100,26 +100,32 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   ngOnInit(): void {
-    this.authService.currentPhotoUrl.subscribe((newPhotoUrl) => {
-      this.photoUrl = newPhotoUrl;
-    });
-    this.sharedService.currentLanguage.subscribe((language) => {
-      this.setProgrammingLanguagesDropDownOptions();
-    });
+    this.authService.currentPhotoUrl
+      .pipe(takeUntil(this.destroy))
+      .subscribe((newPhotoUrl) => {
+        this.photoUrl = newPhotoUrl;
+      });
+    this.sharedService.currentLanguage
+      .pipe(takeUntil(this.destroy))
+      .subscribe((language) => {
+        this.setProgrammingLanguagesDropDownOptions();
+      });
     this.BuildProfileFormGroup();
     this.programmingLanguagesPlaceHolder = this.Lexicon.programmingLanguagesPlaceHolder;
-    this.route.data.subscribe(
-      (data: { EditProfileResolverData: EditProfileResolverData }) => {
-        this.user = data.EditProfileResolverData.user;
-        this.photoUrl = this.user.photoUrl || environment.defaultPhoto;
-        this.setProfileFormData();
-        this.setProgrammingLanguagesDataSource(
-          data.EditProfileResolverData.programmingLanguages
-        );
-        this.setCountriesDataSource(data.EditProfileResolverData.countries);
-        this.setSelectedProgrammingLanguages();
-      }
-    );
+    this.route.data
+      .pipe(takeUntil(this.destroy))
+      .subscribe(
+        (data: { EditProfileResolverData: EditProfileResolverData }) => {
+          this.user = data.EditProfileResolverData.user;
+          this.photoUrl = this.user.photoUrl || environment.defaultPhoto;
+          this.setProfileFormData();
+          this.setProgrammingLanguagesDataSource(
+            data.EditProfileResolverData.programmingLanguages
+          );
+          this.setCountriesDataSource(data.EditProfileResolverData.countries);
+          this.setSelectedProgrammingLanguages();
+        }
+      );
 
     this.setProgrammingLanguagesDropDownOptions();
   }

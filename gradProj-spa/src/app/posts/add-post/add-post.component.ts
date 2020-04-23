@@ -1,3 +1,6 @@
+import { Subject } from "rxjs";
+import { AlertifyService } from "./../../services/alertify.service";
+import { AuthService } from "./../../services/auth.service";
 import { LanguageEnum } from "../../helper/language.enum";
 import { SharedService } from "../../services/shared.service";
 import {
@@ -12,6 +15,8 @@ import {
 import { faPaperPlane, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Post } from "../../models/post";
 import { NgForm } from "@angular/forms";
+import { PostService } from "src/app/services/post.service";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-add-post",
@@ -21,11 +26,11 @@ import { NgForm } from "@angular/forms";
 export class AddPostComponent implements OnInit, OnDestroy {
   @ViewChild("tinymce") tinymce: any;
   @ViewChild("postForm") postForm: NgForm;
-  @Output() editorClosedEvent = new EventEmitter<boolean>();
+  @Output() editorClosedEvent = new EventEmitter<Post>();
   html = ``;
   post: Post = new Post();
   config: any = {
-    height: "80vh",
+    height: "78vh",
     width: "100%",
     base_url: "/tinymce",
     suffix: ".min",
@@ -43,8 +48,13 @@ export class AddPostComponent implements OnInit, OnDestroy {
     content_css: [],
     directionality: "ltr",
   };
-
-  constructor(private sharedService: SharedService) {
+  destroy: Subject<boolean> = new Subject<boolean>();
+  constructor(
+    private sharedService: SharedService,
+    private postService: PostService,
+    private authService: AuthService,
+    private alertifyService: AlertifyService
+  ) {
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       this.config.language = "ar";
     } else {
@@ -55,17 +65,18 @@ export class AddPostComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   ngOnDestroy() {
-    console.log(this.tinymce);
+    this.destroy.next(true);
+    this.destroy.unsubscribe();
   }
   hideEditor() {
     if (this.postForm.dirty) {
       if (
         confirm(this.sharedService.Lexicon.preventUnsavedChangesGuardMessage)
       ) {
-        this.editorClosedEvent.emit();
+        this.editorClosedEvent.emit(null);
       }
     } else {
-      this.editorClosedEvent.emit();
+      this.editorClosedEvent.emit(null);
     }
   }
   get FaPaperPlane() {
@@ -85,6 +96,17 @@ export class AddPostComponent implements OnInit, OnDestroy {
     return "editor-header";
   }
   onSubmit() {
-    console.log(this.postForm.dirty);
+    this.postService
+      .createPost(this.authService.decodedToken.nameid, this.post)
+      .pipe(takeUntil(this.destroy))
+      .subscribe(
+        (post: any) => {
+          this.editorClosedEvent.emit(post);
+          this.alertifyService.success("Post Successfully Created");
+        },
+        (error) => {
+          this.alertifyService.error("Post Failed To Be Created");
+        }
+      );
   }
 }

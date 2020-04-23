@@ -14,7 +14,7 @@
           id="title"
           [(ngModel)]="post.title"
           type="text"
-          minlength="20"
+          minlength="40"
           name="title"
           maxlength="400"
           #title="ngModel"
@@ -45,8 +45,8 @@
     <editor
       #tinymce
       required
-      [(ngModel)]="post.htmlContent"
-      name="htmlContent"
+      [(ngModel)]="post.content"
+      name="content"
       [init]="config"
     ></editor>
   </form>

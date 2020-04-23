@@ -9,8 +9,8 @@ using grad_proj_api.Data;
 namespace grad_proj_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200417234510_initialisation")]
-    partial class initialisation
+    [Migration("20200422124401_Initialisation")]
+    partial class Initialisation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,21 @@ namespace grad_proj_api.Migrations
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("grad_proj_api.Models.DownVotedPost", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "PostId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("DownVotedPosts");
+                });
+
             modelBuilder.Entity("grad_proj_api.Models.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -44,13 +59,13 @@ namespace grad_proj_api.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("DateRead")
+                    b.Property<DateTime?>("DateReadUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("MessageSent")
+                    b.Property<DateTime>("MessageSentUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("RecipientDeleted")
@@ -80,7 +95,7 @@ namespace grad_proj_api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateAdded")
+                    b.Property<DateTime>("DateAddedUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PublicId")
@@ -100,6 +115,36 @@ namespace grad_proj_api.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("grad_proj_api.Models.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AdminId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DateAddedUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("grad_proj_api.Models.ProgrammingLanguage", b =>
                 {
                     b.Property<int>("Id")
@@ -114,6 +159,21 @@ namespace grad_proj_api.Migrations
                     b.ToTable("ProgrammingLanguages");
                 });
 
+            modelBuilder.Entity("grad_proj_api.Models.UpVotedPost", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "PostId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("UpVotedPosts");
+                });
+
             modelBuilder.Entity("grad_proj_api.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -126,7 +186,7 @@ namespace grad_proj_api.Migrations
                     b.Property<int?>("CountryNumericCode")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreatedUTC")
+                    b.Property<DateTime>("CreatedUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("CreatedWithGoogle")
@@ -147,7 +207,10 @@ namespace grad_proj_api.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("LastActiveUTC")
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("LastActiveUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
@@ -187,6 +250,36 @@ namespace grad_proj_api.Migrations
                     b.ToTable("UserProgrammingLanguages");
                 });
 
+            modelBuilder.Entity("grad_proj_api.Models.ViewedPost", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "PostId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("ViewedPosts");
+                });
+
+            modelBuilder.Entity("grad_proj_api.Models.DownVotedPost", b =>
+                {
+                    b.HasOne("grad_proj_api.Models.Post", "Post")
+                        .WithMany("PostDownVoters")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("grad_proj_api.Models.User", "User")
+                        .WithMany("PostsDownVoted")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("grad_proj_api.Models.Message", b =>
                 {
                     b.HasOne("grad_proj_api.Models.User", "Recipient")
@@ -211,6 +304,34 @@ namespace grad_proj_api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("grad_proj_api.Models.Post", b =>
+                {
+                    b.HasOne("grad_proj_api.Models.User", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminId");
+
+                    b.HasOne("grad_proj_api.Models.User", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("grad_proj_api.Models.UpVotedPost", b =>
+                {
+                    b.HasOne("grad_proj_api.Models.Post", "Post")
+                        .WithMany("PostUpVoters")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("grad_proj_api.Models.User", "User")
+                        .WithMany("PostsUpVoted")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("grad_proj_api.Models.User", b =>
                 {
                     b.HasOne("grad_proj_api.Models.Country", "Country")
@@ -224,13 +345,28 @@ namespace grad_proj_api.Migrations
                     b.HasOne("grad_proj_api.Models.ProgrammingLanguage", "ProgrammingLanguage")
                         .WithMany("Users")
                         .HasForeignKey("ProgrammingLanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("grad_proj_api.Models.User", "User")
                         .WithMany("UserProgrammingLanguages")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("grad_proj_api.Models.ViewedPost", b =>
+                {
+                    b.HasOne("grad_proj_api.Models.Post", "Post")
+                        .WithMany("PostViewers")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("grad_proj_api.Models.User", "User")
+                        .WithMany("PostsViewed")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

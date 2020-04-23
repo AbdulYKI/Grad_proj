@@ -1,27 +1,17 @@
 using System;
 
-namespace grad_proj_api.DTOs
-{
-    public class MessageForSendingDTO
-    {
+namespace grad_proj_api.Dtos {
+    public class MessageForSendingDto {
         public int SenderId { get; set; }
-
-
 
         public int RecipientId { get; set; }
 
-
-
         public string Content { get; set; }
 
+        public DateTime MessageSentUtc { get; set; }
 
-
-        public DateTime MessageSent { get; set; }
-
-
-        public MessageForSendingDTO()
-        {
-            MessageSent = DateTime.UtcNow;
+        public MessageForSendingDto () {
+            MessageSentUtc = DateTime.UtcNow;
 
         }
     }

@@ -2,7 +2,7 @@ import { SharedService } from "./../services/shared.service";
 import { AuthService } from "./../services/auth.service";
 import { AlertifyService } from "./../services/alertify.service";
 import { PhotoService } from "./../services/photo.service";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { environment } from "src/environments/environment";
@@ -16,7 +16,7 @@ import { takeUntil } from "rxjs/internal/operators/takeUntil";
   templateUrl: "./photo-uploader.component.html",
   styleUrls: ["./photo-uploader.component.css"],
 })
-export class PhotoUploaderComponent implements OnInit {
+export class PhotoUploaderComponent implements OnInit, OnDestroy {
   constructor(
     public activeModal: NgbActiveModal,
     private photoService: PhotoService,

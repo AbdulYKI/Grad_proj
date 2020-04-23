@@ -1,6 +1,5 @@
-import { SharedService } from "./services/shared.service";
-import { UserService } from "src/app/services/user.service";
-import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
+import { HtmlSanitiser } from "./helper/html-sanitiser.pipe";
+import { ViewPostComponent } from "./posts/view-post/view-post.component";
 import { environment } from "src/environments/environment";
 import { MyRoutes } from "./routes.routing";
 import { JwtModule } from "@auth0/angular-jwt";
@@ -34,7 +33,12 @@ import { PostsListComponent } from "./posts/posts-list/posts-list.component";
 import { PhotoUploaderComponent } from "./photo-uploader/photo-uploader.component";
 import { SinglePostCardComponent } from "./posts/single-post-card/single-post-card.component";
 import { PreventUnsavedChangesGuardForCreatePost } from "./guards/prevent-unsaved-changes-for-create-post.guard";
-
+import { PostsListResolver } from "./../resolvers/posts-list.resolver";
+import { SharedService } from "./services/shared.service";
+import { UserService } from "src/app/services/user.service";
+import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
+import { ViewPostResolver } from "src/resolvers/post-view.resolver";
+import { CommentSectionComponent } from "./posts/comment-section/comment-section.component";
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
 }
@@ -53,6 +57,9 @@ export function tokenGetter() {
     PostsListComponent,
     PhotoUploaderComponent,
     SinglePostCardComponent,
+    ViewPostComponent,
+    CommentSectionComponent,
+    HtmlSanitiser,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
@@ -83,7 +90,9 @@ export function tokenGetter() {
     UserService,
     EditProfileResolver,
     ErrorInterceptorProvider,
+    PostsListResolver,
     SharedService,
+    ViewPostResolver,
     { provide: TINYMCE_SCRIPT_SRC, useValue: "tinymce/tinymce.min.js" },
   ],
   bootstrap: [AppComponent],

@@ -1,3 +1,5 @@
+import { ViewPostComponent } from "./posts/view-post/view-post.component";
+import { PostsListResolver } from "./../resolvers/posts-list.resolver";
 import { PreventUnsavedChangesGuardForCreatePost } from "./guards/prevent-unsaved-changes-for-create-post.guard";
 import { EditProfileComponent } from "./profile/edit-profile/edit-profile.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
@@ -9,6 +11,7 @@ import { AuthGuard } from "./guards/auth.guard";
 import { PreventUnsavedChangesGuardForEditProfile } from "./guards/prevent-unsaved-changes-for-edit-profile.guard";
 import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
 import { PostsListComponent } from "./posts/posts-list/posts-list.component";
+import { ViewPostResolver } from "src/resolvers/post-view.resolver";
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
@@ -35,11 +38,19 @@ const routes: Routes = [
     component: SignUpComponent,
   },
   {
-    path: "posts",
-    component: PostsListComponent,
+    path: "post",
     runGuardsAndResolvers: "always",
+    component: PostsListComponent,
+    resolve: { postsList: PostsListResolver },
     canDeactivate: [PreventUnsavedChangesGuardForCreatePost],
   },
+  {
+    path: "post/:id",
+    component: ViewPostComponent,
+    resolve: { post: ViewPostResolver },
+    canDeactivate: [PreventUnsavedChangesGuardForCreatePost],
+  },
+
   { path: "**", redirectTo: "home", pathMatch: "full" },
 ];
 
