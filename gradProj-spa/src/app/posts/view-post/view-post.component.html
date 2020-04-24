@@ -1,2 +1,23 @@
 <p>{{ post.title }}</p>
-<div [innerHTML]="post.content | htmlSanitiser"></div>
+<div id="wrapper" style="height: 100%;">
+  <editor
+    #tinymce
+    required
+    [(ngModel)]="post.content"
+    name="content"
+    [init]="config"
+    [disabled]="true"
+  ></editor>
+</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>
+<div>comment</div>

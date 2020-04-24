@@ -30,7 +30,6 @@ export class AddPostComponent implements OnInit, OnDestroy {
   html = ``;
   post: Post = new Post();
   config: any = {
-    height: "78vh",
     width: "100%",
     base_url: "/tinymce",
     suffix: ".min",
