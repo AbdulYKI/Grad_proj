@@ -1,1 +1,12 @@
-<p>comment-section works!</p>
+<div class="comment-container" (click)="commentbox()" [class.toggled]="status_comment">
+    <div class="meta">
+      <img src="https://assets.leetcode.com/users/huaying2/avatar_1523559968.png" alt="" class="avatar">
+      <span class="name">Username1</span>
+    </div>
+    <textarea class="form-control" name="" id=""></textarea>
+    <span class="placeholder">write a Comment</span>
+
+    <div class="btns">
+      <a href="#" class="btn btn-default">Comment</a>
+    </div>
+  </div>
