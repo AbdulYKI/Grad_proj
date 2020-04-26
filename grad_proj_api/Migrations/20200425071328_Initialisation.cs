@@ -55,7 +55,8 @@ namespace grad_proj_api.Migrations
                     CompanyName = table.Column<string>(nullable: true),
                     SchoolName = table.Column<string>(nullable: true),
                     CountryNumericCode = table.Column<int>(nullable: true),
-                    IsAdmin = table.Column<bool>(nullable: false)
+                    IsAdmin = table.Column<bool>(nullable: false),
+                    DateUpdatedUtc = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -130,9 +131,10 @@ namespace grad_proj_api.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
-                    CreatorId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     AdminId = table.Column<int>(nullable: true),
-                    DateAddedUtc = table.Column<DateTime>(nullable: false)
+                    DateAddedUtc = table.Column<DateTime>(nullable: false),
+                    DateEditedUtc = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -144,8 +146,8 @@ namespace grad_proj_api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Posts_Users_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_Posts_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -169,6 +171,35 @@ namespace grad_proj_api.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserProgrammingLanguages_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<int>(nullable: false),
+                    DateAddedUtc = table.Column<DateTime>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    PostId = table.Column<int>(nullable: false),
+                    DateEditedUtc = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -247,6 +278,69 @@ namespace grad_proj_api.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DownVotedComments",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DownVotedComments", x => new { x.UserId, x.CommentId });
+                    table.ForeignKey(
+                        name: "FK_DownVotedComments_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DownVotedComments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UpVotedComments",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UpVotedComments", x => new { x.UserId, x.CommentId });
+                    table.ForeignKey(
+                        name: "FK_UpVotedComments_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UpVotedComments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_PostId",
+                table: "Comments",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DownVotedComments_CommentId",
+                table: "DownVotedComments",
+                column: "CommentId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_DownVotedPosts_PostId",
                 table: "DownVotedPosts",
@@ -274,9 +368,14 @@ namespace grad_proj_api.Migrations
                 column: "AdminId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_CreatorId",
+                name: "IX_Posts_UserId",
                 table: "Posts",
-                column: "CreatorId");
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UpVotedComments_CommentId",
+                table: "UpVotedComments",
+                column: "CommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UpVotedPosts_PostId",
@@ -302,6 +401,9 @@ namespace grad_proj_api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "DownVotedComments");
+
+            migrationBuilder.DropTable(
                 name: "DownVotedPosts");
 
             migrationBuilder.DropTable(
@@ -311,6 +413,9 @@ namespace grad_proj_api.Migrations
                 name: "Photos");
 
             migrationBuilder.DropTable(
+                name: "UpVotedComments");
+
+            migrationBuilder.DropTable(
                 name: "UpVotedPosts");
 
             migrationBuilder.DropTable(
@@ -318,6 +423,9 @@ namespace grad_proj_api.Migrations
 
             migrationBuilder.DropTable(
                 name: "ViewedPosts");
+
+            migrationBuilder.DropTable(
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "ProgrammingLanguages");

@@ -15,5 +15,7 @@ namespace grad_proj_api.Interfaces {
         Task<List<Country>> GetCountries ();
         Task<Post> GetPost (int id);
         Task<List<Post>> GetPosts ();
+        Task<Comment> GetComment (int id);
+        Task<List<Comment>> GetComments (int postId);
     }
 }

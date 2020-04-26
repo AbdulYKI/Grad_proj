@@ -1,18 +1,15 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace grad_proj_api.Dtos {
-    public class PostForAddDto {
+namespace grad_proj_api.DTOs {
+    public class CommentForAddDto {
         [Required]
-        [MinLength (20)]
-        [MaxLength (400)]
-        public string Title { get; set; }
+        public int CommentId { get; set; }
 
         [Required]
         public string Content { get; set; }
-
         public DateTime DateAddedUtc { get; set; }
-        public PostForAddDto () {
+        public CommentForAddDto () {
             DateAddedUtc = DateTime.UtcNow;
         }
     }

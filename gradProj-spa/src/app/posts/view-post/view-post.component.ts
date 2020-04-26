@@ -18,7 +18,6 @@ import {
 export class ViewPostComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
   post: Post;
-
   config: any = {
     width: "100%",
     base_url: "/tinymce",

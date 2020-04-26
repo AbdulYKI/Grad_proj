@@ -48,8 +48,13 @@
   font-size: 28px;
   vertical-align: sub;
 }
+.rtl .rank-section span {
+  margin-right: 0px;
+  margin-left: 25px;
+}
 .rank-section span {
   margin-right: 25px;
+  margin-left: 0px;
 }
 .date-section span,
 .rank-section span {
@@ -66,12 +71,22 @@
   font-weight: 300;
   color: #666666;
   padding: 4px;
+  margin-left: 0px;
+}
+.rtl .tag-section span {
+  margin-right: 0px;
+  margin-left: 10px;
 }
 @media (max-width: 768px) {
   .post-info {
     text-align: center;
   }
+  .rtl .rank_view span {
+    margin-right: 0px;
+    margin-left: 10px;
+  }
   .rank_view span {
     margin-right: 10px;
+    margin-right: 0px;
   }
 }
