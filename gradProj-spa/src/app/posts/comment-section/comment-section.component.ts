@@ -8,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class CommentSectionComponent implements OnInit {
 
   constructor() { }
-
+  status_comment = false;
   ngOnInit(): void {
+  }
+
+  commentbox(){
+    this.status_comment = !this.status_comment;
   }
 
 }
