@@ -9,6 +9,7 @@ namespace grad_proj_api.Data {
 
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<Message> Meessages { get; set; }
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
         public DbSet<UserProgrammingLanguage> UserProgrammingLanguages { get; set; }
@@ -17,7 +18,9 @@ namespace grad_proj_api.Data {
         public DbSet<ViewedPost> ViewedPosts { get; set; }
 
         public DbSet<DownVotedPost> DownVotedPosts { get; set; }
+        public DbSet<DownVotedComment> DownVotedComments { get; set; }
         public DbSet<UpVotedPost> UpVotedPosts { get; set; }
+        public DbSet<UpVotedComment> UpVotedComments { get; set; }
 
         protected override void OnModelCreating (ModelBuilder modelBuilder) {
             //tell EF what is the primary key
@@ -37,6 +40,11 @@ namespace grad_proj_api.Data {
             modelBuilder.Entity<DownVotedPost> ()
                 .HasKey (dvp => new { dvp.UserId, dvp.PostId });
 
+            modelBuilder.Entity<DownVotedComment> ()
+                .HasKey (dvc => new { dvc.UserId, dvc.CommentId });
+
+            modelBuilder.Entity<UpVotedComment> ()
+                .HasKey (uvc => new { uvc.UserId, uvc.CommentId });
             //explains the relationship between the likee in the likes table and the likers in the user table
 
             modelBuilder.Entity<Message> ()
@@ -68,7 +76,7 @@ namespace grad_proj_api.Data {
 
             modelBuilder.Entity<ViewedPost> ()
                 .HasOne (u => u.User)
-                .WithMany (p => p.PostsViewed)
+                .WithMany (p => p.ViewedPosts)
                 .HasForeignKey (u => u.UserId)
                 .OnDelete (DeleteBehavior.Restrict);
             modelBuilder.Entity<ViewedPost> ()
@@ -79,7 +87,7 @@ namespace grad_proj_api.Data {
 
             modelBuilder.Entity<UpVotedPost> ()
                 .HasOne (u => u.User)
-                .WithMany (p => p.PostsUpVoted)
+                .WithMany (p => p.UpVotedPosts)
                 .HasForeignKey (u => u.UserId)
                 .OnDelete (DeleteBehavior.Restrict);
             modelBuilder.Entity<UpVotedPost> ()
@@ -90,7 +98,7 @@ namespace grad_proj_api.Data {
 
             modelBuilder.Entity<DownVotedPost> ()
                 .HasOne (u => u.User)
-                .WithMany (p => p.PostsDownVoted)
+                .WithMany (p => p.DownVotedPosts)
                 .HasForeignKey (u => u.UserId)
                 .OnDelete (DeleteBehavior.Restrict);
             modelBuilder.Entity<DownVotedPost> ()
@@ -98,6 +106,35 @@ namespace grad_proj_api.Data {
                 .WithMany (u => u.PostDownVoters)
                 .HasForeignKey (p => p.PostId)
                 .OnDelete (DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comment> ()
+                .HasOne (u => u.User)
+                .WithMany (c => c.Comments)
+                .HasForeignKey (u => u.UserId)
+                .OnDelete (DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<DownVotedComment> ()
+                .HasOne (u => u.User)
+                .WithMany (c => c.DownVotedComments)
+                .HasForeignKey (u => u.UserId)
+                .OnDelete (DeleteBehavior.Restrict);
+            modelBuilder.Entity<DownVotedComment> ()
+                .HasOne (c => c.Comment)
+                .WithMany (u => u.CommentDownVoters)
+                .HasForeignKey (c => c.CommentId)
+                .OnDelete (DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UpVotedComment> ()
+                .HasOne (u => u.User)
+                .WithMany (c => c.UpVotedComments)
+                .HasForeignKey (u => u.UserId)
+                .OnDelete (DeleteBehavior.Restrict);
+            modelBuilder.Entity<UpVotedComment> ()
+                .HasOne (c => c.Comment)
+                .WithMany (u => u.CommentUpVoters)
+                .HasForeignKey (c => c.CommentId)
+                .OnDelete (DeleteBehavior.Restrict);
+
         }
     }
 

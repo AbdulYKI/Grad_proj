@@ -27,11 +27,16 @@ namespace grad_proj_api.Models {
         public ICollection<UserProgrammingLanguage> UserProgrammingLanguages { get; set; }
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessagesReceived { get; set; }
-        public ICollection<ViewedPost> PostsViewed { get; set; }
-        public ICollection<UpVotedPost> PostsUpVoted { get; set; }
-        public ICollection<DownVotedPost> PostsDownVoted { get; set; }
+        public ICollection<ViewedPost> ViewedPosts { get; set; }
+        public ICollection<UpVotedPost> UpVotedPosts { get; set; }
+        public ICollection<DownVotedPost> DownVotedPosts { get; set; }
 
         public bool IsAdmin { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<UpVotedComment> UpVotedComments { get; set; }
 
+        public ICollection<DownVotedComment> DownVotedComments { get; set; }
+
+        public DateTime? DateUpdatedUtc { get; set; }
     }
 }

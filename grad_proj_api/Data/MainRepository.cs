@@ -57,7 +57,7 @@ namespace grad_proj_api.Data {
         public async Task<Post> GetPost (int id) {
             var post = await _context
                 .Posts
-                .Include (c => c.Creator)
+                .Include (c => c.User)
                 .ThenInclude (ph => ph.Photo)
                 .Include (uv => uv.PostUpVoters)
                 .Include (dv => dv.PostDownVoters)
@@ -70,13 +70,33 @@ namespace grad_proj_api.Data {
         public async Task<List<Post>> GetPosts () {
             return await _context
                 .Posts
-                .Include (c => c.Creator)
+                .Include (c => c.User)
                 .ThenInclude (ph => ph.Photo)
                 .Include (uv => uv.PostUpVoters)
                 .Include (dv => dv.PostDownVoters)
                 .Include (v => v.PostViewers)
                 .ToListAsync ();
 
+        }
+
+        public async Task<Comment> GetComment (int id) {
+            return await _context
+                .Comments
+                .Include (c => c.User)
+                .ThenInclude (ph => ph.Photo)
+                .Include (uv => uv.CommentUpVoters)
+                .Include (dv => dv.CommentDownVoters)
+                .FirstOrDefaultAsync (c => c.Id == id);
+        }
+
+        public async Task<List<Comment>> GetComments (int postId) {
+            return await _context
+                .Comments
+                .Include (c => c.User)
+                .ThenInclude (ph => ph.Photo)
+                .Include (uv => uv.CommentUpVoters)
+                .Include (dv => dv.CommentDownVoters)
+                .Where (c => c.PostId == postId).ToListAsync ();
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace grad_proj_api.Dtos {
-    public class UserForEditDto {
+    public class UserForUpdateDto {
         public GenderEnum Gender { get; set; }
         public string SchoolName { get; set; }
         public string CompanyName { get; set; }
@@ -16,7 +16,7 @@ namespace grad_proj_api.Dtos {
         public string Description { get; set; }
         public string CountryName { get; set; }
 
-        [CustomValidation (typeof (UserForEditDto), "ValidateAge")]
+        [CustomValidation (typeof (UserForUpdateDto), "ValidateAge")]
         public DateTime? DateOfBirth { get; set; }
         public int? CountryNumericCode { get; set; }
         public List<int> ProgrammingLanguagesIds { get; set; }
@@ -31,6 +31,12 @@ namespace grad_proj_api.Dtos {
                 ValidationResult.Success;
         }
         public IFormFile PhotoFile { get; set; }
+
+        public DateTime DateUpdatedUtc { get; set; }
+
+        public UserForUpdateDto () {
+            DateUpdatedUtc = DateTime.UtcNow;
+        }
     }
 
 }
