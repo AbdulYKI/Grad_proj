@@ -9,7 +9,7 @@ using grad_proj_api.Data;
 namespace grad_proj_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200422124401_Initialisation")]
+    [Migration("20200425071328_Initialisation")]
     partial class Initialisation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,36 @@ namespace grad_proj_api.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.2");
+
+            modelBuilder.Entity("grad_proj_api.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateAddedUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DateEditedUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
 
             modelBuilder.Entity("grad_proj_api.Models.Country", b =>
                 {
@@ -33,6 +63,21 @@ namespace grad_proj_api.Migrations
                     b.HasKey("NumericCode");
 
                     b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("grad_proj_api.Models.DownVotedComment", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "CommentId");
+
+                    b.HasIndex("CommentId");
+
+                    b.ToTable("DownVotedComments");
                 });
 
             modelBuilder.Entity("grad_proj_api.Models.DownVotedPost", b =>
@@ -127,20 +172,23 @@ namespace grad_proj_api.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("CreatorId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("DateAddedUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DateEditedUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AdminId");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -157,6 +205,21 @@ namespace grad_proj_api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProgrammingLanguages");
+                });
+
+            modelBuilder.Entity("grad_proj_api.Models.UpVotedComment", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "CommentId");
+
+                    b.HasIndex("CommentId");
+
+                    b.ToTable("UpVotedComments");
                 });
 
             modelBuilder.Entity("grad_proj_api.Models.UpVotedPost", b =>
@@ -193,6 +256,9 @@ namespace grad_proj_api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DateUpdatedUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -265,6 +331,36 @@ namespace grad_proj_api.Migrations
                     b.ToTable("ViewedPosts");
                 });
 
+            modelBuilder.Entity("grad_proj_api.Models.Comment", b =>
+                {
+                    b.HasOne("grad_proj_api.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("grad_proj_api.Models.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("grad_proj_api.Models.DownVotedComment", b =>
+                {
+                    b.HasOne("grad_proj_api.Models.Comment", "Comment")
+                        .WithMany("CommentDownVoters")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("grad_proj_api.Models.User", "User")
+                        .WithMany("DownVotedComments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("grad_proj_api.Models.DownVotedPost", b =>
                 {
                     b.HasOne("grad_proj_api.Models.Post", "Post")
@@ -274,7 +370,7 @@ namespace grad_proj_api.Migrations
                         .IsRequired();
 
                     b.HasOne("grad_proj_api.Models.User", "User")
-                        .WithMany("PostsDownVoted")
+                        .WithMany("DownVotedPosts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -310,10 +406,25 @@ namespace grad_proj_api.Migrations
                         .WithMany()
                         .HasForeignKey("AdminId");
 
-                    b.HasOne("grad_proj_api.Models.User", "Creator")
+                    b.HasOne("grad_proj_api.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("CreatorId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("grad_proj_api.Models.UpVotedComment", b =>
+                {
+                    b.HasOne("grad_proj_api.Models.Comment", "Comment")
+                        .WithMany("CommentUpVoters")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("grad_proj_api.Models.User", "User")
+                        .WithMany("UpVotedComments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -326,7 +437,7 @@ namespace grad_proj_api.Migrations
                         .IsRequired();
 
                     b.HasOne("grad_proj_api.Models.User", "User")
-                        .WithMany("PostsUpVoted")
+                        .WithMany("UpVotedPosts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -364,7 +475,7 @@ namespace grad_proj_api.Migrations
                         .IsRequired();
 
                     b.HasOne("grad_proj_api.Models.User", "User")
-                        .WithMany("PostsViewed")
+                        .WithMany("ViewedPosts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

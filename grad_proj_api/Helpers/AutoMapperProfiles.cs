@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using grad_proj_api.Dtos;
+using grad_proj_api.DTOs;
 using grad_proj_api.Models;
 using Google.Apis.Auth;
+
 namespace grad_proj_api.Helpers {
     public class AutoMapperProfiles : Profile {
         public AutoMapperProfiles () {
@@ -45,7 +47,7 @@ namespace grad_proj_api.Helpers {
             CreateMap<Message, MessageForSendingDto> ()
                 .ForMember (dest => dest.MessageSentUtc, opt => opt.MapFrom (src => src.MessageSentUtc.ToLocalTime ()))
                 .ReverseMap ();
-            CreateMap<UserForEditDto, User> ();
+            CreateMap<UserForUpdateDto, User> ();
             CreateMap<UserForSignUpDto, User> ();
             CreateMap<Message, MessageToReturnDto> ()
                 .ForMember (dest => dest.MessageSentUtc, opt => opt.MapFrom (src => src.MessageSentUtc.ToLocalTime ()))
@@ -56,12 +58,22 @@ namespace grad_proj_api.Helpers {
 
             CreateMap<PostForAddDto, Post> ();
             CreateMap<Post, postToReturnDto> ()
-                .ForMember (dest => dest.CreatorPhotoUrl, opt => opt.MapFrom (src => src.Creator.Photo.Url))
-                .ForMember (dest => dest.CreatorUserName, opt => opt.MapFrom (src => src.Creator.Username))
+                .ForMember (dest => dest.CreatorPhotoUrl, opt => opt.MapFrom (src => src.User.Photo.Url))
+                .ForMember (dest => dest.CreatorUserName, opt => opt.MapFrom (src => src.User.Username))
                 .ForMember (dest => dest.UpVotesCount, opt => opt.MapFrom (src => src.PostUpVoters.Count ()))
                 .ForMember (dest => dest.DownVotesCount, opt => opt.MapFrom (src => src.PostDownVoters.Count ()))
                 .ForMember (dest => dest.ViewersCount, opt => opt.MapFrom (src => src.PostViewers.Count ()));
 
+            CreateMap<PostForEditDto, Post> ();
+
+            CreateMap<CommentForAddDto, Comment> ();
+
+            CreateMap<CommentForEditDto, Comment> ();
+
+            CreateMap<Comment, CommentToReturnDto> ()
+                .ForMember (dest => dest.Username, opt => opt.MapFrom (src => src.User.Username))
+                .ForMember (dest => dest.UsernamePhotoUrl, opt => opt.MapFrom (src => src.User.Photo.Url))
+                .ForMember (dest => dest.VotesCount, opt => opt.MapFrom (src => src.CommentUpVoters.Count () - src.CommentDownVoters.Count ()));
         }
     }
 }

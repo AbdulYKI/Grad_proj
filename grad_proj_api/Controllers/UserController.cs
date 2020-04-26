@@ -32,7 +32,7 @@ namespace grad_proj_api.Controllers {
         }
 
         [HttpPut ("{id}")]
-        public async Task<IActionResult> UpdateUser (int id, UserForEditDto userForEditDTO) {
+        public async Task<IActionResult> UpdateUser (int id, UserForUpdateDto userForEditDTO) {
             if (id != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
                 return Unauthorized ();
 
