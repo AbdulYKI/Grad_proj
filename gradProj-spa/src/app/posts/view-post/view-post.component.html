@@ -52,7 +52,15 @@
     <!--  End  content header  -->
    <div class="container">
     <div class="content-body">
-        <div [innerHTML]="post.content | htmlSanitiser"></div>
+        <editor
+        #tinymce
+        required
+        [(ngModel)]="post.content"
+        name="content"
+        [init]="config"
+        [disabled]="true"
+      ></editor>
+    
     </div>
 </div>
     </div>

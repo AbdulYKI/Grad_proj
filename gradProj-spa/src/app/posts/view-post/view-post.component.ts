@@ -7,7 +7,7 @@ import {
   faStar,
   faCalendarAlt,
   faEye,
-  faChevronLeft
+  faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 @Component({
   selector: "app-view-post",
@@ -18,6 +18,20 @@ import {
 export class ViewPostComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
   post: Post;
+
+  config: any = {
+    width: "100%",
+    base_url: "/tinymce",
+    suffix: ".min",
+    plugins:
+      // tslint:disable-next-line: max-line-length
+      "print preview  autoresize searchreplace autolink directionality visualblocks visualchars  image imagetools link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists  wordcount   textpattern preview",
+    content_css: [],
+    directionality: "ltr",
+    toolbar: false,
+    menubar: false,
+    statusbar: false,
+  };
   ngOnInit(): void {
     this.route.data.subscribe((data: { post }) => (this.post = data.post));
   }
