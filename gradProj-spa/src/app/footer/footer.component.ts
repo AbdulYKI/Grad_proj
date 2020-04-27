@@ -18,25 +18,25 @@ export class FooterComponent implements OnInit {
     localStorage.setItem("language", language.toString());
     this.sharedService.changeLanguage(language as LanguageEnum);
   }
-  get LanguageEnum() {
+  get languageEnum() {
     return LanguageEnum;
   }
-  get FaMapMarker() {
+  get faMapMarker() {
     return faMapMarker;
   }
-  get FaAt() {
+  get faAt() {
     return faAt;
   }
-  get FaPhone() {
+  get faPhone() {
     return faPhone;
   }
   ToggleMenuCollapsed() {
     this.isMenuCollapsed = !this.isMenuCollapsed;
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
-  get RtlClass() {
+  get rtlClass() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       return "rtl";
     }

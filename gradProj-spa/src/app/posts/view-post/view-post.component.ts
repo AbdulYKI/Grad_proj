@@ -32,24 +32,27 @@ export class ViewPostComponent implements OnInit {
     statusbar: false,
   };
   ngOnInit(): void {
-    this.route.data.subscribe((data: { post }) => (this.post = data.post));
+    this.route.data.subscribe((data: { post }) => {
+      this.post = data.post;
+      console.log(this.post);
+    });
   }
-  get FaSortUp() {
+  get faSortUp() {
     return faSortUp;
   }
-  get FaSortDown() {
+  get faSortDown() {
     return faSortDown;
   }
-  get Fastar() {
+  get fastar() {
     return faStar;
   }
-  get FaCalender() {
+  get faCalender() {
     return faCalendarAlt;
   }
-  get FaEye() {
+  get faEye() {
     return faEye;
   }
-  get FaChevronLeft() {
+  get faChevronLeft() {
     return faChevronLeft;
   }
 }

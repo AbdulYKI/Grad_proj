@@ -63,11 +63,11 @@ export class EditProfileResolver implements Resolve<EditProfileResolverData> {
     );
     return joinedResponses;
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
   HandleError() {
-    this.alertifyService.error(this.Lexicon.retrievingDataErrorMessage);
+    this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
     this.router.navigate([""]);
   }
 }

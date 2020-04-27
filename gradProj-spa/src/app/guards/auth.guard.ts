@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     if (this.auth.signedIn()) {
       return true;
     }
-    this.alertify.warning(this.sharedService.Lexicon.authGuardMessage);
+    this.alertify.warning(this.sharedService.lexicon.authGuardMessage);
     this.router.navigate(["sign-in"]);
     return false;
   }

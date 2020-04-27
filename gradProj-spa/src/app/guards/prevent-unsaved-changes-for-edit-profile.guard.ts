@@ -10,7 +10,7 @@ export class PreventUnsavedChangesGuardForEditProfile
   canDeactivate(component: EditProfileComponent): boolean {
     if (component.editForm?.dirty) {
       return confirm(
-        this.sharedService.Lexicon.preventUnsavedChangesGuardMessage
+        this.sharedService.lexicon.preventUnsavedChangesGuardMessage
       );
     }
     return true;

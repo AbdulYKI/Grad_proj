@@ -10,7 +10,7 @@ export class PreventUnsavedChangesGuardForCreatePost
   canDeactivate(component: PostsListComponent): boolean {
     if (component.addPostComponent?.postForm?.dirty) {
       return confirm(
-        this.sharedService.Lexicon.preventUnsavedChangesGuardMessage
+        this.sharedService.lexicon.preventUnsavedChangesGuardMessage
       );
     }
     return true;

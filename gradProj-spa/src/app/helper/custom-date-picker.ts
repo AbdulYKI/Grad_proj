@@ -9,10 +9,10 @@ export class CustomDatePicker extends NgbDatepickerI18n {
   }
 
   getWeekdayShortName(weekday: number): string {
-    return this.sharedService.Lexicon.weekdays[weekday - 1];
+    return this.sharedService.lexicon.weekdays[weekday - 1];
   }
   getMonthShortName(month: number): string {
-    return this.sharedService.Lexicon.months[month - 1];
+    return this.sharedService.lexicon.months[month - 1];
   }
   getMonthFullName(month: number): string {
     return this.getMonthShortName(month);

@@ -89,7 +89,7 @@ export class SignUpComponent implements OnInit {
       const user: User = Object.assign({}, this.signupForm.value);
       this.authService.signUp(user).subscribe(
         () => {
-          this.alertifyService.success(this.Lexicon.signedUpSucessFullyMessage);
+          this.alertifyService.success(this.lexicon.signedUpSucessFullyMessage);
         },
         (error) => {
           if (typeof error === "number") {
@@ -129,31 +129,31 @@ export class SignUpComponent implements OnInit {
     setTimeout(() => (this.loaded = true), 1100);
   }
 
-  get Email(): AbstractControl {
+  get email(): AbstractControl {
     return this.signupForm.get("email");
   }
-  get Username(): AbstractControl {
+  get username() {
     return this.signupForm.get("username");
   }
-  get Password(): AbstractControl {
+  get password() {
     return this.signupForm.get("password");
   }
-  get ConfirmPassword(): AbstractControl {
+  get confirmPassword() {
     return this.signupForm.get("confirmPassword");
   }
-  get Gender(): AbstractControl {
+  get gender() {
     return this.signupForm.get("gender");
   }
-  get GenderEnum() {
+  get genderEnum() {
     return GenderEnum;
   }
-  get Patterns() {
+  get patterns() {
     return Patterns;
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
-  get ContainerClasses() {
+  get containerClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
       return "container";
     } else {

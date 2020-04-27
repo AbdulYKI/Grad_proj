@@ -1,4 +1,4 @@
-<footer [ngClass]="RtlClass">
+<footer [ngClass]="rtlClass">
   <div class="social-icons">
     <div class="container">
       <div class="row">
@@ -28,39 +28,39 @@
         <ul class="footer-nav">
           <div class="row">
             <li class="col-lg-3 col-md-4 col-12 level-1">
-              <h6>{{ Lexicon.projectName }}</h6>
+              <h6>{{ lexicon.projectName }}</h6>
               <ul class="level-2">
                 <img class="logo-footer" src="../../assets/icons/logo.png" />
                 <li>
                   <a
-                    ><fa-icon [icon]="FaMapMarker"></fa-icon>
-                    {{ Lexicon.projectLocation }}</a
+                    ><fa-icon [icon]="faMapMarker"></fa-icon>
+                    {{ lexicon.projectLocation }}</a
                   >
                 </li>
                 <li>
-                  <a><fa-icon [icon]="FaPhone"></fa-icon> 077xxxxxx</a>
+                  <a><fa-icon [icon]="faPhone"></fa-icon> 077xxxxxx</a>
                 </li>
                 <li>
-                  <a><fa-icon [icon]="FaAt"></fa-icon> Gradproj@company.com</a>
+                  <a><fa-icon [icon]="faAt"></fa-icon> Gradproj@company.com</a>
                 </li>
               </ul>
             </li>
 
             <li class="col-lg-3 col-md-4 col-12 level-1">
-              <h6>{{ Lexicon.about }} {{ Lexicon.projectName }}</h6>
+              <h6>{{ lexicon.about }} {{ lexicon.projectName }}</h6>
               <ul class="level-2">
                 <li>
                   <a
-                    >{{ Lexicon.why }} {{ Lexicon.projectName
-                    }}{{ Lexicon.questionMark }}</a
+                    >{{ lexicon.why }} {{ lexicon.projectName
+                    }}{{ lexicon.questionMark }}</a
                   >
                 </li>
 
                 <li>
-                  <a>{{ Lexicon.mission }}</a>
+                  <a>{{ lexicon.mission }}</a>
                 </li>
                 <li>
-                  <a>{{ Lexicon.regulation }}</a>
+                  <a>{{ lexicon.regulation }}</a>
                 </li>
               </ul>
             </li>
@@ -76,7 +76,7 @@
                   src="https://fxriver.com/wp-content/uploads/flags/jordan_flag_300 (1).png"
                 />
                 <span
-                  (click)="changeLanguage(LanguageEnum.Arabic)"
+                  (click)="changeLanguage(languageEnum.Arabic)"
                   class="ar"
                   lang="ar"
                   >العربية</span
@@ -89,7 +89,7 @@
                   src="https://fxriver.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.png"
                 />
                 <span
-                  (click)="changeLanguage(LanguageEnum.English)"
+                  (click)="changeLanguage(languageEnum.English)"
                   class="en"
                   lang="ar"
                   >English</span

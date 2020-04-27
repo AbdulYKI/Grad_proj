@@ -31,7 +31,7 @@ export class PhotoUploaderComponent implements OnInit, OnDestroy {
   uploadingFlag = false;
   allowedExtensions = ["jpg", "jpeg", "png"];
   ngOnInit(): void {}
-  get FaImage() {
+  get faImage() {
     return faImage;
   }
   closeModal() {
@@ -101,10 +101,10 @@ export class PhotoUploaderComponent implements OnInit, OnDestroy {
     }
     return true;
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
-  get RtlClass() {
+  get rtlClass() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       return "rtl";
     }

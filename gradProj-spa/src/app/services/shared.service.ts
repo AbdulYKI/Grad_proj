@@ -12,7 +12,7 @@ export class SharedService {
   changeLanguage(language: LanguageEnum) {
     this.currentLanguage.next(language);
   }
-  get Lexicon() {
+  get lexicon() {
     if (this.currentLanguage.value === LanguageEnum.English) {
       return englishLexicon;
     } else {

@@ -1,7 +1,7 @@
-<div [ngClass]="ContainerClasses">
+<div [ngClass]="containerClasses">
   <div *ngIf="signedIn()" class="btn-new">
     <button (click)="showEditor()" class="btn">
-      {{ Lexicon.new }} <fa-icon [icon]="FaPlus"></fa-icon>
+      {{ lexicon.new }} <fa-icon [icon]="faPlus"></fa-icon>
     </button>
   </div>
   <div class="clear"></div>

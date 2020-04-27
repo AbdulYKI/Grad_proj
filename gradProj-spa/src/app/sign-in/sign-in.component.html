@@ -1,5 +1,5 @@
 <div class="background mt-4">
-  <div [ngClass]="ContainerClasses">
+  <div [ngClass]="containerClasses">
     <div class="screen">
       <div [ngClass]="checkLoading()">
         <img class="splash-logo" [src]="logo" alt="Alpha Logo" />
@@ -9,7 +9,7 @@
           <div>
             <img class="sign-in-logo" [src]="logo" alt="Alpha Logo" />
           </div>
-          <div class="sign-in-subtitle">{{ Lexicon.signInFormSubtitle }}</div>
+          <div class="sign-in-subtitle">{{ lexicon.signInFormSubtitle }}</div>
         </div>
         <div class="sign-in-body">
           <!--Form Here -->
@@ -17,10 +17,10 @@
             <div class="form-group">
               <!--Email  -->
               <label class="form-label" for="sign-in-email">
-                {{ Lexicon.usernameOrEmail }}
+                {{ lexicon.usernameOrEmail }}
               </label>
               <input
-                [ngClass]="formControlClasses(Username)"
+                [ngClass]="formControlClasses(username)"
                 formControlName="username"
                 class="form-control"
                 type="text"
@@ -29,23 +29,23 @@
               />
               <div
                 *ngIf="
-                  Username.errors &&
-                  (Username.errors?.invalid || Username.touched)
+                  username.errors &&
+                  (username.errors?.invalid || username.touched)
                 "
                 class="invalid-feedback"
               >
-                <span *ngIf="Username.errors?.required">
-                  {{ Lexicon.usernameOrEmailRequiredErrorMessage }}
+                <span *ngIf="username.errors?.required">
+                  {{ lexicon.usernameOrEmailRequiredErrorMessage }}
                 </span>
               </div>
             </div>
             <div class="form-group">
-              <!--Password  -->
+              <!--password  -->
               <label class="form-label" for="sign-in-password">
-                {{ Lexicon.password }}</label
+                {{ lexicon.password }}</label
               >
               <input
-                [ngClass]="formControlClasses(Password)"
+                [ngClass]="formControlClasses(password)"
                 formControlName="password"
                 class="form-control"
                 placeholder="*****"
@@ -54,19 +54,19 @@
               />
               <div
                 *ngIf="
-                  Password.errors &&
-                  (Password.errors.invalid || Password.touched)
+                  password.errors &&
+                  (password.errors.invalid || password.touched)
                 "
                 class="invalid-feedback"
               >
-                <span *ngIf="Password.errors?.required">
-                  {{ Lexicon.passwordRequiredErrorMessage }}
+                <span *ngIf="password.errors?.required">
+                  {{ lexicon.passwordRequiredErrorMessage }}
                 </span>
               </div>
             </div>
             <div class="form-group link-forgot-container">
               <a class="forgot link link-forgot" href="#">{{
-                Lexicon.forgotPassword
+                lexicon.forgotPassword
               }}</a>
             </div>
             <div class="form-group">
@@ -79,7 +79,7 @@
                 "
                 type="submit"
               >
-                {{ Lexicon.signIn }}
+                {{ lexicon.signIn }}
               </button>
             </div>
           </form>
@@ -91,11 +91,11 @@
           <img [src]="instagramLogo" alt="instagram" />
         </div>
         <div class="sign-in-footer">
-          {{ Lexicon.newUser }}&nbsp;&nbsp;<a
+          {{ lexicon.newUser }}&nbsp;&nbsp;<a
             class="link link-sign-up"
             routerLink="/sign-up"
           >
-            {{ Lexicon.createAccount }}
+            {{ lexicon.createAccount }}
           </a>
         </div>
       </div>

@@ -50,11 +50,11 @@ export class SignInComponent implements OnInit {
       this.authService.signIn(user).subscribe(
         (next) => {
           this.alertifyService.success(
-            this.Lexicon.signedInSuccessFullyMessage
+            this.lexicon.signedInSuccessFullyMessage
           );
         },
         (error) =>
-          this.alertifyService.error(this.Lexicon.signedInFailedMessage),
+          this.alertifyService.error(this.lexicon.signedInFailedMessage),
         () => {
           this.router.navigate(["/members"]);
         }
@@ -66,10 +66,10 @@ export class SignInComponent implements OnInit {
     setTimeout(() => (this.loaded = true), 1100);
   }
 
-  get Username() {
+  get username() {
     return this.signInForm.get("username");
   }
-  get Password() {
+  get password() {
     return this.signInForm.get("password");
   }
   checkLoading(): string {
@@ -79,10 +79,10 @@ export class SignInComponent implements OnInit {
       return "splash";
     }
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
-  get ContainerClasses() {
+  get containerClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
       return "container";
     } else {

@@ -1,5 +1,5 @@
 <div class="background mt-4">
-  <div [ngClass]="ContainerClasses">
+  <div [ngClass]="containerClasses">
     <div class="screen p-3 mt-2 mb-2">
       <div [ngClass]="checkLoading()">
         <img class="splash-logo" [src]="logo" alt="Alpha Logo" />
@@ -9,139 +9,139 @@
           <div>
             <img class="sign-up-logo" [src]="logo" alt="Alpha Logo" />
           </div>
-          <div class="sign-up-subtitle">{{ Lexicon.signUpFormSubtitle }}</div>
+          <div class="sign-up-subtitle">{{ lexicon.signUpFormSubtitle }}</div>
         </div>
         <div class="sign-up-body">
           <!--Form Here -->
           <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-              <!--Email  -->
+              <!--email  -->
               <label class="form-label" for="sign-up-email">{{
-                Lexicon.email
+                lexicon.email
               }}</label>
               <input
                 formControlName="email"
-                [ngClass]="formControlClasses(Email)"
+                [ngClass]="formControlClasses(email)"
                 type="email"
                 placeholder="eg. example@email.com"
                 required
               />
               <div
-                *ngIf="Email.errors && Email.touched"
+                *ngIf="email.errors && email.touched"
                 class="invalid-feedback"
               >
-                <span *ngIf="Email.hasError('pattern')">{{
-                  Lexicon.emailPatternErrorMessage
+                <span *ngIf="email.hasError('pattern')">{{
+                  lexicon.emailPatternErrorMessage
                 }}</span>
-                <span *ngIf="Email.errors?.required">{{
-                  Lexicon.emailRequiredErrorMessage
+                <span *ngIf="email.errors?.required">{{
+                  lexicon.emailRequiredErrorMessage
                 }}</span>
               </div>
               <div
                 *ngIf="serverError.controllerName == 'email'"
                 class="invalid-feedback d-block"
               >
-                <span>{{ Lexicon[serverError.message] }}</span>
+                <span>{{ lexicon[serverError.message] }}</span>
               </div>
             </div>
             <div class="form-group">
-              <!--Email  -->
+              <!--email  -->
               <label class="form-label" for="sign-up-email">{{
-                Lexicon.username
+                lexicon.username
               }}</label>
               <input
                 formControlName="username"
-                [ngClass]="formControlClasses(Username)"
+                [ngClass]="formControlClasses(username)"
                 type="text"
                 placeholder="eg. username123"
                 required
               />
               <div
-                *ngIf="Username.errors && Username.touched"
+                *ngIf="username.errors && username.touched"
                 class="invalid-feedback"
               >
                 <span
                   *ngIf="
-                    Username.hasError('minlength') ||
-                    Username.hasError('maxlength')
+                    username.hasError('minlength') ||
+                    username.hasError('maxlength')
                   "
-                  >{{ Lexicon.usernameLengthErrorMessage }}
+                  >{{ lexicon.usernameLengthErrorMessage }}
                 </span>
                 <span
                   *ngIf="
-                    !Username.hasError('minlength') &&
-                    !Username.hasError('maxlength') &&
-                    Username.hasError('pattern')
+                    !username.hasError('minlength') &&
+                    !username.hasError('maxlength') &&
+                    username.hasError('pattern')
                   "
-                  >{{ Lexicon.usernamePatternErrorMessage }}
+                  >{{ lexicon.usernamePatternErrorMessage }}
                 </span>
-                <span *ngIf="Username.errors?.required">
-                  {{ Lexicon.usernameRequiredErrorMessage }}
+                <span *ngIf="username.errors?.required">
+                  {{ lexicon.usernameRequiredErrorMessage }}
                 </span>
               </div>
               <div
                 *ngIf="serverError.controllerName == 'username'"
                 class="invalid-feedback d-block"
               >
-                <span>{{ Lexicon[serverError.message] }}</span>
+                <span>{{ lexicon[serverError.message] }}</span>
               </div>
             </div>
             <div class="form-group">
-              <!--Password  -->
+              <!--password  -->
               <label class="form-label" for="sign-up-password">
-                {{ Lexicon.password }}
+                {{ lexicon.password }}
               </label>
               <input
                 matInput
                 formControlName="password"
-                [ngClass]="formControlClasses(Password)"
+                [ngClass]="formControlClasses(password)"
                 placeholder="*****"
                 type="password"
                 name="password"
               />
               <div
-                *ngIf="Password.errors && Password.touched"
+                *ngIf="password.errors && password.touched"
                 class="invalid-feedback"
               >
                 <span
                   *ngIf="
-                    Password.hasError('minlength') ||
-                    Password.hasError('maxlength')
+                    password.hasError('minlength') ||
+                    password.hasError('maxlength')
                   "
                 >
-                  {{ Lexicon.passwordLengthErrorMessage }}
+                  {{ lexicon.passwordLengthErrorMessage }}
                 </span>
-                <span *ngIf="Password.hasError('required')">
-                  {{ Lexicon.passwordRequiredErrorMessage }}
+                <span *ngIf="password.hasError('required')">
+                  {{ lexicon.passwordRequiredErrorMessage }}
                 </span>
               </div>
             </div>
             <div class="form-group">
-              <!--Password  -->
+              <!--password  -->
               <label class="form-label" for="sign-up-password">
-                {{ Lexicon.confirmPassword }}
+                {{ lexicon.confirmPassword }}
               </label>
               <input
-                formControlName="confirmPassword"
-                [ngClass]="formControlClasses(ConfirmPassword)"
+                formControlName="confirmpassword"
+                [ngClass]="formControlClasses(confirmPassword)"
                 placeholder="*****"
                 type="password"
               />
               <div
-                *ngIf="ConfirmPassword.errors && ConfirmPassword.touched"
+                *ngIf="confirmPassword.errors && confirmPassword.touched"
                 class="invalid-feedback"
               >
-                <span *ngIf="ConfirmPassword.errors?.mustMatch">
-                  {{ Lexicon.confirmPasswordMismatchErrorMessage }}
+                <span *ngIf="confirmPassword.errors?.mustMatch">
+                  {{ lexicon.confirmPasswordMismatchErrorMessage }}
                 </span>
-                <span *ngIf="ConfirmPassword.errors?.required">
-                  {{ Lexicon.confirmPasswordRequiredErrorMessage }}
+                <span *ngIf="confirmPassword.errors?.required">
+                  {{ lexicon.confirmPasswordRequiredErrorMessage }}
                 </span>
               </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="gender">{{
-                Lexicon.gender
+                lexicon.gender
               }}</label>
               <select
                 placeholder="Select your gender"
@@ -150,14 +150,14 @@
                 [style.padding]="0"
               >
                 <option [ngValue]="null" disabled hidden selected>
-                  {{ Lexicon.genderSelectPlaceHolder }}
+                  {{ lexicon.genderSelectPlaceHolder }}
                 </option>
-                <option [ngValue]="GenderEnum.Male">{{ Lexicon.male }}</option>
-                <option [ngValue]="GenderEnum.Female">{{
-                  Lexicon.female
+                <option [ngValue]="genderEnum.Male">{{ lexicon.male }}</option>
+                <option [ngValue]="genderEnum.Female">{{
+                  lexicon.female
                 }}</option>
-                <option [ngValue]="GenderEnum.Other">{{
-                  Lexicon.other
+                <option [ngValue]="genderEnum.Other">{{
+                  lexicon.other
                 }}</option>
               </select>
             </div>
@@ -172,13 +172,13 @@
                   !signupForm.touched
                 "
               >
-                {{ Lexicon.signUp }}
+                {{ lexicon.signUp }}
               </button>
             </div>
           </form>
         </div>
         <div class="text-center">
-          <span>{{ Lexicon.or }}</span>
+          <span>{{ lexicon.or }}</span>
         </div>
         <!--Social Icons  -->
         <div class="social-icons">
@@ -187,16 +187,14 @@
           <img [src]="instagramLogo" alt="instagram" />
         </div>
         <div class="sign-in-footer">
-          {{ Lexicon.alreadyAUser }}&nbsp;&nbsp;<a
+          {{ lexicon.alreadyAUser }}&nbsp;&nbsp;<a
             class="link link-sign-in"
             routerLink="/sign-in"
           >
-            {{ Lexicon.signIn }}
+            {{ lexicon.signIn }}
           </a>
         </div>
       </div>
     </div>
   </div>
 </div>
-{{ Username?.errors | json }}
-{{ Patterns.usernamePattern }}

@@ -4,7 +4,7 @@
       <div class="title-section float-left d-inline">
         <div class="back-section">
           <span class="backicon"
-            ><fa-icon [icon]="FaChevronLeft"></fa-icon
+            ><fa-icon [icon]="faChevronLeft"></fa-icon
           ></span>
           <a class="backlink" [routerLink]="['/post']">Back</a>
         </div>
@@ -20,10 +20,10 @@
           <!-- Rating btn -->
           <div class="col-1">
             <div class="rating-post-section">
-              <div class="rating-up"><fa-icon [icon]="FaSortUp"></fa-icon></div>
-              <div class="rating-count">400</div>
+              <div class="rating-up"><fa-icon [icon]="faSortUp"></fa-icon></div>
+              <div class="rating-count">{{ post.votesCount }}</div>
               <div class="rating-down">
-                <fa-icon [icon]="FaSortDown"></fa-icon>
+                <fa-icon [icon]="faSortDown"></fa-icon>
               </div>
             </div>
           </div>
@@ -44,29 +44,29 @@
                               class="avatar"
                               src="https://assets.leetcode.com/users/huaying2/avatar_1523559968.png"
                           /></a>
-                          <span class="username">Username1</span>
-                          <span class="Reputation">
-
-                            <span><fa-icon [icon]="Fastar"></fa-icon></span>
-                            Reputation
+                          <span class="username">
+                            {{ post.username }}
                           </span>
-
+                          <!-- <span class="Reputation">
+                            <span><fa-icon [icon]="fastar"></fa-icon></span>
+                            Reputation
+                          </span> -->
                         </div>
                         <!--   post date  content  -->
                         <div class="post-date col-auto">
-                          <span class="date"
-                            ><span>
-                              <fa-icon [icon]="FaCalender"></fa-icon
-                            ></span>
-                            Last Edit: December 13, 2019 12:45 AM</span
-                          >
+                          <span class="date">
+                            <span>
+                              <fa-icon [icon]="faCalender"></fa-icon>
+                            </span>
+                            {{ post.dateAddedUtc | date: "dd/MM/yyyy" }}
+                          </span>
                         </div>
                         <!--   post views  content  -->
                         <div class="post-views col-auto">
-                          <span class="views"
-                            ><span> <fa-icon [icon]="FaEye"></fa-icon></span>
-                            15.7K Views</span
-                          >
+                          <span class="views">
+                            <span> <fa-icon [icon]="faEye"></fa-icon></span>
+                            {{ post.viewersCount }}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -93,8 +93,6 @@
     </div>
   </div>
   <div class="comment">
-
     <app-comment-card></app-comment-card>
-
   </div>
 </div>

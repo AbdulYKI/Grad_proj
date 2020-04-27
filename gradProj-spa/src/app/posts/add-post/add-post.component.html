@@ -1,15 +1,15 @@
-<div [ngClass]="EditorHeaderClasses">
+<div [ngClass]="editorHeaderClasses">
   <button class="btn cancel" (click)="hideEditor()">
-    {{ Lexicon.cancel }} <fa-icon [icon]="FaTimes"></fa-icon>
+    {{ lexicon.cancel }} <fa-icon [icon]="faTimes"></fa-icon>
   </button>
 
   <form (ngSubmit)="onSubmit()" id="postForm" #postForm="ngForm">
     <button class="btn form-button" type="submit" [disabled]="postForm.invalid">
-      {{ Lexicon.create }} <fa-icon [icon]="FaPaperPlane"></fa-icon>
+      {{ lexicon.create }} <fa-icon [icon]="faPaperPlane"></fa-icon>
     </button>
     <div class="title">
       <div class="input-group">
-        {{ Lexicon.title }}
+        {{ lexicon.title }}
         <input
           id="title"
           [(ngModel)]="post.title"
@@ -26,7 +26,7 @@
           *ngIf="title.getError('required') && title.touched"
           class="invalid-feedback"
         >
-          {{ Lexicon.titleIsRequiredErrorMessage }}
+          {{ lexicon.titleIsRequiredErrorMessage }}
         </div>
         <div
           *ngIf="
@@ -37,7 +37,7 @@
           "
           class="invalid-feedback"
         >
-          {{ Lexicon.titleLengthErrorMessage }}
+          {{ lexicon.titleLengthErrorMessage }}
         </div>
       </div>
     </div>

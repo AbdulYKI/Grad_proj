@@ -18,8 +18,8 @@ body {
 }
 .avatar img {
   border-radius: 50%;
-  height: 50px;/*50px*/
-  width: 50px;/*50px*/
+  height: 50px; /*50px*/
+  width: 50px; /*50px*/
   object-fit: cover;
   border-style: none;
 }
@@ -33,7 +33,7 @@ body {
 .caption {
   font-weight: 400;
   font-size: 12px !important;
-   color: #bdbdbd;
+  color: #bdbdbd;
 }
 .answers {
   padding-left: 64px;
@@ -47,51 +47,51 @@ body {
   font-size: 14px;
   margin-bottom: 7px;
 }
-.displayName {
+.display-name {
   margin-left: 24px;
-   color: #bdbdbd;
+  color: #bdbdbd;
 }
 .card {
   padding: 32px 16px;
   margin-bottom: 32px;
   display: flex;
   flex-direction: column;
-     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
     0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
 }
-.rating-comment-section{
-margin-left: 25px;
+.rating-comment-section {
+  margin-left: 25px;
 }
-.comment-up , .comment-down{
+.comment-up,
+.comment-down {
   cursor: pointer;
   color: #cfd8dc;
   width: 26px;
   height: 26px;
   transition: 0.4s ease-in-out;
 }
-.comment-up
-{
+.comment-up {
   vertical-align: -webkit-baseline-middle;
 }
-.vote-count{
+.vote-count {
   margin: 0px 10px;
   color: #78909c;
 }
-.comment-up:hover{
+.comment-up:hover {
   color: #78909c;
 }
-.comment-down:hover{
+.comment-down:hover {
   color: #78909c;
 }
-.Reputation_user{
+.reputation {
   margin-left: 12px;
   font-size: 12px;
   color: #bdbdbd;
   vertical-align: middle;
 }
-.Reputation_user span{
+.reputation span {
   font-size: 13px;
-margin-right: 3px;
+  margin-right: 3px;
 }
 
 @media screen and (max-width: 640px) {

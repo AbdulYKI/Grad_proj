@@ -13,13 +13,13 @@ export class CommentCardComponent implements OnInit {
   constructor() {}
   ngOnInit(): void {}
 
-  get FaSortUp() {
+  get faSortUp() {
     return faSortUp;
   }
-  get FaSortDown() {
+  get faSortDown() {
     return faSortDown;
   }
-  get Fastar() {
+  get fastar() {
     return faStar;
   }
 }

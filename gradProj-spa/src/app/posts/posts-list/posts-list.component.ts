@@ -30,7 +30,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {}
 
-  get FaPlus() {
+  get faPlus() {
     return faPlus;
   }
 
@@ -51,10 +51,10 @@ export class PostsListComponent implements OnInit, OnDestroy {
     this.showEditorFlag = false;
   }
 
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
-  get ContainerClasses() {
+  get containerClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       return "container rtl";
     }

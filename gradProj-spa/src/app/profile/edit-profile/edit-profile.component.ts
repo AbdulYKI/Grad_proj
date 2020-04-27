@@ -111,7 +111,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.setProgrammingLanguagesDropDownOptions();
       });
     this.BuildProfileFormGroup();
-    this.programmingLanguagesPlaceHolder = this.Lexicon.programmingLanguagesPlaceHolder;
+    this.programmingLanguagesPlaceHolder = this.lexicon.programmingLanguagesPlaceHolder;
     this.route.data
       .pipe(takeUntil(this.destroy))
       .subscribe(
@@ -135,16 +135,16 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       labelKey: "name",
       searchBy: ["name"],
       singleSelection: false,
-      text: this.Lexicon.programmingLanguagesPlaceHolder,
-      selectAllText: this.Lexicon.selectAll,
-      unSelectAllText: this.Lexicon.unselectAll,
+      text: this.lexicon.programmingLanguagesPlaceHolder,
+      selectAllText: this.lexicon.selectAll,
+      unSelectAllText: this.lexicon.unselectAll,
       enableSearchFilter: true,
       badgeShowLimit: 2,
       classes: "multiselect-dropdown",
       lazyLoading: true,
-      filterSelectAllText: this.Lexicon.filterSelectAll,
-      filterUnSelectAllText: this.Lexicon.filterUnSelectAll,
-      searchPlaceholderText: this.Lexicon.searchPlaceholder,
+      filterSelectAllText: this.lexicon.filterSelectAll,
+      filterUnSelectAllText: this.lexicon.filterUnSelectAll,
+      searchPlaceholderText: this.lexicon.searchPlaceholder,
     };
   }
 
@@ -191,7 +191,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.user.dateOfBirth != null) {
       // for some reason dateOfBirth gets casted to string so I need to create a date object from it
       const dob = new Date(this.user.dateOfBirth);
-      this.DateOfBirth.reset({
+      this.dateOfBirth.reset({
         year: dob.getFullYear(),
         month: dob.getMonth(),
         day: dob.getDay(),
@@ -218,13 +218,13 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         .subscribe(
           (next) => {
             this.alertifyService.success(
-              this.Lexicon.updatedSuccessfullyMessage
+              this.lexicon.updatedSuccessfullyMessage
             );
             // I need to save the DateOfBirth value so I can use it after resetting the form
-            const dateOfBirthValue = this.DateOfBirth.value;
+            const dateOfBirthValue = this.dateOfBirth.value;
             this.editForm.reset(user);
-            this.Photo.reset("");
-            this.DateOfBirth.reset(dateOfBirthValue);
+            this.photo.reset("");
+            this.dateOfBirth.reset(dateOfBirthValue);
           },
           (error) => this.alertifyService.error(error)
         );
@@ -235,15 +235,15 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     user.photoFile = this.chosenphoto;
     user.programmingLanguagesIds = (this.editFormGroup.value
       .programmingLanguages as ProgrammingLanguage[]).map(({ id }) => id);
-    if (this.DateOfBirth.value == null) {
+    if (this.dateOfBirth.value == null) {
       user.dateOfBirth = null;
     } else {
       const birthDate = new Date(
-        this.DateOfBirth.value.year +
+        this.dateOfBirth.value.year +
           "-" +
-          this.DateOfBirth.value.month +
+          this.dateOfBirth.value.month +
           "-" +
-          this.DateOfBirth.value.day
+          this.dateOfBirth.value.day
       );
       user.dateOfBirth = birthDate;
     }
@@ -271,14 +271,14 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   isActive(buttonName) {
     return this.activeButton === buttonName;
   }
-  get DateOfBirth() {
+  get dateOfBirth() {
     return this.editFormGroup.get("dateOfBirth");
   }
   ngOnDestroy() {
     this.destroy.next(true);
     this.destroy.unsubscribe();
   }
-  get GenderEnum() {
+  get genderEnum() {
     return GenderEnum;
   }
 
@@ -288,23 +288,23 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     );
     this.flagClass = "flag " + country.alpha2Code.toLowerCase();
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
-  get FaCamera() {
+  get faCamera() {
     return faCamera;
   }
-  get FaCalendar() {
+  get faCalendar() {
     return faCalendar;
   }
-  get FormLabelClasses() {
+  get formLabelClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
       return "form-label";
     } else {
       return "form-label form-label-rtl";
     }
   }
-  get FormClasses() {
+  get formClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
       return "form";
     } else {
@@ -319,15 +319,15 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.editForm.form.controls.programmingLanguages.markAsTouched();
     this.selectedProgrammingLanguages = [];
   }
-  get DateOfBirthClasses() {
-    if (this.DateOfBirth.errors && this.DateOfBirth.touched) {
+  get dateOfBirthClasses() {
+    if (this.dateOfBirth.errors && this.dateOfBirth.touched) {
       return "form-control is-invalid";
     } else {
       return "form-control";
     }
   }
 
-  get Photo() {
+  get photo() {
     return this.editFormGroup.get("photo");
   }
 
