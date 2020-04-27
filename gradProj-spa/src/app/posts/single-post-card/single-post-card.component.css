@@ -10,6 +10,9 @@
   padding: 20px 0px;
   background-color: #5453532e;
 }
+.post-title{
+  word-break: break-all;
+}
 .poster-img img {
   width: 125px;
   border: 5px solid white;

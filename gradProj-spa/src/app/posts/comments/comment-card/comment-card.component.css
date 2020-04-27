@@ -1,0 +1,104 @@
+body {
+  background-color: #fafafa;
+}
+.container {
+  margin: 2rem auto;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  margin-left: -42px;
+  border-radius: 50%;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+}
+.avatar img {
+  border-radius: 50%;
+  height: 50px;/*50px*/
+  width: 50px;/*50px*/
+  object-fit: cover;
+  border-style: none;
+}
+.title {
+  font-size: 14px !important;
+  font-weight: 700;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+  color: #bdbdbd;
+}
+.caption {
+  font-weight: 400;
+  font-size: 12px !important;
+   color: #bdbdbd;
+}
+.answers {
+  padding-left: 64px;
+}
+.comment {
+  overflow-y: auto;
+  margin-left: 32px;
+  margin-right: 16px;
+}
+.comment p {
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+.displayName {
+  margin-left: 24px;
+   color: #bdbdbd;
+}
+.card {
+  padding: 32px 16px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.rating-comment-section{
+margin-left: 25px;
+}
+.comment-up , .comment-down{
+  cursor: pointer;
+  color: #cfd8dc;
+  width: 26px;
+  height: 26px;
+  transition: 0.4s ease-in-out;
+}
+.comment-up
+{
+  vertical-align: -webkit-baseline-middle;
+}
+.vote-count{
+  margin: 0px 10px;
+  color: #78909c;
+}
+.comment-up:hover{
+  color: #78909c;
+}
+.comment-down:hover{
+  color: #78909c;
+}
+.Reputation_user{
+  margin-left: 12px;
+  font-size: 12px;
+  color: #bdbdbd;
+  vertical-align: middle;
+}
+.Reputation_user span{
+  font-size: 13px;
+margin-right: 3px;
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    width: 100%;
+  }
+  .comments {
+    padding: 32px;
+  }
+}
