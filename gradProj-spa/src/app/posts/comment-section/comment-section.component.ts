@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import {
+  faSortUp,
+  faSortDown,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 @Component({
   selector: 'app-comment-section',
   templateUrl: './comment-section.component.html',
@@ -8,12 +12,18 @@ import { Component, OnInit } from '@angular/core';
 export class CommentSectionComponent implements OnInit {
 
   constructor() { }
-  status_comment = false;
   ngOnInit(): void {
   }
 
-  commentbox(){
-    this.status_comment = !this.status_comment;
-  }
 
+
+  get FaSortUp() {
+    return faSortUp;
+  }
+  get FaSortDown() {
+    return faSortDown;
+  }
+  get Fastar() {
+    return faStar;
+  }
 }

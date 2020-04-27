@@ -9,6 +9,7 @@ body{
 .bg-post{
 background-color: white;
 border-radius: 18px;
+margin: auto;
     box-shadow: 13px 12px 8px 0px #00000075;
 }
 
@@ -123,7 +124,8 @@ margin-right: 8px;
 /*content-body*/
 .content-body{
     line-height: 1.57;
-    width: 90%;
+    width: 100%;
+    word-break: break-all;
     margin-top: 10px;
     color: #424242;
     padding: 10px 10px;
@@ -131,7 +133,7 @@ margin-right: 8px;
 
 }
 
-@media (max-width: 576px) {
+@media (max-width: 767px) {
     .post-content-section{
         padding-left: 25px;
     }
@@ -148,6 +150,13 @@ margin-right: 8px;
     }
     .back-section span{
         font-size: 14px;
+    }
+    .post-view-header{
+        padding: 14px;
+        margin: 0px;
+    }
+    .back-section::after{
+        display: none;
     }
  }
 
