@@ -1,77 +1,96 @@
-
 <div class="container pd-post">
-    <div class="row bg-post">
+  <div class="row bg-post">
     <div class="post-view-header col-12">
-        <div class="title-section float-left d-inline">
-        <div class="back-section"><span class="backicon"><fa-icon [icon]="FaChevronLeft"></fa-icon></span> <a class="backlink" [routerLink]="['/post']">Back</a></div>
-        <div class="title">{{post.title}}</div>
+      <div class="title-section float-left d-inline">
+        <div class="back-section">
+          <span class="backicon"
+            ><fa-icon [icon]="FaChevronLeft"></fa-icon
+          ></span>
+          <a class="backlink" [routerLink]="['/post']">Back</a>
         </div>
-        </div>
-        <!--End post view header-->
+        <div class="title">{{ post.title }}</div>
+      </div>
+    </div>
+    <!--End post view header-->
 
- <!--Start post view Body-->
- <div class="post-view-body col-12">
-    <div class="container">
-    <div class="row">
-    <!-- Rating btn -->
-    <div class="col-1">
-    <div class="rating-post-section">
-    <div class="rating-up"><fa-icon [icon]="FaSortUp"></fa-icon></div>
-    <div class="rating-count">400</div>
-    <div class="rating-down"><fa-icon [icon]="FaSortDown"></fa-icon></div>
-    </div>
-    </div>
-        <!-- End  Rating btn -->
-        <!-- start post  content  -->
-    <div class="col-11">
-    <div class="post-content-section">
-    <div class="content-header">
-    <div class="row">
-    <div class="col-12">
-    <!-- post info  -->
-    <div class="post-info-section">
+    <!--Start post view Body-->
+    <div class="post-view-body col-12">
+      <div class="container">
         <div class="row">
-        <!-- user-info  content  -->
-    <div class="user-info col-auto">
-    <a><img class="avatar" src="https://assets.leetcode.com/users/huaying2/avatar_1523559968.png"></a>
-    <span class="username">Username1</span>
-    <span class="Reputation"> <span><fa-icon [icon]="Fastar"></fa-icon></span>Reputation</span>
+          <!-- Rating btn -->
+          <div class="col-1">
+            <div class="rating-post-section">
+              <div class="rating-up"><fa-icon [icon]="FaSortUp"></fa-icon></div>
+              <div class="rating-count">400</div>
+              <div class="rating-down">
+                <fa-icon [icon]="FaSortDown"></fa-icon>
+              </div>
+            </div>
+          </div>
+          <!-- End  Rating btn -->
+          <!-- start post  content  -->
+          <div class="col-11">
+            <div class="post-content-section">
+              <div class="content-header">
+                <div class="row">
+                  <div class="col-12">
+                    <!-- post info  -->
+                    <div class="post-info-section">
+                      <div class="row">
+                        <!-- user-info  content  -->
+                        <div class="user-info col-auto">
+                          <a
+                            ><img
+                              class="avatar"
+                              src="https://assets.leetcode.com/users/huaying2/avatar_1523559968.png"
+                          /></a>
+                          <span class="username">Username1</span>
+                          <span class="Reputation">
+                            <span><fa-icon [icon]="Fastar"></fa-icon></span
+                            >Reputation</span
+                          >
+                        </div>
+                        <!--   post date  content  -->
+                        <div class="post-date col-auto">
+                          <span class="date"
+                            ><span>
+                              <fa-icon [icon]="FaCalender"></fa-icon
+                            ></span>
+                            Last Edit: December 13, 2019 12:45 AM</span
+                          >
+                        </div>
+                        <!--   post views  content  -->
+                        <div class="post-views col-auto">
+                          <span class="views"
+                            ><span> <fa-icon [icon]="FaEye"></fa-icon></span>
+                            15.7K Views</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--  End  content header  -->
+              <div class="container">
+                <div class="content-body">
+                  <editor
+                    #tinymce
+                    required
+                    [(ngModel)]="post.content"
+                    name="content"
+                    [init]="config"
+                    [disabled]="true"
+                  ></editor>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!--   post date  content  -->
-    <div class="post-date col-auto">
-    <span class="date"><span> <fa-icon [icon]="FaCalender"></fa-icon></span> Last Edit: December 13, 2019 12:45 AM</span>
-    </div>
-    <!--   post views  content  -->
-    <div class="post-views col-auto">
-    <span class="views"><span> <fa-icon [icon]="FaEye"></fa-icon></span> 15.7K Views</span>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    <!--  End  content header  -->
-   <div class="container">
-    <div class="content-body">
-        <editor
-        #tinymce
-        required
-        [(ngModel)]="post.content"
-        name="content"
-        [init]="config"
-        [disabled]="true"
-      ></editor>
-    
-    </div>
-</div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-    </div>
-</div>
-<div class="comment">
-<app-comment-section></app-comment-section>
-</div>
+  </div>
+  <div class="comment">
+    <app-comment-card></app-comment-card>
+  </div>
 </div>

@@ -38,7 +38,7 @@ import { SharedService } from "./services/shared.service";
 import { UserService } from "src/app/services/user.service";
 import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
 import { ViewPostResolver } from "src/resolvers/post-view.resolver";
-import { CommentSectionComponent } from "./posts/comment-section/comment-section.component";
+import { CommentCardComponent } from "./posts/comments/comment-card/comment-card.component";
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
 }
@@ -58,7 +58,7 @@ export function tokenGetter() {
     PhotoUploaderComponent,
     SinglePostCardComponent,
     ViewPostComponent,
-    CommentSectionComponent,
+    CommentCardComponent,
     HtmlSanitiser,
   ],
   imports: [
