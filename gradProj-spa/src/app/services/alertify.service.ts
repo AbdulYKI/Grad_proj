@@ -19,23 +19,23 @@ export class AlertifyService {
       .set({ title: "GradProj", transition: "zoom" });
   }
   success(message: string) {
-    alertify.set("notifier", "position", this.NotifierPosition);
+    alertify.set("notifier", "position", this.notifierPosition);
     alertify.success(message);
     console.log(alertify);
   }
   error(message: string) {
-    alertify.set("notifier", "position", this.NotifierPosition);
+    alertify.set("notifier", "position", this.notifierPosition);
     alertify.error(message);
   }
   warning(message: string) {
-    alertify.set("notifier", "position", this.NotifierPosition);
+    alertify.set("notifier", "position", this.notifierPosition);
     alertify.warning(message);
   }
   message(message: string) {
-    alertify.set("notifier", "position", this.NotifierPosition);
+    alertify.set("notifier", "position", this.notifierPosition);
     alertify.message(message);
   }
-  get NotifierPosition() {
+  get notifierPosition() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       return "bottom-left";
     } else {

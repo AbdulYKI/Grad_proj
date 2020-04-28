@@ -70,7 +70,7 @@ export class AddPostComponent implements OnInit, OnDestroy {
   hideEditor() {
     if (this.postForm.dirty) {
       if (
-        confirm(this.sharedService.Lexicon.preventUnsavedChangesGuardMessage)
+        confirm(this.sharedService.lexicon.preventUnsavedChangesGuardMessage)
       ) {
         this.editorClosedEvent.emit(null);
       }
@@ -78,17 +78,17 @@ export class AddPostComponent implements OnInit, OnDestroy {
       this.editorClosedEvent.emit(null);
     }
   }
-  get FaPaperPlane() {
+  get faPaperPlane() {
     return faPaperPlane;
   }
-  get FaTimes() {
+  get faTimes() {
     return faTimes;
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
 
-  get EditorHeaderClasses() {
+  get editorHeaderClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       return "editor-header rtl";
     }

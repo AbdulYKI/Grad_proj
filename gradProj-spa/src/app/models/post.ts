@@ -1,13 +1,12 @@
 export class Post {
   content: string;
   title: string;
-  creatorPhotoUrl: string;
-  creatorUsername: string;
-  upVotesCount: number;
-  downVotesCount: number;
+  userPhotoUrl: string;
+  username: string;
+  votesCount: number;
   dateAddedUtc: Date;
   viewersCount: number;
-  id;
+  id: number;
   constructor() {
     this.content = "";
     this.title = "";

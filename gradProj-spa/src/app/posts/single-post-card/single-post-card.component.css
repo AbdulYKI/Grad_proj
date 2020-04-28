@@ -10,7 +10,7 @@
   padding: 20px 0px;
   background-color: #5453532e;
 }
-.post-title{
+.post-title {
   word-break: break-all;
 }
 .poster-img img {
@@ -41,12 +41,16 @@
   color: skyblue;
 }
 
-.fa-caret-up {
+.caret-up {
   color: green;
   font-size: 28px;
   vertical-align: sub;
 }
-.fa-caret-down {
+.calender {
+  font-size: 12px;
+  color: #bdbdbd;
+}
+.caret-down {
   color: red;
   font-size: 28px;
   vertical-align: sub;

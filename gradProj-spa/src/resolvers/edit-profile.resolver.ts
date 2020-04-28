@@ -26,7 +26,7 @@ export class EditProfileResolver implements Resolve<EditProfileResolverData> {
       .getUser(this.authService.decodedToken.nameid)
       .pipe(
         catchError((error) => {
-          this.HandleError();
+          this.handleError();
           return of(null);
         })
       );
@@ -34,7 +34,7 @@ export class EditProfileResolver implements Resolve<EditProfileResolverData> {
       ProgrammingLanguage[]
     > = this.userService.getProgrammingLanguages().pipe(
       catchError((error) => {
-        this.HandleError();
+        this.handleError();
         return of(null);
       })
     );
@@ -42,7 +42,7 @@ export class EditProfileResolver implements Resolve<EditProfileResolverData> {
       Country[]
     > = this.userService.getCountries().pipe(
       catchError((error) => {
-        this.HandleError();
+        this.handleError();
         return of(null);
       })
     );
@@ -63,11 +63,11 @@ export class EditProfileResolver implements Resolve<EditProfileResolverData> {
     );
     return joinedResponses;
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
-  HandleError() {
-    this.alertifyService.error(this.Lexicon.retrievingDataErrorMessage);
+  handleError() {
+    this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
     this.router.navigate([""]);
   }
 }

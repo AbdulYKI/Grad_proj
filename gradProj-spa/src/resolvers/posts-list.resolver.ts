@@ -23,18 +23,18 @@ export class PostsListResolver implements Resolve<Post[]> {
   resolve(snapShot: ActivatedRouteSnapshot): any {
     const posts: Observable<Post[]> = this.postService.getPosts().pipe(
       catchError((error) => {
-        this.HandleError();
+        this.handleError();
         return of(null);
       })
     );
 
     return posts;
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
-  HandleError() {
-    this.alertifyService.error(this.Lexicon.retrievingDataErrorMessage);
+  handleError() {
+    this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
     this.router.navigate([""]);
   }
 }

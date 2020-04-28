@@ -13,13 +13,16 @@ export class PostService {
   constructor(private http: HttpClient) {}
 
   createPost(userId: number, post: Post) {
-    return this.http.post<Observable<Post>>(this.baseUrl + userId, post);
+    return this.http.post(this.baseUrl + userId, post);
   }
 
-  getPost(postId: number) {
-    return this.http.get<Observable<Post>>(this.baseUrl + postId);
+  getPost(postId: number): Observable<Post> {
+    return this.http.get<Post>(this.baseUrl + postId);
   }
-  getPosts() {
-    return this.http.get<Observable<Post>>(this.baseUrl);
+  getPosts(): Observable<Post> {
+    return this.http.get<Post>(this.baseUrl);
+  }
+  deletePost(userId: number, id: number) {
+    return this.http.delete(this.baseUrl + userId + "/" + id);
   }
 }

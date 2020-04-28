@@ -66,24 +66,24 @@ export class NavBarComponent implements OnInit {
     localStorage.removeItem("info");
     this.authService.currentUser = null;
     this.authService.decodedToken = null;
-    this.alertifyService.message(this.Lexicon.signedOutMessage);
+    this.alertifyService.message(this.lexicon.signedOutMessage);
     this.router.navigate(["./"]);
   }
 
-  get Name() {
+  get name() {
     return this.authService.decodedToken.unique_name;
   }
-  get Lexicon() {
-    return this.sharedService.Lexicon;
+  get lexicon() {
+    return this.sharedService.lexicon;
   }
-  get ContainerClasses() {
+  get containerClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
       return "container";
     } else {
       return "container rtl";
     }
   }
-  get SideSectionClasses() {
+  get sideSectionClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
       return "side-section nav-item ml-0 ml-md-2 ml-lg-4";
     } else {

@@ -1,6 +1,6 @@
-<div [ngClass]="RtlClass">
+<div [ngClass]="rtlClass">
   <div class="modal-header">
-    <h4 class="modal-title">{{ Lexicon.changePhoto }}</h4>
+    <h4 class="modal-title">{{ lexicon.changePhoto }}</h4>
     <button
       [disabled]="uploadingFlag"
       type="button"
@@ -20,15 +20,15 @@
           [src]="photoUrl || defaultPhoto"
         />
         <div class="img-overlay" *ngIf="uploadingFlag">
-          <img src="../../assets/svg-loaders/rings.svg" />
+          <img [src]="loadingSvgPath" />
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
     <label class="btn btn-outline-warning m-auto" ngbAutofocus>
-      <fa-icon [icon]="FaImage"></fa-icon>
-      {{ Lexicon.uploadPhoto }}
+      <fa-icon [icon]="faImage"></fa-icon>
+      {{ lexicon.uploadPhoto }}
       <input
         type="file"
         hidden

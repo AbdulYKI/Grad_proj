@@ -1,28 +1,32 @@
 <div class="container">
   <div class="row post-user">
     <div class="col-md-3 col-12 poster-img">
-      <img [src]="post.creatorPhotoUrl || defaulPhotoUrl" />
+      <img [src]="post.userPhotoUrl || defaulPhotoUrl" />
     </div>
     <div class="col-md-9 col-12 post-info">
       <h5 class="post-title">
         <a [routerLink]="['/post', post.id]">{{ post.title }}</a>
       </h5>
       <div class="date-section">
-        <span>{{ post.creatorUsername }} created at :</span
-        ><span class="date"></span><span>{{ post.dateAddedUtc }}</span>
+        <span>{{ post.username }} {{ lexicon.createdAt }}</span>
+
+        <fa-icon class="calender" [icon]="faCalendar"></fa-icon>
+        <span
+          >{{ post.dateAddedUtc | localiseDate: "medium":localeCode }}
+        </span>
       </div>
       <div class="rank-section">
-        <span
-          ><fa-icon class="eye-icon" [icon]="FaEye"></fa-icon>
+        <span>
+          <fa-icon [icon]="faEye"></fa-icon>
           {{ post.viewersCount }}
         </span>
         <span
-          ><fa-icon class="fa-caret-up" [icon]="FaCaretUp"></fa-icon>
-          {{ post.upVotesCount }}</span
+          ><fa-icon class="caret-up" [icon]="faCaretUp"></fa-icon>
+          {{ post.votesCount }}</span
         >
         <span
-          ><fa-icon class="fa-caret-down" [icon]="FaCaretDown"></fa-icon>
-          {{ post.downVotesCount }}</span
+          ><fa-icon class="caret-down" [icon]="faCaretDown"></fa-icon>
+          {{ post.votesCount }}</span
         >
       </div>
 

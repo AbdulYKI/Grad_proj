@@ -12,6 +12,8 @@ import {
 } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { LanguageEnum } from "./helper/language.enum";
+import ar from "@angular/common/locales/ar";
+import { registerLocaleData } from "@angular/common";
 
 @Component({
   selector: "app-root",
@@ -30,6 +32,7 @@ export class AppComponent implements OnInit {
     router.events.subscribe((event: RouterEvent) => {
       this.navigationInterceptor(event);
     });
+    registerLocaleData(ar);
   }
 
   ngOnInit() {

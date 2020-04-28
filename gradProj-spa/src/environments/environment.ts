@@ -6,11 +6,13 @@ export const environment = {
   production: false,
   apiUrl: "http://localhost:5000/api/",
   logo: "../assets/icons/logo.png",
+  profileUploaderLoadingSvg: "../assets/svg-loaders/rings.svg",
+  editorLoadingSvg: "../assets/svg-loaders/oval.svg",
   fbLogo: "../assets/icons/facebook.png",
   googleLogo: "../assets/icons/google.png",
   instagramLogo: "../assets/icons/instagram.png",
   defaultPhoto: "../assets/icons/user.png",
-  tokenName: "gradProjToken"
+  tokenName: "gradProjToken",
 };
 
 /*

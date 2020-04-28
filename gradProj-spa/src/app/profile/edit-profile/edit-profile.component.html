@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container edit-profile-container">
   <!-- <div class="row">
     <div *ngIf="false" class="col-lg-3">
       <div class="list-group" style="padding-bottom: 15px;">
@@ -6,11 +6,11 @@
           <div class="card-body pr-0">
             <p>
               <span id="btnToggleSideBar" (click)="ToggleSideBar()">
-                <i class="fas fa-bars"></i> {{ Lexicon.userDashboard }}
+                <i class="fas fa-bars"></i> {{ lexicon.userDashboard }}
               </span>
             </p>
             <div [ngbCollapse]="isCollapsed" id="menulinks">
-              <h3>{{ Lexicon.userDashboard }}</h3>
+              <h3>{{ lexicon.userDashboard }}</h3>
               <a
                 class="nav-link"
                 [class.Active]="isActive('btn1')"
@@ -21,7 +21,7 @@
                 class="nav-link"
                 [class.Active]="isActive('btn2')"
                 (click)="setActive('btn2')"
-                ><i class="far fa-heart"></i> Favourites
+                ><i class="far fa-heart"></i> favourites
               </a>
               <a
                 class="nav-link"
@@ -49,30 +49,26 @@
                 (click)="setActive('btn6')"
                 ><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out</a
               >
-<<<<<<< HEAD
-
-=======
->>>>>>> finished photo uploading
             </div>
           </div>
         </div>
       </div>
     </div> -->
 
-  <div *ngIf="editForm?.dirty" [ngClass]="FormClasses" class="col-lg-12">
+  <div *ngIf="editForm?.dirty" [ngClass]="formClasses" class="col-lg-12">
     <div class="alert alert-info">
-      <strong>{{ Lexicon.information }}</strong>
-      {{ Lexicon.changeAlert }}
+      <strong>{{ lexicon.information }}</strong>
+      {{ lexicon.changeAlert }}
     </div>
   </div>
 
   <div
-    *ngIf="editForm?.dirty && Photo.invalid"
-    [ngClass]="FormClasses"
+    *ngIf="editForm?.dirty && photo.invalid"
+    [ngClass]="formClasses"
     class="col-lg-12"
   >
     <div class="alert alert-danger">
-      <strong>{{ Photo.errors | json }}</strong>
+      <strong>{{ photo.errors | json }}</strong>
     </div>
   </div>
   <div class="col-lg-12">
@@ -83,7 +79,7 @@
           id="editForm"
           [formGroup]="editFormGroup"
           (ngSubmit)="onSubmit()"
-          [ngClass]="FormClasses"
+          [ngClass]="formClasses"
         >
           <div class="img-row-col">
             <div class="row">
@@ -94,7 +90,7 @@
                     class="card-img-overlay"
                     (click)="openImageUploaderModal()"
                   >
-                    <fa-icon [icon]="FaCamera"></fa-icon>
+                    <fa-icon [icon]="faCamera"></fa-icon>
                   </div>
                 </div>
               </div>
@@ -107,8 +103,8 @@
             <div class="container profile-input">
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label [ngClass]="FormLabelClasses">{{
-                    Lexicon.firstName
+                  <label [ngClass]="formLabelClasses">{{
+                    lexicon.firstName
                   }}</label>
                   <input
                     class="form-control"
@@ -117,8 +113,8 @@
                   />
                 </div>
                 <div class="form-group col-md-6">
-                  <label [ngClass]="FormLabelClasses">{{
-                    Lexicon.lastName
+                  <label [ngClass]="formLabelClasses">{{
+                    lexicon.lastName
                   }}</label>
                   <input
                     class="form-control"
@@ -127,12 +123,12 @@
                   />
                 </div>
                 <div class="form-group col-md-6">
-                  <label [ngClass]="FormLabelClasses">{{
-                    Lexicon.dateOfBirth
+                  <label [ngClass]="formLabelClasses">{{
+                    lexicon.dateOfBirth
                   }}</label>
                   <div class="input-group">
                     <input
-                      [ngClass]="DateOfBirthClasses"
+                      [ngClass]="dateOfBirthClasses"
                       formControlName="dateOfBirth"
                       [minDate]="minDate"
                       [maxDate]="maxDate"
@@ -150,29 +146,29 @@
                         (click)="datePicker.toggle()"
                         type="button"
                       >
-                        <fa-icon [icon]="FaCalendar"></fa-icon>
+                        <fa-icon [icon]="faCalendar"></fa-icon>
                       </button>
                     </div>
                     <div
                       class="invalid-feedback"
                       *ngIf="
-                        DateOfBirth?.hasError('underAge') &&
-                        !DateOfBirth?.hasError('ngbDate')
+                        dateOfBirth?.hasError('underAge') &&
+                        !dateOfBirth?.hasError('ngbDate')
                       "
                     >
-                      {{ Lexicon.underAgeError }}
+                      {{ lexicon.underAgeError }}
                     </div>
                     <div
                       class="invalid-feedback"
-                      *ngIf="DateOfBirth?.hasError('ngbDate')"
+                      *ngIf="dateOfBirth?.hasError('ngbDate')"
                     >
-                      {{ Lexicon.invalidDate }}
+                      {{ lexicon.invalidDate }}
                     </div>
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label [ngClass]="FormLabelClasses" for="companyName">
-                    {{ Lexicon.companyName }}
+                  <label [ngClass]="formLabelClasses" for="companyName">
+                    {{ lexicon.companyName }}
                   </label>
                   <input
                     class="form-control"
@@ -183,8 +179,8 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label [ngClass]="FormLabelClasses" for="schoolName">
-                    {{ Lexicon.schoolName }}
+                  <label [ngClass]="formLabelClasses" for="schoolName">
+                    {{ lexicon.schoolName }}
                   </label>
                   <input
                     class="form-control"
@@ -195,9 +191,9 @@
 
                 <div class="form-group col-md-6">
                   <label
-                    [ngClass]="FormLabelClasses"
+                    [ngClass]="formLabelClasses"
                     for="countryNumericCode"
-                    >{{ Lexicon.country }}</label
+                    >{{ lexicon.country }}</label
                   >
                   <div class="input-group">
                     <select
@@ -206,12 +202,12 @@
                       (ngModelChange)="onChange($event)"
                     >
                       <option [ngValue]="null" disabled hidden selected>
-                        {{ Lexicon.countrySelectPlaceHolder }}
+                        {{ lexicon.countrySelectPlaceHolder }}
                       </option>
                       <option
                         *ngFor="let country of countriesDataSource"
                         [ngValue]="country.numericCode"
-                        >{{ Lexicon[country.alpha2Code] }}</option
+                        >{{ lexicon[country.alpha2Code] }}</option
                       >
                     </select>
                     <div class="input-group-append">
@@ -229,8 +225,8 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label [ngClass]="FormLabelClasses">
-                    {{ Lexicon.programmingLanguages }}
+                  <label [ngClass]="formLabelClasses">
+                    {{ lexicon.programmingLanguages }}
                   </label>
                   <angular2-multiselect
                     [settings]="programmingLanguagesDropDownSettings"
@@ -243,8 +239,8 @@
                   </angular2-multiselect>
                 </div>
                 <div class="form-group col-md-6">
-                  <label [ngClass]="FormLabelClasses" for="gender">{{
-                    Lexicon.gender
+                  <label [ngClass]="formLabelClasses" for="gender">{{
+                    lexicon.gender
                   }}</label>
                   <select
                     placeholder="Select your gender"
@@ -252,30 +248,30 @@
                     class="form-control my-select"
                   >
                     <option [ngValue]="null" disabled hidden selected>
-                      {{ Lexicon.genderSelectPlaceHolder }}
+                      {{ lexicon.genderSelectPlaceHolder }}
                     </option>
-                    <option [ngValue]="GenderEnum.Male">{{
-                      Lexicon.male
+                    <option [ngValue]="genderEnum.Male">{{
+                      lexicon.male
                     }}</option>
-                    <option [ngValue]="GenderEnum.Female">{{
-                      Lexicon.female
+                    <option [ngValue]="genderEnum.Female">{{
+                      lexicon.female
                     }}</option>
-                    <option [ngValue]="GenderEnum.Other">{{
-                      Lexicon.other
+                    <option [ngValue]="genderEnum.Other">{{
+                      lexicon.other
                     }}</option>
                   </select>
                 </div>
 
                 <div class="form-group col-md-12">
-                  <label [ngClass]="FormLabelClasses" for="description">
-                    {{ Lexicon.description }}
+                  <label [ngClass]="formLabelClasses" for="description">
+                    {{ lexicon.description }}
                   </label>
                   <textarea
                     class="form-control"
                     type="text"
                     rows="6"
                     formControlName="description"
-                    [placeholder]="Lexicon.descriptionPlaceHolder"
+                    [placeholder]="lexicon.descriptionPlaceHolder"
                   >
                   </textarea>
                 </div>
@@ -287,7 +283,7 @@
                   [disabled]="editForm?.invalid || !editForm?.dirty"
                   type="submit"
                 >
-                  {{ Lexicon.saveButtonText }}
+                  {{ lexicon.saveButtonText }}
                 </button>
               </div>
             </div>

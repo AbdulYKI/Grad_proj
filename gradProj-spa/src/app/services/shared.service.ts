@@ -9,10 +9,18 @@ import { arabicLexicon } from "../helper/arabic.lexicon";
 })
 export class SharedService {
   currentLanguage = new BehaviorSubject<LanguageEnum>(LanguageEnum.Arabic);
+  localeCode = "ar";
   changeLanguage(language: LanguageEnum) {
-    this.currentLanguage.next(language);
+    if (language !== this.currentLanguage.value) {
+      this.currentLanguage.next(language);
+      if (language === LanguageEnum.Arabic) {
+        this.localeCode = "ar";
+      } else {
+        this.localeCode = "en_GB";
+      }
+    }
   }
-  get Lexicon() {
+  get lexicon() {
     if (this.currentLanguage.value === LanguageEnum.English) {
       return englishLexicon;
     } else {
