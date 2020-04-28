@@ -353,4 +353,7 @@ export const englishLexicon = {
   titleIsRequiredErrorMessage: "Title Is Required",
   emailUsedErrorMessage: "Email Is Used",
   usernameUsedErrorMessage: "Username Is Used",
+  back: "Back",
+  createdAt: "Created at:",
+  leaveAComment: "Leave a comment:",
 };

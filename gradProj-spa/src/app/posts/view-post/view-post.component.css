@@ -1,162 +1,149 @@
-body{
-    background-color: rgba(245, 245, 245, 0.82);
+body {
+  background-color: rgba(245, 245, 245, 0.82);
 }
-.pd-post{
-    padding-bottom: 50px;
-    padding-top: 50px;
-}
-
-.bg-post{
-background-color: white;
-border-radius: 18px;
-margin: auto;
-    box-shadow: 13px 12px 8px 0px #00000075;
+.pd-post {
+  padding-bottom: 50px;
+  padding-top: 50px;
 }
 
-.post-view-header{
-    border-bottom: 1px solid #88888836;
-    padding-bottom: 5px;
-    height: auto;
-}
-.title-section .title{
-color: rgba(0, 0, 0, 0.85);
-font-weight: 500;
-font-size: 0.9rem;
-margin-left: 50px;
-display: inline;
-line-height: 3;
-}
-.back-section{
-    font-size: 14px;
-    cursor: pointer;
-    display: inline;
-    text-decoration: none;
-    }
-    .back-section a{
-        text-decoration: none;
-        vertical-align: text-bottom;
-        color: #adadad;
-    }
-    .back-section span{
-        color: #adadad;
-    }
-    .back-section:hover .backlink{
-        color: black;
-    }
-    .back-section:hover .backicon{
-        color: black;
-    }
-.back-section::after{
-   content: '';
-    height: 12px;
-    width: 1px;
-    background: gainsboro;
-    position: relative;
-    display: inline-block;
-    left: 30px;
-    cursor: default;
-}
-.rating-post-section{
-text-align: center;
-}
-.rating-post-section .rating-up , .rating-down
-{
-    background-color: #88888836;
-    border-radius: 15%;
-    width: 35px;
-    height: 35px;
-    font-size: 25px;
-    margin: auto;
-    display: inline-block;
-    cursor: pointer;
-
-}
-.rating-up{
-    color: green;
-    line-height: 45px;
-    margin-bottom: 12px;
-    transition: 0.6s ease-in-out;
-}
-.rating-down{
-    margin-top:12px;
-    color: red;
-    line-height: 28px;
-    transition: 0.6s ease-in-out;
-}
-.rating-up:hover{
-background-color: green;
-color: white;
-}
-.rating-down:hover{
-    background-color: red;
-    color: white;
-    }
-.rating-count{
-    padding: 10px 0px;
-    font-size: 15px;
-    font-weight: 500;
-    text-shadow: 1px 1px 1px;
+.bg-post {
+  background-color: white;
+  border-radius: 18px;
+  margin: auto;
+  box-shadow: 13px 12px 8px 8px #00000075;
 }
 
-.post-view-body{
-padding: 25px 0px;
+.post-view-header {
+  border-bottom: 1px solid #88888836;
+  padding-bottom: 5px;
+  height: auto;
+}
+.title-section .title {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-size: 20px;
+}
+.back-section {
+  font-size: 20px;
+  text-decoration: none;
+}
+.back-section a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #adadad;
+}
+.username:hover {
+  color: black;
+  cursor: pointer;
+}
+.back-section:hover .backlink {
+  color: black;
+}
+.back-section:hover fa-icon {
+  color: black;
+}
+
+.rating-post-section {
+  text-align: center;
+}
+.rating-post-section .rating-up,
+.rating-down {
+  background-color: #88888836;
+  border-radius: 15%;
+  width: 35px;
+  height: 35px;
+  font-size: 25px;
+  margin: auto;
+  display: inline-block;
+  cursor: pointer;
+}
+.rating-up {
+  color: green;
+  line-height: 45px;
+  margin-bottom: 12px;
+  transition: 0.6s ease-in-out;
+}
+.rating-down {
+  margin-top: 12px;
+  color: red;
+  line-height: 28px;
+  transition: 0.6s ease-in-out;
+}
+.rating-up:hover {
+  background-color: green !important;
+  color: white;
+}
+.rating-down:hover {
+  background-color: red !important;
+  color: white;
+}
+.rating-count {
+  padding: 10px 0px;
+  font-size: 15px;
+  font-weight: 500;
+  text-shadow: 1px 1px 1px;
+}
+
+.post-view-body {
+  padding: 25px 0px;
 }
 /*user-info*/
-.avatar{
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    display: inline-block;
-    background-color: #f5f5f5;
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #f5f5f5;
 }
-.username , .Reputation , .date , .views{
-    vertical-align: -webkit-baseline-middle;
-    margin-left: 12px;
-    font-size: 12px;
-    color: #bdbdbd;
-    vertical-align: middle;
+.username,
+.Reputation,
+.date,
+.views {
+  vertical-align: -webkit-baseline-middle;
+  margin-left: 12px;
+  font-size: 12px;
+  color: #bdbdbd;
+  vertical-align: middle;
 }
-.username span , .Reputation span , .date span , .views span , .back-section span{
-font-size: 16px;
-margin-right: 8px;
+fa-icon {
+  color: #bdbdbd;
+  font-size: 16px;
 }
 
 /*content-body*/
-.content-body{
-    line-height: 1.57;
-    width: 100%;
-    word-break: break-all;
-    margin-top: 10px;
-    color: #424242;
-    padding: 10px 10px;
-    overflow: hidden;
-
+.content-body {
+  line-height: 1.57;
+  width: 100%;
+  word-break: break-all;
+  margin-top: 10px;
+  color: #424242;
+  padding: 10px 10px;
+  overflow: hidden;
 }
 
 @media (max-width: 767px) {
-    .post-content-section{
-        padding-left: 25px;
-    }
-    .content-body{
+  .post-content-section {
+    padding-left: 25px;
+  }
+  .content-body {
     width: 100%;
-    }
-    .title-section .title{
-        font-size: 0.75rem;
-        line-height: 2;
-        margin-left: 15px;
-    }
-    .back-section{
-        font-size: 12;
-    }
-    .back-section span{
-        font-size: 14px;
-    }
-    .post-view-header{
-        padding: 14px;
-        margin: 0px;
-    }
-    .back-section::after{
-        display: none;
-    }
- }
-
+  }
+  .title-section .title {
+    font-size: 0.75rem;
+    line-height: 2;
+    margin-left: 15px;
+  }
+  .back-section {
+    font-size: 12;
+  }
+  .back-section span {
+    font-size: 14px;
+  }
+  .post-view-header {
+    padding: 14px;
+    margin: 0px;
+  }
+  .back-section::after {
+    display: none;
+  }
+}

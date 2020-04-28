@@ -23,7 +23,7 @@ export class PostsListResolver implements Resolve<Post[]> {
   resolve(snapShot: ActivatedRouteSnapshot): any {
     const posts: Observable<Post[]> = this.postService.getPosts().pipe(
       catchError((error) => {
-        this.HandleError();
+        this.handleError();
         return of(null);
       })
     );
@@ -33,7 +33,7 @@ export class PostsListResolver implements Resolve<Post[]> {
   get lexicon() {
     return this.sharedService.lexicon;
   }
-  HandleError() {
+  handleError() {
     this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
     this.router.navigate([""]);
   }

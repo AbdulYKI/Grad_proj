@@ -8,19 +8,12 @@
         <a [routerLink]="['/post', post.id]">{{ post.title }}</a>
       </h5>
       <div class="date-section">
-        <span>{{ post.username }} created at :</span>
+        <span>{{ post.username }} {{ lexicon.createdAt }}</span>
 
-        <fa-icon
-          style="
-            vertical-align: -webkit-baseline-middle;
-
-            font-size: 28px;
-            color: #bdbdbd;
-            vertical-align: middle;
-          "
-          [icon]="faCalendar"
-        ></fa-icon>
-        <span>{{ post.dateAddedUtc | date: "medium" }} </span>
+        <fa-icon class="calender" [icon]="faCalendar"></fa-icon>
+        <span
+          >{{ post.dateAddedUtc | localiseDate: "medium":localeCode }}
+        </span>
       </div>
       <div class="rank-section">
         <span>
@@ -28,11 +21,11 @@
           {{ post.viewersCount }}
         </span>
         <span
-          ><fa-icon class="fa-caret-up" [icon]="faCaretUp"></fa-icon>
+          ><fa-icon class="caret-up" [icon]="faCaretUp"></fa-icon>
           {{ post.votesCount }}</span
         >
         <span
-          ><fa-icon class="fa-caret-down" [icon]="faCaretDown"></fa-icon>
+          ><fa-icon class="caret-down" [icon]="faCaretDown"></fa-icon>
           {{ post.votesCount }}</span
         >
       </div>

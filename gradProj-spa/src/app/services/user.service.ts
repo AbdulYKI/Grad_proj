@@ -21,12 +21,12 @@ export class UserService {
   updateUser(id: number, user: User) {
     return this.http.put(this.baseUrl + id, user);
   }
-  getProgrammingLanguages(): Observable<ProgrammingLanguage> {
-    return this.http.get<ProgrammingLanguage>(
+  getProgrammingLanguages(): Observable<ProgrammingLanguage[]> {
+    return this.http.get<ProgrammingLanguage[]>(
       this.baseUrl + "programming-languages"
     );
   }
-  getCountries(): Observable<Country> {
-    return this.http.get<Country>(this.baseUrl + "Countries");
+  getCountries(): Observable<Country[]> {
+    return this.http.get<Country[]>(this.baseUrl + "Countries");
   }
 }

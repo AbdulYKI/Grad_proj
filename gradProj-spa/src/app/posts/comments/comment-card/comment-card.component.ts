@@ -11,6 +11,7 @@ import {
 })
 export class CommentCardComponent implements OnInit {
   constructor() {}
+
   ngOnInit(): void {}
 
   get faSortUp() {

@@ -22,7 +22,7 @@ namespace grad_proj_api.Controllers {
         }
 
         [HttpPost ("{userId}/{postId}")]
-        public async Task<IActionResult> AddComment (int userId, int postId, CommentForAddDto commentForAddDto) {
+        public async Task<IActionResult> CreateComment (int userId, int postId, CommentForAddDto commentForAddDto) {
 
             if (userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value)) {
                 return Unauthorized ();

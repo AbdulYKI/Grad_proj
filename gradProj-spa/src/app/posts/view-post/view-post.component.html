@@ -1,14 +1,18 @@
-<div class="container pd-post">
+<div [ngClass]="containerClasses">
   <div class="row bg-post">
     <div class="post-view-header col-12">
-      <div class="title-section float-left d-inline">
-        <div class="back-section">
-          <span class="backicon"
-            ><fa-icon [icon]="faChevronLeft"></fa-icon
-          ></span>
-          <a class="backlink" [routerLink]="['/post']">Back</a>
+      <div class="title-section row mt-2">
+        <div class="col-lg-1 col-md-1 col-3">
+          <span class="back-section">
+            <a class="backlink" [routerLink]="['/post']">
+              <fa-icon [icon]="faChevron"></fa-icon>
+              {{ lexicon.back }}
+            </a>
+          </span>
         </div>
-        <div class="title">{{ post.title }}</div>
+        <div class="col-9 col-md-11 col-lg-11">
+          <a class="title">{{ post.title }}</a>
+        </div>
       </div>
     </div>
     <!--End post view header-->
@@ -20,10 +24,10 @@
           <!-- Rating btn -->
           <div class="col-1">
             <div class="rating-post-section">
-              <div class="rating-up"><fa-icon [icon]="faSortUp"></fa-icon></div>
+              <div><fa-icon class="rating-up" [icon]="faSortUp"></fa-icon></div>
               <div class="rating-count">{{ post.votesCount }}</div>
-              <div class="rating-down">
-                <fa-icon [icon]="faSortDown"></fa-icon>
+              <div>
+                <fa-icon class="rating-down" [icon]="faSortDown"></fa-icon>
               </div>
             </div>
           </div>
@@ -38,12 +42,13 @@
                     <div class="post-info-section">
                       <div class="row">
                         <!-- user-info  content  -->
+                        <a>
+                          <img
+                            class="avatar"
+                            [src]="post.userPhotoUrl || defaulPhotoUrl"
+                          />
+                        </a>
                         <div class="user-info col-auto">
-                          <a
-                            ><img
-                              class="avatar"
-                              src="https://assets.leetcode.com/users/huaying2/avatar_1523559968.png"
-                          /></a>
                           <span class="username">
                             {{ post.username }}
                           </span>
@@ -55,16 +60,18 @@
                         <!--   post date  content  -->
                         <div class="post-date col-auto">
                           <span class="date">
-                            <span>
-                              <fa-icon [icon]="faCalender"></fa-icon>
-                            </span>
-                            {{ post.dateAddedUtc | date: "dd/MM/yyyy" }}
+                            <fa-icon [icon]="faCalender"></fa-icon>
+
+                            {{
+                              post.dateAddedUtc
+                                | localiseDate: "long":localeCode
+                            }}
                           </span>
                         </div>
                         <!--   post views  content  -->
                         <div class="post-views col-auto">
                           <span class="views">
-                            <span> <fa-icon [icon]="faEye"></fa-icon></span>
+                            <fa-icon [icon]="faEye"></fa-icon>
                             {{ post.viewersCount }}
                           </span>
                         </div>
@@ -91,6 +98,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="mt-3">
+    <app-add-comment [postId]="post.id"></app-add-comment>
   </div>
   <div class="comment">
     <app-comment-card></app-comment-card>

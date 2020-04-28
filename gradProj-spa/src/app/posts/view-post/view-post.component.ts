@@ -1,5 +1,7 @@
+import { LocaliseDatePipe } from "./../../helper/localiseDate.pipe";
+import { SharedService } from "./../../services/shared.service";
 import { ActivatedRoute } from "@angular/router";
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Post } from "src/app/models/post";
 import {
   faSortUp,
@@ -8,15 +10,21 @@ import {
   faCalendarAlt,
   faEye,
   faChevronLeft,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { LanguageEnum } from "src/app/helper/language.enum";
+import { environment } from "src/environments/environment";
 @Component({
   selector: "app-view-post",
   templateUrl: "./view-post.component.html",
   styleUrls: ["./view-post.component.css"],
-  encapsulation: ViewEncapsulation.None,
 })
 export class ViewPostComponent implements OnInit {
-  constructor(private route: ActivatedRoute) {}
+  defaulPhotoUrl: string = environment.defaultPhoto;
+  constructor(
+    private route: ActivatedRoute,
+    private sharedService: SharedService
+  ) {}
   post: Post;
   config: any = {
     width: "100%",
@@ -32,9 +40,8 @@ export class ViewPostComponent implements OnInit {
     statusbar: false,
   };
   ngOnInit(): void {
-    this.route.data.subscribe((data: { post }) => {
+    this.route.data.subscribe((data: { post: Post }) => {
       this.post = data.post;
-      console.log(this.post);
     });
   }
   get faSortUp() {
@@ -52,7 +59,22 @@ export class ViewPostComponent implements OnInit {
   get faEye() {
     return faEye;
   }
-  get faChevronLeft() {
+  get faChevron() {
+    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+      return faChevronRight;
+    }
     return faChevronLeft;
+  }
+  get lexicon() {
+    return this.sharedService.lexicon;
+  }
+  get containerClasses() {
+    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+      return "container pd-post rtl";
+    }
+    return "container pd-post";
+  }
+  get localeCode() {
+    return this.sharedService.localeCode;
   }
 }

@@ -1,4 +1,5 @@
-import { HtmlSanitiser } from "./helper/html-sanitiser.pipe";
+import { LocaliseDatePipe } from "./helper/localiseDate.pipe";
+
 import { ViewPostComponent } from "./posts/view-post/view-post.component";
 import { environment } from "src/environments/environment";
 import { MyRoutes } from "./routes.routing";
@@ -30,7 +31,6 @@ import { PreventUnsavedChangesGuardForEditProfile } from "./guards/prevent-unsav
 import { ErrorInterceptorProvider } from "./services/Interceptor.service";
 import { FooterComponent } from "./footer/footer.component";
 import { PostsListComponent } from "./posts/posts-list/posts-list.component";
-import { PhotoUploaderComponent } from "./photo-uploader/photo-uploader.component";
 import { SinglePostCardComponent } from "./posts/single-post-card/single-post-card.component";
 import { PreventUnsavedChangesGuardForCreatePost } from "./guards/prevent-unsaved-changes-for-create-post.guard";
 import { PostsListResolver } from "./../resolvers/posts-list.resolver";
@@ -39,6 +39,8 @@ import { UserService } from "src/app/services/user.service";
 import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
 import { ViewPostResolver } from "src/resolvers/post-view.resolver";
 import { CommentCardComponent } from "./posts/comments/comment-card/comment-card.component";
+import { PhotoUploaderComponent } from "./profile/photo-uploader/photo-uploader.component";
+import { AddCommentComponent } from './posts/comments/add-comment/add-comment.component';
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
 }
@@ -59,7 +61,8 @@ export function tokenGetter() {
     SinglePostCardComponent,
     ViewPostComponent,
     CommentCardComponent,
-    HtmlSanitiser,
+    LocaliseDatePipe,
+    AddCommentComponent,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
@@ -93,6 +96,7 @@ export function tokenGetter() {
     PostsListResolver,
     SharedService,
     ViewPostResolver,
+
     { provide: TINYMCE_SCRIPT_SRC, useValue: "tinymce/tinymce.min.js" },
   ],
   bootstrap: [AppComponent],

@@ -37,8 +37,7 @@ import {
   NgbModalOptions,
   NgbModal,
 } from "@ng-bootstrap/ng-bootstrap";
-
-import { PhotoUploaderComponent } from "../../photo-uploader/photo-uploader.component";
+import { PhotoUploaderComponent } from "../photo-uploader/photo-uploader.component";
 
 @Component({
   selector: "app-edit-profile",

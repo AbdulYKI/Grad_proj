@@ -351,4 +351,7 @@ export const arabicLexicon = {
   titleIsRequiredErrorMessage: "العنوان مطلوب",
   emailUsedErrorMessage: "الإيميل مستخدم",
   usernameUsedErrorMessage: "اسم المستخدم مستخدم",
+  back: "رجوع",
+  createdAt: "كتب في:",
+  leaveAComment: "اترك تعليق:",
 };

@@ -20,7 +20,7 @@
           [src]="photoUrl || defaultPhoto"
         />
         <div class="img-overlay" *ngIf="uploadingFlag">
-          <img src="../../assets/svg-loaders/rings.svg" />
+          <img [src]="loadingSvgPath" />
         </div>
       </div>
     </div>

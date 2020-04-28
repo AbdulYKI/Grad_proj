@@ -56,7 +56,7 @@ export class SignInComponent implements OnInit {
         (error) =>
           this.alertifyService.error(this.lexicon.signedInFailedMessage),
         () => {
-          this.router.navigate(["/members"]);
+          this.router.navigate(["/home"]);
         }
       );
     }

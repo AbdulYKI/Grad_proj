@@ -1,13 +1,13 @@
-import { SharedService } from "./../services/shared.service";
-import { AuthService } from "./../services/auth.service";
-import { AlertifyService } from "./../services/alertify.service";
-import { PhotoService } from "./../services/photo.service";
+import { SharedService } from "../../services/shared.service";
+import { AuthService } from "../../services/auth.service";
+import { AlertifyService } from "../../services/alertify.service";
+import { PhotoService } from "../../services/photo.service";
 import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { environment } from "src/environments/environment";
-import { Photo } from "../models/photo";
-import { LanguageEnum } from "../helper/language.enum";
+import { Photo } from "../../models/photo";
+import { LanguageEnum } from "../../helper/language.enum";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/internal/operators/takeUntil";
 
@@ -39,9 +39,9 @@ export class PhotoUploaderComponent implements OnInit, OnDestroy {
   }
   fileChangeEvent(event: any) {
     const newPhoto: File = event.target.files[0];
-    this.uploadingFlag = true;
 
     if (this.validatePhoto(newPhoto)) {
+      this.uploadingFlag = true;
       const formData = new FormData();
       formData.append("file", newPhoto, newPhoto.name);
       this.photoService
@@ -110,7 +110,9 @@ export class PhotoUploaderComponent implements OnInit, OnDestroy {
     }
     return "";
   }
-
+  get loadingSvgPath() {
+    return environment.profileUploaderLoadingSvg;
+  }
   ngOnDestroy() {
     this.destroy.next(true);
     this.destroy.unsubscribe();

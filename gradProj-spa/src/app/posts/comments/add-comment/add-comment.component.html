@@ -1,0 +1,22 @@
+<div [ngClass]="containerClasses">
+  <h2>{{ lexicon.leaveAComment }}</h2>
+  <editor
+    *ngIf="loadingFlag"
+    #tinymce
+    [(ngModel)]="comment.content"
+    name="content"
+    [init]="config"
+  ></editor>
+  <div class="text-center" *ngIf="!loadingFlag">
+    <img [src]="loadingSvgPath" />
+  </div>
+  <div>
+    <button
+      class="btn form-button mt-2"
+      (click)="createComment()"
+      [disabled]="comment.content === ''"
+    >
+      {{ lexicon.create }} <fa-icon [icon]="faPaperPlane"></fa-icon>
+    </button>
+  </div>
+</div>

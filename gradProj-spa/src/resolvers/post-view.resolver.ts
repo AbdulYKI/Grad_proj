@@ -23,7 +23,7 @@ export class ViewPostResolver implements Resolve<Post> {
 
     const post = this.postService.getPost(id).pipe(
       catchError((error) => {
-        this.HandleError();
+        this.handleError();
         return of(null);
       })
     );
@@ -32,7 +32,7 @@ export class ViewPostResolver implements Resolve<Post> {
   get lexicon() {
     return this.sharedService.lexicon;
   }
-  HandleError() {
+  handleError() {
     this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
     this.router.navigate([""]);
   }

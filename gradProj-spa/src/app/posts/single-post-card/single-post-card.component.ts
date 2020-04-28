@@ -1,3 +1,4 @@
+import { SharedService } from "./../../services/shared.service";
 import { environment } from "./../../../environments/environment";
 import { Component, OnInit, Input } from "@angular/core";
 import {
@@ -18,7 +19,7 @@ export class SinglePostCardComponent implements OnInit {
   @Input() post: Post;
 
   defaulPhotoUrl: string = environment.defaultPhoto;
-  constructor() {}
+  constructor(private sharedService: SharedService) {}
 
   get faEye() {
     return faEye;
@@ -32,6 +33,11 @@ export class SinglePostCardComponent implements OnInit {
   get faCalendar() {
     return faCalendarAlt;
   }
-
+  get localeCode() {
+    return this.sharedService.localeCode;
+  }
   ngOnInit(): void {}
+  get lexicon() {
+    return this.sharedService.lexicon;
+  }
 }
