@@ -7,6 +7,7 @@ export class Post {
   dateAddedUtc: Date;
   viewersCount: number;
   id: number;
+  userId: number;
   constructor() {
     this.content = "";
     this.title = "";

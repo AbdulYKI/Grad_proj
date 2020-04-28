@@ -1,3 +1,4 @@
+import { AuthService } from "./../../services/auth.service";
 import { LocaliseDatePipe } from "./../../helper/localiseDate.pipe";
 import { SharedService } from "./../../services/shared.service";
 import { ActivatedRoute } from "@angular/router";
@@ -23,7 +24,8 @@ export class ViewPostComponent implements OnInit {
   defaulPhotoUrl: string = environment.defaultPhoto;
   constructor(
     private route: ActivatedRoute,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private authService: AuthService
   ) {}
   post: Post;
   config: any = {
@@ -76,5 +78,11 @@ export class ViewPostComponent implements OnInit {
   }
   get localeCode() {
     return this.sharedService.localeCode;
+  }
+  checkPostOwnership() {
+    if (this.authService.signedIn()) {
+      return this.post.userId === this.authService.decodedToken.nameid;
+    }
+    return false;
   }
 }

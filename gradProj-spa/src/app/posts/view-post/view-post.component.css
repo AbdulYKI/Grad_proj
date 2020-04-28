@@ -5,6 +5,9 @@ body {
   padding-bottom: 50px;
   padding-top: 50px;
 }
+.pd-post .dropdown-toggle::after {
+  display: none;
+}
 
 .bg-post {
   background-color: white;
