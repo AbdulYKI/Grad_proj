@@ -125,6 +125,7 @@
   overflow: hidden;
 }
 
+
 @media (max-width: 767px) {
   .post-content-section {
     padding-left: 25px;
@@ -191,4 +192,5 @@
   transition: background-color 500ms linear;
   color: white !important;
   float: left;
+
 }
