@@ -2,7 +2,7 @@
   <div class="row bg-post">
     <div class="post-view-header col-12">
       <div class="title-section row mt-2">
-        <div class="col-lg-1 col-md-1 col-3">
+        <div class=" col-md-1 col-2 back_fix">
           <span class="back-section">
             <a class="backlink" [routerLink]="['/post']">
               <fa-icon [icon]="faChevron"></fa-icon>
@@ -10,10 +10,10 @@
             </a>
           </span>
         </div>
-        <div class="col-8 col-md-10 col-lg-10">
+        <div class="col-8 col-md-10">
           <a class="title">{{ post.title }}</a>
         </div>
-        <div class="col-1">
+        <div class="col-2 col-md-1">
           <div ngbDropdown class="d-inline-block">
             <button
               class="btn btn-outline-primary"

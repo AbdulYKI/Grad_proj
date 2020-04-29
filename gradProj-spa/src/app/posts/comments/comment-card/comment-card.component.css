@@ -4,10 +4,15 @@ body {
 .container {
   margin: 2rem auto;
 }
+.rtl .avatar{
+  margin-right: -40px;
+  margin-left: 15px;
+}
 .avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  margin-left: -40px;
   align-items: center;
   display: inline-flex;
   justify-content: center;
@@ -15,6 +20,7 @@ body {
   text-align: center;
   vertical-align: middle;
 }
+
 .avatar img {
   border-radius: 50%;
   height: 50px; /*50px*/

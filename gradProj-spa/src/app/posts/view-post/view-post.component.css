@@ -25,6 +25,7 @@ body {
   color: rgba(0, 0, 0, 0.85);
   font-weight: 500;
   font-size: 20px;
+  word-break: break-word;
 }
 .back-section {
   font-size: 20px;
@@ -39,6 +40,11 @@ body {
   color: black;
   cursor: pointer;
 }
+.back_fix{
+  padding: 1px 0px;
+    margin: 0 auto;
+    text-align: center;
+}
 .back-section:hover .backlink {
   color: black;
 }
@@ -48,6 +54,7 @@ body {
 
 .rating-post-section {
   text-align: center;
+  width: max-content;
 }
 .rating-post-section .rating-up,
 .rating-down {
@@ -124,6 +131,7 @@ fa-icon {
   overflow: hidden;
 }
 
+
 @media (max-width: 767px) {
   .post-content-section {
     padding-left: 25px;
@@ -132,7 +140,7 @@ fa-icon {
     width: 100%;
   }
   .title-section .title {
-    font-size: 0.75rem;
+    font-size: 1rem;
     line-height: 2;
     margin-left: 15px;
   }
@@ -148,5 +156,8 @@ fa-icon {
   }
   .back-section::after {
     display: none;
+  }
+  .rtl .post-info-section{
+    padding: 0px 19px;
   }
 }
