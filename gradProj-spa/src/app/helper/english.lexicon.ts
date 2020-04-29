@@ -356,4 +356,7 @@ export const englishLexicon = {
   back: "Back",
   createdAt: "Created at:",
   leaveAComment: "Leave a comment:",
+  edit: "Edit",
+  save: "Save",
+  report: "Report",
 };

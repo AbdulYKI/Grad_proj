@@ -7,6 +7,7 @@ import { SharedService } from "./../../../services/shared.service";
 import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import { LanguageEnum } from "src/app/helper/language.enum";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { Patterns } from "src/app/helper/patterns";
 
 @Component({
   selector: "app-add-comment",
@@ -17,8 +18,8 @@ export class AddCommentComponent implements OnInit {
   @Input() postId: number;
   @ViewChild("tinymce") tinymce: any;
   comment: Comment;
-  oldContent = "";
-  loadingFlag = true;
+  oldContentBeforeRefresh = "";
+  loadingFlag = false;
   config: any = {
     width: "100%",
     base_url: "/tinymce",
@@ -46,11 +47,11 @@ export class AddCommentComponent implements OnInit {
     this.comment = new Comment();
   }
   refreshEditor() {
-    this.oldContent = this.comment.content;
-    this.loadingFlag = false;
+    this.oldContentBeforeRefresh = this.comment.content;
+    this.loadingFlag = true;
     setTimeout(() => {
-      this.comment.content = this.oldContent;
-      this.loadingFlag = true;
+      this.comment.content = this.oldContentBeforeRefresh;
+      this.loadingFlag = false;
     }, 500);
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       this.config.language = "ar";
@@ -95,5 +96,11 @@ export class AddCommentComponent implements OnInit {
           this.alertifyService.error("error");
         }
       );
+  }
+  emptyEditorCheck() {
+    if (this.comment.content === "") {
+      return true;
+    }
+    return Patterns.emptyEditorPattern.test(this.comment.content);
   }
 }

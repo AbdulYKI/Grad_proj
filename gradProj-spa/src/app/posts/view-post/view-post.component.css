@@ -150,3 +150,49 @@ fa-icon {
     display: none;
   }
 }
+
+.edit-button:enabled,
+.cancel-button:enabled {
+  cursor: pointer !important;
+}
+.edit-button:hover,
+.cancel-button:hover {
+  opacity: 0.8;
+}
+.edit-button:disabled {
+  cursor: auto !important;
+  background-color: #989494 !important;
+  border-color: #989494 !important;
+  cursor: auto !important;
+}
+.edit-button fa-icon,
+.cancel-button fa-icon {
+  color: white;
+}
+.edit-button {
+  background-color: #3dc867 !important;
+  opacity: 1;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
+  color: white !important;
+  float: right;
+}
+.cancel-button {
+  background-color: #ec2626 !important;
+  opacity: 1;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
+  color: white !important;
+  float: left;
+}
+.rtl .cancel-button {
+  float: right;
+}
+.rtl .edit-button {
+  float: left;
+}
+.add-comment-section {
+  width: 100%;
+}

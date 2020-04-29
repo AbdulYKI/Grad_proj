@@ -4,4 +4,8 @@ export class Comment {
   usernameId: number;
   id: number;
   content: string;
+
+  constructor() {
+    this.content = "";
+  }
 }
