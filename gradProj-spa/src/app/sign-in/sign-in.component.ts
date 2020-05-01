@@ -12,7 +12,7 @@ import {
   FormBuilder,
   AbstractControl,
 } from "@angular/forms";
-import { LanguageEnum } from "../helper/language.enum";
+import { LanguageEnum } from "../helper/enums/language.enum";
 @Component({
   selector: "app-sign-in",
   templateUrl: "./sign-in.component.html",

@@ -1,4 +1,4 @@
-import { LanguageEnum } from "./../helper/language.enum";
+import { LanguageEnum } from "../helper/enums/language.enum";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";

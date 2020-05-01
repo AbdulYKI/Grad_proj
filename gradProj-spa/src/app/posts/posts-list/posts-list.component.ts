@@ -8,7 +8,7 @@ import {
   faPaperPlane,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { LanguageEnum } from "../../helper/language.enum";
+import { LanguageEnum } from "../../helper/enums/language.enum";
 import { Post } from "../../models/post";
 import { AddPostComponent } from "../add-post/add-post.component";
 import { takeUntil } from "rxjs/operators";

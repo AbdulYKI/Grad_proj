@@ -10,9 +10,9 @@ import {
 } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { SharedService } from "../services/shared.service";
-import { LanguageEnum } from "../helper/language.enum";
-import { englishLexicon } from "../helper/english.lexicon";
-import { arabicLexicon } from "../helper/arabic.lexicon";
+import { LanguageEnum } from "../helper/enums/language.enum";
+import { englishLexicon } from "../helper/lexicon/english.lexicon";
+import { arabicLexicon } from "../helper/lexicon/arabic.lexicon";
 import { takeUntil } from "rxjs/operators";
 
 @Component({

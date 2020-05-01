@@ -1,7 +1,7 @@
 import { Subject } from "rxjs";
 import { AlertifyService } from "./../../services/alertify.service";
 import { AuthService } from "./../../services/auth.service";
-import { LanguageEnum } from "../../helper/language.enum";
+import { LanguageEnum } from "../../helper/enums/language.enum";
 import { SharedService } from "../../services/shared.service";
 import {
   Component,

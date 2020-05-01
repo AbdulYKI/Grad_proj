@@ -1,8 +1,8 @@
 import { ServerError } from "./../models/server-error";
-import { ExceptionEnum } from "./../helper/exception.enum";
+import { ExceptionEnum } from "../helper/enums/exception.enum";
 import { SharedService } from "./../services/shared.service";
-import { Patterns } from "./../helper/patterns";
-import { GenderEnum } from "./../helper/gender.enum";
+import { Patterns } from "../helper/validation/patterns";
+import { GenderEnum } from "../helper/enums/gender.enum";
 import { environment } from "./../../environments/environment";
 import {
   Component,
@@ -17,12 +17,12 @@ import {
   FormBuilder,
   AbstractControl,
 } from "@angular/forms";
-import { MustMatch } from "../helper/must-match.validator";
+import { MustMatch } from "../helper/validation/must-match.validator";
 import { User } from "../models/User";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { AlertifyService } from "../services/alertify.service";
-import { LanguageEnum } from "../helper/language.enum";
+import { LanguageEnum } from "../helper/enums/language.enum";
 
 @Component({
   selector: "app-sign-up",

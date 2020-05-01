@@ -1,6 +1,3 @@
-import { LocaliseDatePipe } from "./helper/localiseDate.pipe";
-
-import { ViewPostComponent } from "./posts/view-post/view-post.component";
 import { environment } from "src/environments/environment";
 import { MyRoutes } from "./routes.routing";
 import { JwtModule } from "@auth0/angular-jwt";
@@ -16,6 +13,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { EditorModule, TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { AngularMultiSelectModule } from "angular2-multiselect-dropdown";
 /*-------------------------------------------------------------------------------------------------*/
+import { LocaliseDatePipe } from "./helper/pipes/localiseDate.pipe";
+import { ViewPostComponent } from "./posts/view-post/view-post.component";
 import { AppComponent } from "./app.component";
 import { SignInComponent } from "./sign-in/sign-in.component";
 import { EditProfileComponent } from "./profile/edit-profile/edit-profile.component";
@@ -40,7 +39,8 @@ import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
 import { ViewPostResolver } from "src/resolvers/post-view.resolver";
 import { CommentCardComponent } from "./posts/comments/comment-card/comment-card.component";
 import { PhotoUploaderComponent } from "./profile/photo-uploader/photo-uploader.component";
-import { AddCommentComponent } from './posts/comments/add-comment/add-comment.component';
+import { AddCommentComponent } from "./posts/comments/add-comment/add-comment.component";
+
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
 }
@@ -96,7 +96,6 @@ export function tokenGetter() {
     PostsListResolver,
     SharedService,
     ViewPostResolver,
-
     { provide: TINYMCE_SCRIPT_SRC, useValue: "tinymce/tinymce.min.js" },
   ],
   bootstrap: [AppComponent],

@@ -6,10 +6,10 @@
 }
 /*form-button is a global class*/
 
-.form-button {
+.add-comment-card .form-button {
   max-width: 100px;
   float: right;
 }
-.rtl .form-button {
+.rtl.add-comment-card .form-button {
   float: left;
 }

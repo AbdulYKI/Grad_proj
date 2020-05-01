@@ -11,7 +11,7 @@ import {
   NavigationError,
 } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { LanguageEnum } from "./helper/language.enum";
+import { LanguageEnum } from "./helper/enums/language.enum";
 import ar from "@angular/common/locales/ar";
 import { registerLocaleData } from "@angular/common";
 

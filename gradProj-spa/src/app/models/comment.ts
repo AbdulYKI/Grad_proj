@@ -1,7 +1,12 @@
 export class Comment {
   username: string;
-  usernamePhotoUrl: string;
-  usernameId: number;
+  userPhotoUrl: string;
+  userId: number;
   id: number;
   content: string;
+  dateAddedUtc: Date;
+  votesCount: number;
+  constructor() {
+    this.content = "";
+  }
 }

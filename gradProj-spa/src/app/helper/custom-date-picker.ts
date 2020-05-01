@@ -1,7 +1,7 @@
 import { SharedService } from "./../services/shared.service";
 import { Injectable } from "@angular/core";
 import { NgbDatepickerI18n, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
-import { LanguageEnum } from "./language.enum";
+import { LanguageEnum } from "./enums/language.enum";
 @Injectable()
 export class CustomDatePicker extends NgbDatepickerI18n {
   constructor(private sharedService: SharedService) {

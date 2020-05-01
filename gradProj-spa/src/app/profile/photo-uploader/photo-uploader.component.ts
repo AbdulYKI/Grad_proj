@@ -7,7 +7,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { environment } from "src/environments/environment";
 import { Photo } from "../../models/photo";
-import { LanguageEnum } from "../../helper/language.enum";
+import { LanguageEnum } from "../../helper/enums/language.enum";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/internal/operators/takeUntil";
 

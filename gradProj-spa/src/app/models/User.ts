@@ -1,4 +1,4 @@
-import { GenderEnum } from "./../helper/gender.enum";
+import { GenderEnum } from "../helper/enums/gender.enum";
 
 export class User {
   username: string;

@@ -74,7 +74,7 @@ namespace grad_proj_api.Helpers
 
             CreateMap<Comment, CommentToReturnDto>()
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username))
-                .ForMember(dest => dest.UsernamePhotoUrl, opt => opt.MapFrom(src => src.User.Photo.Url))
+                .ForMember(dest => dest.UserPhotoUrl, opt => opt.MapFrom(src => src.User.Photo.Url))
                 .ForMember(dest => dest.VotesCount, opt => opt.MapFrom(src => src.CommentUpVoters.Count() - src.CommentDownVoters.Count()));
         }
     }

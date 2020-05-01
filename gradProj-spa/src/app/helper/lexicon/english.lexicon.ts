@@ -1,4 +1,4 @@
-import { AuthGuard } from "./../guards/auth.guard";
+import { AuthGuard } from "../../guards/auth.guard";
 const countries = {
   AF: "Afghanistan",
   AL: "Albania",
@@ -356,4 +356,7 @@ export const englishLexicon = {
   back: "Back",
   createdAt: "Created at:",
   leaveAComment: "Leave a comment:",
+  edit: "Edit",
+  save: "Save",
+  report: "Report",
 };

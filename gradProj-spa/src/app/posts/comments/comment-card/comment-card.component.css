@@ -47,7 +47,7 @@ body {
   margin-bottom: 7px;
 }
 .display-name {
-  margin-left: 24px;
+  font-size: 12px;
   color: #bdbdbd;
 }
 .card {

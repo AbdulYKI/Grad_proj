@@ -354,4 +354,7 @@ export const arabicLexicon = {
   back: "رجوع",
   createdAt: "كتب في:",
   leaveAComment: "اترك تعليق:",
+  edit: "تعديل",
+  save: "حفظ",
+  report: "إبلاغ",
 };
