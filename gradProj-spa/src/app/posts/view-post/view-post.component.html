@@ -1,155 +1,106 @@
 <div [ngClass]="containerClasses">
-  <div class="row card bg-post">
-    <div class="col-12">
-      <div class="title-section row mt-2">
-        <div class="col-md-1 col-2 back_fix">
-          <span class="back-section">
-            <a class="backlink" [routerLink]="['/post']">
-              <fa-icon [icon]="faChevron"></fa-icon>
-              {{ lexicon.back }}
-            </a>
-          </span>
-        </div>
-        <div class="col-8 col-md-10">
-          <a class="title">{{ post.title }}</a>
-        </div>
-        <div class="col-2 col-md-1">
-          <div ngbDropdown class="d-inline-block">
-            <button
-              class="btn btn-outline-primary"
-              id="dropdownBasic1"
-              ngbDropdownToggle
-            >
-              ...
-            </button>
-
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button
-                ngbDropdownItem
-                *ngIf="checkPostOwnership()"
-                (click)="enterEditMode()"
-              >
-                {{ lexicon.edit }}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!--End post view header-->
-
-        <!--Start post view Body-->
-        <div class="post-view-body col-12">
-          <div class="container">
-            <div class="row">
-              <!-- Rating btn -->
-              <div class="col-1">
-                <div class="rating-post-section">
-                  <div>
-                    <fa-icon class="rating-up" [icon]="faSortUp"></fa-icon>
-                  </div>
-                  <div class="rating-count">{{ post.votesCount }}</div>
-                  <div>
-                    <fa-icon class="rating-down" [icon]="faSortDown"></fa-icon>
-                  </div>
-                </div>
-              </div>
-              <!-- End  Rating btn -->
-              <!-- start post  content  -->
-              <div class="col-11">
-                <div class="post-content-section">
-                  <div class="content-header">
-                    <div class="row">
-                      <div class="col-12">
-                        <!-- post info  -->
-                        <div class="post-info-section">
-                          <div class="row">
-                            <!-- user-info  content  -->
-                            <a>
-                              <img
-                                class="avatar"
-                                [src]="post.userPhotoUrl || defaulPhotoUrl"
-                              />
-                            </a>
-                            <div class="user-info col-auto">
-                              <span class="username">
-                                {{ post.username }}
-                              </span>
-                              <!-- <span class="Reputation">
-                            <span><fa-icon [icon]="fastar"></fa-icon></span>
-                            Reputation
-                          </span> -->
-                            </div>
-                            <!--   post date  content  -->
-                            <div class="post-date col-auto">
-                              <span class="date">
-                                <fa-icon [icon]="faCalender"></fa-icon>
-
-                                {{
-                                  post.dateAddedUtc
-                                    | localiseDate: "long":localeCode
-                                }}
-                              </span>
-                            </div>
-                            <!--   post views  content  -->
-                            <div class="post-views col-auto">
-                              <span class="views">
-                                <fa-icon [icon]="faEye"></fa-icon>
-                                {{ post.viewersCount }}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!--  End  content header  -->
-                  <div class="container">
-                    <div class="content-body">
-                      <form
-                        (ngSubmit)="submitEditedPost()"
-                        #editPostForm="ngForm"
-                      >
-                        <editor
-                          *ngIf="!loadingFlag"
-                          #content="ngModel"
-                          [(ngModel)]="post.content"
-                          name="content"
-                          [init]="config"
-                          [disabled]="!inEditModeFlag"
-                        ></editor>
-                        <div class="text-center" *ngIf="loadingFlag">
-                          <img [src]="loadingSvgPath" />
-                        </div>
-                        <div>
-                          <button
-                            class="btn edit-button mt-2"
-                            *ngIf="inEditModeFlag && !loadingFlag"
-                            type="submit"
-                            [disabled]="emptyEditorCheck()"
-                          >
-                            {{ lexicon.save }}
-                            <fa-icon [icon]="faEdit"></fa-icon>
-                          </button>
-                          <button
-                            class="btn cancel-button mt-2"
-                            (click)="cancelEditMode(true)"
-                            *ngIf="inEditModeFlag && !loadingFlag"
-                          >
-                            {{ lexicon.cancel }}
-                            <fa-icon [icon]="faUndo"></fa-icon>
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="view-post-section card">
+  <div class="container">
+<div class="row">
+  <!--Back Date Post Section-->
+<div class="col-12 back-date">
+  <div class="back-section">
+      <a class="backlink" [routerLink]="['/post']">
+        <fa-icon [icon]="faChevron"></fa-icon>
+       <span class="back"> {{ lexicon.back }}</span>
+      </a>
+      <span class="line"> | </span>
   </div>
+  <div class="post-date">
+    <span class="date">
+      <fa-icon [icon]="faCalender"></fa-icon>
+
+      {{
+        post.dateAddedUtc
+          | localiseDate: "long":localeCode
+      }}
+    </span>
+  </div>
+</div>
+  <!-- End  Back Date Post Section-->
+  <!-- Start  Title Section-->
+<div class="col-12 title-section">
+  <a class="title">{{ post.title }}</a>
+</div>
+<!-- Start  Title Section-->
+<!-- Start  post-info-section-->
+<div class="col-12 post-info-section">
+  <a>
+    <img
+      class="avatar"
+      [src]="post.userPhotoUrl || defaulPhotoUrl"
+    />
+  </a>
+  <div class="username">
+  <a>  {{ post.username }}</a>
+  </div>
+
+<div class="rating">
+<span class="up"> <fa-icon class="rating-up" [icon]="faSortUp"></fa-icon></span>
+<span class="rating-count">{{ post.votesCount }}</span>
+<span class="down"> <fa-icon class="rating-down" [icon]="faSortDown"></fa-icon>  </span>
+</div>
+
+  <div class="views">
+    <fa-icon [icon]="faEye"></fa-icon>
+    <span class="views-count">{{ post.viewersCount }}</span>
+  </div>
+</div>
+<!-- End  post-info-section-->
+<!-- Start Content post section-->
+<div class="col-12">
+  <form
+  (ngSubmit)="submitEditedPost()"
+  #editPostForm="ngForm"
+>
+  <editor
+    *ngIf="!loadingFlag"
+    #content="ngModel"
+    [(ngModel)]="post.content"
+    name="content"
+    [init]="config"
+    [disabled]="!inEditModeFlag"
+  ></editor>
+  <div class="text-center" *ngIf="loadingFlag">
+    <img [src]="loadingSvgPath" />
+  </div>
+  <div>
+    <button
+      class="btn edit-button mt-2"
+      *ngIf="inEditModeFlag && !loadingFlag"
+      type="submit"
+      [disabled]="emptyEditorCheck()"
+    >
+      {{ lexicon.save }}
+      <fa-icon [icon]="faSave"></fa-icon>
+    </button>
+    <button
+      class="btn cancel-button mt-2"
+      (click)="cancelEditMode(true)"
+      *ngIf="inEditModeFlag && !loadingFlag"
+    >
+      {{ lexicon.cancel }}
+      <fa-icon [icon]="faUndo"></fa-icon>
+    </button>
+  </div>
+</form>
+</div>
+<!-- End Content post section-->
+<div class="col-12 post-tools">
+  <div class="box">
+<span class="edit" (click)="enterEditMode()"> {{ lexicon.edit }} <fa-icon [icon]="faEdit"></fa-icon></span>
+<span class="share">Share <fa-icon [icon]=" faShareAlt"></fa-icon></span>
+<span class="report">Report <fa-icon [icon]="faTriangle"></fa-icon></span>
+</div>
+</div>
+</div>
+  </div>
+</div>
 </div>
 <div class="mt-3">
   <app-add-comment [postId]="post.id"></app-add-comment>

@@ -17,6 +17,9 @@ import {
   faChevronRight,
   faEdit,
   faUndo,
+  faSave,
+  faShareAlt,
+  faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons";
 import { LanguageEnum } from "src/app/helper/enums/language.enum";
 import { environment } from "src/environments/environment";
@@ -105,6 +108,15 @@ export class ViewPostComponent implements OnInit {
   }
   get faEdit() {
     return faEdit;
+  }
+  get faSave() {
+    return faSave;
+  }
+  get faShareAlt() {
+    return faShareAlt;
+  }
+  get faTriangle() {
+    return faExclamationTriangle;
   }
   get containerClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {

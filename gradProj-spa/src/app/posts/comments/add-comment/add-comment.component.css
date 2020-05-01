@@ -8,8 +8,8 @@
 
 .add-comment-card .form-button {
   max-width: 100px;
-  float: right;
+  float: left;
 }
 .rtl.add-comment-card .form-button {
-  float: left;
+  float: right;
 }
