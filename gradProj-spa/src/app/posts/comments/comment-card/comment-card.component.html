@@ -1,65 +1,77 @@
-<div class="container">
-  <div class="comments">
-    <div class="card">
-      <div class="header row">
-        <div class="avatar col-2 mb-2">
-          <img [src]="comment.userPhotoUrl || null" />
-        </div>
-        <span class="display-name col-6 title">{{ comment.username }}</span>
-        <!-- <span class="reputation">
-          <span><fa-icon [icon]="fastar"></fa-icon></span>122</span
-        > -->
-        <span class="caption col-4">
-          <fa-icon [icon]="faCalender"></fa-icon>
+<div [ngClass]="containerClasses" class=" comment-section">
+  <div class="card pd-comment">
+    <div class="container">
+  <div class="row">
+    <!-- Date comment Section-->
+  <div class="col-12 date">
+    <div class="comment-date">
+      <span class="caption col-4">
+        <fa-icon [icon]="faCalender"></fa-icon>
 
-          {{ comment.dateAddedUtc | localiseDate: "long":localeCode }}
-        </span>
-      </div>
-      <!---->
-      <div class="wrapper comment">
-        <form (ngSubmit)="submitEditedPost()" #editPostForm="ngForm">
-          <editor
-            *ngIf="!loadingFlag"
-            #content="ngModel"
-            [(ngModel)]="comment.content"
-            name="content"
-            [init]="config"
-            [disabled]="!inEditModeFlag"
-          ></editor>
-          <div class="text-center" *ngIf="loadingFlag">
-            <img [src]="loadingSvgPath" />
-          </div>
-          <div>
-            <button
-              class="btn edit-button mt-2"
-              *ngIf="inEditModeFlag && !loadingFlag"
-              type="submit"
-              [disabled]="emptyEditorCheck()"
-            >
-              {{ lexicon.save }} <fa-icon [icon]="faEdit"></fa-icon>
-            </button>
-            <button
-              class="btn cancel-button mt-2"
-              (click)="cancelEditMode(true)"
-              *ngIf="inEditModeFlag && !loadingFlag"
-            >
-              {{ lexicon.cancel }}
-              <fa-icon [icon]="faUndo"></fa-icon>
-            </button>
-          </div>
-        </form>
-      </div>
-      <div class="btn-comment">
-        <div class="rating-comment-section">
-          <span class="comment-up"><fa-icon [icon]="faSortUp"></fa-icon></span>
-          <span class="vote-count">{{ comment.votesCount }}</span>
-          <span class="comment-down"
-            ><fa-icon [icon]="faSortDown"></fa-icon
-          ></span>
-        </div>
-      </div>
+        {{ comment.dateAddedUtc | localiseDate: "long":localeCode }}
+      </span>
     </div>
-    <!---->
-    <div class="answers"></div>
+  </div>
+    <!-- End   Date comment Section-->
+  <!-- Start  comment-info-section-->
+  <div class="col-12 comment-info-section">
+    <a>
+      <img
+        class="avatar"
+        [src]="comment.userPhotoUrl || null"
+      />
+    </a>
+    <div class="username">
+    <a> {{ comment.username }}</a>
+    </div>
+
+  <div class="rating">
+  <span class="up"> <fa-icon class="rating-up" [icon]="faSortUp"></fa-icon></span>
+  <span class="rating-count">{{ comment.votesCount }}</span>
+  <span class="down"> <fa-icon class="rating-down" [icon]="faSortDown"></fa-icon>  </span>
+  </div>
+
+  </div>
+  <!-- End  comment-info-section-->
+  <!-- Start Content comment section-->
+  <div class="col-12">
+    <div class="wrapper comment">
+      <form (ngSubmit)="submitEditedPost()" #editPostForm="ngForm">
+        <editor
+          *ngIf="!loadingFlag"
+          #content="ngModel"
+          [(ngModel)]="comment.content"
+          name="content"
+          [init]="config"
+          [disabled]="!inEditModeFlag"
+        ></editor>
+        <div class="text-center" *ngIf="loadingFlag">
+          <img [src]="loadingSvgPath" />
+        </div>
+        <div>
+          <button
+            class="btn edit-button mt-2"
+            *ngIf="inEditModeFlag && !loadingFlag"
+            type="submit"
+            [disabled]="emptyEditorCheck()"
+          >
+            {{ lexicon.save }} <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+          <button
+            class="btn cancel-button mt-2"
+            (click)="cancelEditMode(true)"
+            *ngIf="inEditModeFlag && !loadingFlag"
+          >
+            {{ lexicon.cancel }}
+            <fa-icon [icon]="faUndo"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End Content post section-->
+
+  </div>
+    </div>
   </div>
 </div>
