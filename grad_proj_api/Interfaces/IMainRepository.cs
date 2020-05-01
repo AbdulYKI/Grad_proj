@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using grad_proj_api.Helpers;
 using grad_proj_api.Models;
 
 namespace grad_proj_api.Interfaces {
@@ -14,7 +15,7 @@ namespace grad_proj_api.Interfaces {
         Task<Photo> GetPhoto (int id);
         Task<List<Country>> GetCountries ();
         Task<Post> GetPost (int id);
-        Task<List<Post>> GetPosts ();
+        Task<PagedList<Post>> GetPosts (PostPagingParams postPagingParams);
         Task<Comment> GetComment (int id);
         Task<List<Comment>> GetComments (int postId);
     }

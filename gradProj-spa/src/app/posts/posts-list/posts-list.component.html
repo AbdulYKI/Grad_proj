@@ -16,4 +16,13 @@
       *ngIf="showEditorFlag"
     ></app-add-post>
   </div>
+  <ngb-pagination
+    class="d-flex justify-content-center"
+    [(page)]="pagination.currentPage"
+    [pageSize]="pagination.pageSize"
+    [boundaryLinks]="true"
+    [collectionSize]="pagination.totalItems"
+    (pageChange)="pageChange($event)"
+  >
+  </ngb-pagination>
 </div>

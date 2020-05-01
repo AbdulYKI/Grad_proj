@@ -41,7 +41,7 @@ const routes: Routes = [
     path: "post",
     runGuardsAndResolvers: "always",
     component: PostsListComponent,
-    resolve: { postsList: PostsListResolver },
+    resolve: { postsPaginationResult: PostsListResolver },
     canDeactivate: [PreventUnsavedChangesGuardForCreatePost],
   },
   {

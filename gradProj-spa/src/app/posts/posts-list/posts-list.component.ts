@@ -1,3 +1,5 @@
+import { PostService } from "src/app/services/post.service";
+import { PaginationResult } from "./../../helper/pagination/pagination-result";
 import { Subject } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { AuthService } from "./../../services/auth.service";
@@ -12,6 +14,7 @@ import { LanguageEnum } from "../../helper/enums/language.enum";
 import { Post } from "../../models/post";
 import { AddPostComponent } from "../add-post/add-post.component";
 import { takeUntil } from "rxjs/operators";
+import { Pagination } from "src/app/helper/pagination/pagination";
 
 @Component({
   selector: "app-posts-list",
@@ -22,12 +25,14 @@ export class PostsListComponent implements OnInit, OnDestroy {
   showEditorFlag = false;
   status = false;
   posts: Post[];
+  pagination: Pagination;
   destroy: Subject<boolean> = new Subject<boolean>();
   @ViewChild("addPostComponent") addPostComponent: AddPostComponent;
   constructor(
     private sharedService: SharedService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private postService: PostService
   ) {}
 
   get faPlus() {
@@ -37,9 +42,12 @@ export class PostsListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.data
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: { postsList: Post[] }) => {
-        this.posts = data.postsList;
-      });
+      .subscribe(
+        (data: { postsPaginationResult: PaginationResult<Post[]> }) => {
+          this.posts = data.postsPaginationResult.result;
+          this.pagination = data.postsPaginationResult.pagination;
+        }
+      );
   }
   showEditor() {
     this.showEditorFlag = true;
@@ -62,6 +70,12 @@ export class PostsListComponent implements OnInit, OnDestroy {
   }
   signedIn() {
     return this.authService.signedIn();
+  }
+  pageChange(pageNumber: number) {
+    this.postService.getPosts(5, pageNumber).subscribe((paginationResult) => {
+      this.posts = paginationResult.result;
+      this.pagination = paginationResult.pagination;
+    });
   }
   ngOnDestroy() {}
 }
