@@ -1,6 +1,6 @@
 import { SharedService } from "./../services/shared.service";
 import { Component, OnInit } from "@angular/core";
-import { LanguageEnum } from "../helper/language.enum";
+import { LanguageEnum } from "../helper/enums/language.enum";
 import { faPhone, faMapMarker, faAt } from "@fortawesome/free-solid-svg-icons";
 import { Subject } from "rxjs";
 @Component({

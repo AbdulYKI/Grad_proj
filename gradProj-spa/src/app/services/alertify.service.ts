@@ -1,6 +1,6 @@
 import { SharedService } from "./shared.service";
 import { Injectable } from "@angular/core";
-import { LanguageEnum } from "../helper/language.enum";
+import { LanguageEnum } from "../helper/enums/language.enum";
 
 declare let alertify: any;
 @Injectable({

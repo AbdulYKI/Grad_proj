@@ -1,6 +1,6 @@
 import { environment } from "../../../environments/environment";
 import { CustomDatePicker } from "../../helper/custom-date-picker";
-import { LanguageEnum } from "../../helper/language.enum";
+import { LanguageEnum } from "../../helper/enums/language.enum";
 import { SharedService } from "../../services/shared.service";
 import { NgbDatePickerValue } from "../../helper/ngb-date-picker-value";
 import { EditProfileResolverData } from "../../helper/edit-profile-resolver-data";
@@ -30,7 +30,7 @@ import { UserService } from "../../services/user.service";
 import { AlertifyService } from "../../services/alertify.service";
 import { AuthService } from "../../services/auth.service";
 import { takeUntil } from "rxjs/operators";
-import { GenderEnum } from "../../helper/gender.enum";
+import { GenderEnum } from "../../helper/enums/gender.enum";
 import { Country } from "../../models/country";
 import {
   NgbDatepickerI18n,

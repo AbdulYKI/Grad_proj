@@ -1,8 +1,8 @@
-import { LanguageEnum } from "./../helper/language.enum";
+import { LanguageEnum } from "../helper/enums/language.enum";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { englishLexicon } from "../helper/english.lexicon";
-import { arabicLexicon } from "../helper/arabic.lexicon";
+import { englishLexicon } from "../helper/lexicon/english.lexicon";
+import { arabicLexicon } from "../helper/lexicon/arabic.lexicon";
 
 @Injectable({
   providedIn: "root",

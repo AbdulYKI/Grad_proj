@@ -1,4 +1,4 @@
-import { AuthGuard } from "./../guards/auth.guard";
+import { AuthGuard } from "../../guards/auth.guard";
 const countries = {
   AF: "Afghanistan",
   AL: "Albania",

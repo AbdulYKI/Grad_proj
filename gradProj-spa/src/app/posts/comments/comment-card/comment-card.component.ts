@@ -1,16 +1,53 @@
-import { Component, OnInit } from "@angular/core";
+import { SharedService } from "./../../../services/shared.service";
+import { AlertifyService } from "./../../../services/alertify.service";
+import { Comment } from "./../../../models/comment";
+import { Component, OnInit, Input } from "@angular/core";
 import {
   faSortUp,
   faSortDown,
   faStar,
+  faUndo,
+  faEdit,
+  faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { Patterns } from "src/app/helper/validation/patterns";
+import { AuthService } from "src/app/services/auth.service";
+import { CommentService } from "src/app/services/comment.service";
+import { environment } from "src/environments/environment";
+import { LanguageEnum } from "src/app/helper/enums/language.enum";
 @Component({
   selector: "app-comment-card",
   templateUrl: "./comment-card.component.html",
   styleUrls: ["./comment-card.component.css"],
 })
 export class CommentCardComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+    private commentService: CommentService,
+    private alertifyService: AlertifyService,
+    private sharedService: SharedService
+  ) {}
+  @Input() comment: Comment;
+  loadingFlag = false;
+  contentBeforeRefresh = "";
+  contentBeforeEdit: string;
+  toolbarsForEditMode =
+    // tslint:disable-next-line: max-line-length
+    "formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat | preview";
+  inEditModeFlag = false;
+  config: any = {
+    width: "100%",
+    base_url: "/tinymce",
+    suffix: ".min",
+    plugins:
+      // tslint:disable-next-line: max-line-length
+      "print preview autoresize searchreplace autolink directionality visualblocks visualchars  image imagetools link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists  wordcount   textpattern preview",
+    content_css: [],
+    toolbar: "",
+    directionality: "ltr",
+    menubar: false,
+    statusbar: false,
+  };
 
   ngOnInit(): void {}
 
@@ -22,5 +59,87 @@ export class CommentCardComponent implements OnInit {
   }
   get fastar() {
     return faStar;
+  }
+  get faUndo() {
+    return faUndo;
+  }
+  checkPostOwnership() {
+    if (this.signedIn()) {
+      return (
+        this.comment.userId ===
+        Number.parseInt(this.authService.decodedToken.nameid)
+      );
+    }
+    return false;
+  }
+  enterEditMode() {
+    this.config.toolbar = this.toolbarsForEditMode;
+    this.config.menubar = true;
+    this.inEditModeFlag = true;
+    this.refreshEditor();
+  }
+  submitEditedPost() {
+    this.commentService
+      .editComment(
+        this.authService.decodedToken.nameid,
+        this.comment.id,
+        this.comment
+      )
+      .subscribe(
+        () => {
+          this.alertifyService.success("Your Editing Has Been Saved");
+          this.cancelEditMode(false);
+        },
+        (error) => {
+          this.alertifyService.error(error);
+        }
+      );
+  }
+  refreshEditor() {
+    this.contentBeforeRefresh = this.comment.content;
+    this.loadingFlag = true;
+    setTimeout(() => {
+      this.comment.content = this.contentBeforeRefresh;
+      this.loadingFlag = false;
+      console.log(this.config);
+    }, 500);
+    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+      this.config.language = "ar";
+    } else {
+      this.config.language = "en_GB";
+    }
+  }
+  get loadingSvgPath() {
+    return environment.editorLoadingSvg;
+  }
+  cancelEditMode(revertToOldContent: boolean) {
+    if (revertToOldContent) {
+      this.comment.content = this.contentBeforeEdit;
+    }
+    this.inEditModeFlag = false;
+    this.config.toolbar = "";
+    this.config.menubar = false;
+    this.refreshEditor();
+  }
+  signedIn() {
+    return this.authService.signedIn();
+  }
+  emptyEditorCheck() {
+    if (this.comment.content === "") {
+      return true;
+    }
+    return Patterns.emptyEditorPattern.test(this.comment.content);
+  }
+  get lexicon() {
+    return this.sharedService.lexicon;
+  }
+  get faEdit() {
+    return faEdit;
+  }
+  get faCalender() {
+    return faCalendarAlt;
+  }
+  get localeCode() {
+    return this.sharedService.localeCode;
   }
 }

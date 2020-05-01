@@ -5,9 +5,9 @@ import { CommentService } from "./../../../services/comment.service";
 import { environment } from "src/environments/environment";
 import { SharedService } from "./../../../services/shared.service";
 import { Component, OnInit, ViewChild, Input } from "@angular/core";
-import { LanguageEnum } from "src/app/helper/language.enum";
+import { LanguageEnum } from "src/app/helper/enums/language.enum";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { Patterns } from "src/app/helper/patterns";
+import { Patterns } from "src/app/helper/validation/patterns";
 
 @Component({
   selector: "app-add-comment",
@@ -71,9 +71,9 @@ export class AddCommentComponent implements OnInit {
 
   get containerClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
-      return "add-comment-card  card rtl mt-2";
+      return "container add-comment-card  card rtl mt-2";
     }
-    return "add-comment-card card mt-2";
+    return "container add-comment-card card mt-2";
   }
 
   ngOnInit(): void {

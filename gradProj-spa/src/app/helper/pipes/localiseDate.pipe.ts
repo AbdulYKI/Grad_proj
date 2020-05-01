@@ -1,7 +1,7 @@
-import { SharedService } from "./../services/shared.service";
+import { SharedService } from "../../services/shared.service";
 import { Pipe, PipeTransform } from "@angular/core";
 import { DatePipe } from "@angular/common";
-import { LanguageEnum } from "./language.enum";
+import { LanguageEnum } from "../enums/language.enum";
 
 @Pipe({
   name: "localiseDate",

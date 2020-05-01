@@ -1,8 +1,8 @@
 <div [ngClass]="containerClasses">
-  <div class="row bg-post">
-    <div class="post-view-header col-12">
+  <div class="row card bg-post">
+    <div class="col-12">
       <div class="title-section row mt-2">
-        <div class="col-lg-1 col-md-1 col-4">
+        <div class="col-md-1 col-2 back_fix">
           <span class="back-section">
             <a class="backlink" [routerLink]="['/post']">
               <fa-icon [icon]="faChevron"></fa-icon>
@@ -10,10 +10,10 @@
             </a>
           </span>
         </div>
-        <div class="col-6 col-md-10 col-lg-10">
+        <div class="col-8 col-md-10">
           <a class="title">{{ post.title }}</a>
         </div>
-        <div class="col-2 col-md-1 col-lg-1">
+        <div class="col-2 col-md-1">
           <div ngbDropdown class="d-inline-block">
             <button
               class="btn btn-outline-primary"
@@ -22,15 +22,15 @@
             >
               ...
             </button>
+
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <button
                 ngbDropdownItem
+                *ngIf="checkPostOwnership()"
                 (click)="enterEditMode()"
-                *ngIf="checkPostOwnership() && !inEditModeFlag"
               >
                 {{ lexicon.edit }}
               </button>
-              <button ngbDropdownItem>{{ lexicon.report }}</button>
             </div>
           </div>
         </div>
@@ -105,35 +105,41 @@
                   <!--  End  content header  -->
                   <div class="container">
                     <div class="content-body">
-                      <editor
-                        *ngIf="!loadingFlag"
-                        #tinymce
-                        [(ngModel)]="post.content"
-                        name="content"
-                        [init]="config"
-                        [disabled]="!inEditModeFlag"
-                      ></editor>
-                      <div class="text-center" *ngIf="loadingFlag">
-                        <img [src]="loadingSvgPath" />
-                      </div>
-                      <div>
-                        <button
-                          class="btn edit-button mt-2"
-                          *ngIf="inEditModeFlag && !loadingFlag"
-                          (click)="submitEditedPost()"
-                          [disabled]="emptyEditorCheck()"
-                        >
-                          {{ lexicon.save }} <fa-icon [icon]="faEdit"></fa-icon>
-                        </button>
-                        <button
-                          class="btn cancel-button mt-2"
-                          (click)="cancelEditMode(true)"
-                          *ngIf="inEditModeFlag && !loadingFlag"
-                        >
-                          {{ lexicon.cancel }}
-                          <fa-icon [icon]="faUndo"></fa-icon>
-                        </button>
-                      </div>
+                      <form
+                        (ngSubmit)="submitEditedPost()"
+                        #editPostForm="ngForm"
+                      >
+                        <editor
+                          *ngIf="!loadingFlag"
+                          #content="ngModel"
+                          [(ngModel)]="post.content"
+                          name="content"
+                          [init]="config"
+                          [disabled]="!inEditModeFlag"
+                        ></editor>
+                        <div class="text-center" *ngIf="loadingFlag">
+                          <img [src]="loadingSvgPath" />
+                        </div>
+                        <div>
+                          <button
+                            class="btn edit-button mt-2"
+                            *ngIf="inEditModeFlag && !loadingFlag"
+                            type="submit"
+                            [disabled]="emptyEditorCheck()"
+                          >
+                            {{ lexicon.save }}
+                            <fa-icon [icon]="faEdit"></fa-icon>
+                          </button>
+                          <button
+                            class="btn cancel-button mt-2"
+                            (click)="cancelEditMode(true)"
+                            *ngIf="inEditModeFlag && !loadingFlag"
+                          >
+                            {{ lexicon.cancel }}
+                            <fa-icon [icon]="faUndo"></fa-icon>
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -142,12 +148,12 @@
           </div>
         </div>
       </div>
-      <div class="add-comment-section m-auto">
-        <app-add-comment [postId]="post.id"></app-add-comment>
-      </div>
-      <div class="comment-section">
-        <app-comment-card></app-comment-card>
-      </div>
     </div>
   </div>
+</div>
+<div class="mt-3">
+  <app-add-comment [postId]="post.id"></app-add-comment>
+</div>
+<div class="comment">
+  <app-comment-card [comment]="fakeComment"></app-comment-card>
 </div>

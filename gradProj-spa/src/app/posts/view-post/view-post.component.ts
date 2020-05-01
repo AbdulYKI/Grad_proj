@@ -1,8 +1,8 @@
-import { Patterns } from "./../../helper/patterns";
+import { Patterns } from "../../helper/validation/patterns";
 import { AlertifyService } from "./../../services/alertify.service";
 import { PostService } from "src/app/services/post.service";
 import { AuthService } from "./../../services/auth.service";
-import { LocaliseDatePipe } from "./../../helper/localiseDate.pipe";
+import { LocaliseDatePipe } from "../../helper/pipes/localiseDate.pipe";
 import { SharedService } from "./../../services/shared.service";
 import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
@@ -18,7 +18,7 @@ import {
   faEdit,
   faUndo,
 } from "@fortawesome/free-solid-svg-icons";
-import { LanguageEnum } from "src/app/helper/language.enum";
+import { LanguageEnum } from "src/app/helper/enums/language.enum";
 import { environment } from "src/environments/environment";
 @Component({
   selector: "app-view-post",
@@ -27,7 +27,17 @@ import { environment } from "src/environments/environment";
 })
 export class ViewPostComponent implements OnInit {
   defaulPhotoUrl: string = environment.defaultPhoto;
-  @ViewChild("tinymce") tinymce: any;
+  fakeComment = {
+    content: "new comment",
+    dateEditedUtc: null,
+    dateAddedUtc: "2020-04-30T14:59:58.6989271Z",
+    id: 8,
+    userId: 2,
+    username: "username1234",
+    userPhotoUrl:
+      "http://res.cloudinary.com/da57tn2gm/image/upload/v1588097061/uxf2ij9vf2hcdic44kky.jpg",
+    votesCount: 0,
+  };
   constructor(
     private route: ActivatedRoute,
     private sharedService: SharedService,
@@ -98,9 +108,9 @@ export class ViewPostComponent implements OnInit {
   }
   get containerClasses() {
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
-      return "container pd-post rtl";
+      return "container post-padding rtl";
     }
-    return "container pd-post";
+    return "container post-padding";
   }
   get localeCode() {
     return this.sharedService.localeCode;
@@ -110,7 +120,7 @@ export class ViewPostComponent implements OnInit {
     return faUndo;
   }
   checkPostOwnership() {
-    if (this.authService.signedIn()) {
+    if (this.signedIn()) {
       return (
         this.post.userId ===
         Number.parseInt(this.authService.decodedToken.nameid)
@@ -122,6 +132,7 @@ export class ViewPostComponent implements OnInit {
     this.config.toolbar = this.toolbarsForEditMode;
     this.config.menubar = true;
     this.inEditModeFlag = true;
+    this.contentBeforeEdit = this.post.content;
     this.refreshEditor();
   }
   submitEditedPost() {
@@ -162,5 +173,8 @@ export class ViewPostComponent implements OnInit {
     this.config.toolbar = "";
     this.config.menubar = false;
     this.refreshEditor();
+  }
+  signedIn() {
+    return this.authService.signedIn();
   }
 }
