@@ -133,6 +133,12 @@ export class CommentCardComponent implements OnInit {
   get lexicon() {
     return this.sharedService.lexicon;
   }
+  get containerClasses() {
+    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+      return "container post-padding rtl";
+    }
+    return "container post-padding";
+  }
   get faEdit() {
     return faEdit;
   }
