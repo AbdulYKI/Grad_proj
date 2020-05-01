@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using grad_proj_api.Helpers;
 using grad_proj_api.Interfaces;
 using grad_proj_api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -67,15 +68,20 @@ namespace grad_proj_api.Data {
             return post;
         }
 
-        public async Task<List<Post>> GetPosts () {
-            return await _context
+        public async Task<PagedList<Post>> GetPosts (PostPagingParams postPagingParams) {
+            var posts = _context
                 .Posts
                 .Include (c => c.User)
                 .ThenInclude (ph => ph.Photo)
                 .Include (uv => uv.PostUpVoters)
                 .Include (dv => dv.PostDownVoters)
-                .Include (v => v.PostViewers)
-                .ToListAsync ();
+                .Include (v => v.PostViewers);
+            if (postPagingParams.OrderBy == OrderBy.NEWEST)
+                posts.OrderByDescending ((p) => p.DateAddedUtc);
+            else if (postPagingParams.OrderBy == OrderBy.OLDEST)
+                posts.OrderBy ((p) => p.DateAddedUtc);
+
+            return await PagedList<Post>.CreateAsync (posts, postPagingParams.PageNumber, postPagingParams.PageSize);
 
         }
 

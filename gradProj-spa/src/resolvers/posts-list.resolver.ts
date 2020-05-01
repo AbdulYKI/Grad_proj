@@ -1,3 +1,4 @@
+import { PaginationResult } from "./../app/helper/pagination/pagination-result";
 import { PostsListComponent } from "./../app/posts/posts-list/posts-list.component";
 import { PostService } from "./../app/services/post.service";
 import { SharedService } from "../app/services/shared.service";
@@ -21,7 +22,9 @@ export class PostsListResolver implements Resolve<Post[]> {
   ) {}
 
   resolve(snapShot: ActivatedRouteSnapshot): any {
-    const posts: Observable<Post[]> = this.postService.getPosts().pipe(
+    const posts: Observable<PaginationResult<
+      Post[]
+    >> = this.postService.getPosts(5).pipe(
       catchError((error) => {
         this.handleError();
         return of(null);
