@@ -1,16 +1,14 @@
 /*full screen wallpaper responsive css */
-header{
-  background: linear-gradient(0deg,#ff2e22,#ffbc00);
- background-size: cover;
- height: 94vh;
- position: relative;
- overflow: hidden;
-
-
+header {
+  background: linear-gradient(0deg, #ff2e22, #ffbc00);
+  background-size: cover;
+  height: 94vh;
+  position: relative;
+  overflow: hidden;
 }
 
-header::after{
-  content: '';
+header::after {
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -22,22 +20,21 @@ header::after{
   z-index: 10;
 }
 
-header .header-content h1{
+header .header-content h1 {
   font-size: 45px;
   font-weight: bold;
   text-transform: capitalize;
   color: white;
   margin-top: 120px;
 }
-header .header-content p{
+header .header-content p {
   font-size: 20px;
   margin: 20px 0px 25px;
   color: white;
   letter-spacing: 1px;
   font-weight: 300px;
-  text-transform: capitalize;
 }
-header .btn-home{
+header .btn-home {
   border-radius: 5%;
   background: white;
   padding: 15px 30px;
@@ -55,43 +52,41 @@ header .btn-home{
   position: absolute;
   z-index: 99;
 }
-header .btn-home:hover{
+header .btn-home:hover {
   text-decoration: none;
   background-color: #ff5a17;
   color: white;
 }
-.headerimg{
+.headerimg {
   width: 100%;
 }
 /* End Header */
 
-
 /* Start Wrapper */
 
-.Home-section-1{
-  background: linear-gradient(to bottom,#ffffff,#eaeaea85);
+.Home-section-1 {
+  background: linear-gradient(to bottom, #ffffff, #eaeaea85);
   margin: 80px 0px;
 }
-.Home-section-1 .content{
+.Home-section-1 .content {
   margin-top: 40px;
 }
-.Home-section-1 .content h2{
+.Home-section-1 .content h2 {
   font-size: 35px;
   font-weight: bold;
   text-transform: capitalize;
-  color: rgba(0,0,0,.5);
+  color: rgba(0, 0, 0, 0.5);
 }
 
-.Home-section-1 .content p{
+.Home-section-1 .content p {
   font-size: 20px;
   margin: 20px 0px 25px;
-  color: rgba(0,0,0,.5);
+  color: rgba(0, 0, 0, 0.5);
   letter-spacing: 1px;
   font-weight: 300px;
   text-transform: capitalize;
 }
-.Home-section-1 .content a{
-
+.Home-section-1 .content a {
   text-align: center;
   font-size: 17px;
   text-transform: capitalize;
@@ -101,23 +96,23 @@ header .btn-home:hover{
   font-weight: 500;
   color: #1e96d2;
   text-decoration: none;
-  }
+}
 
-  .chevRight{
-margin-left: 15px;
-  }
+.chevRight {
+  margin-left: 15px;
+}
 
 .Home-section-1 .imgs img {
   width: 100%;
 }
 
-.waves{
-width: 100%;
-min-height: 33vh;
-position: relative;
+.waves {
+  width: 100%;
+  min-height: 33vh;
+  position: relative;
 }
-.waves::before{
-  content: '';
+.waves::before {
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -128,12 +123,10 @@ position: relative;
   background-repeat: no-repeat;
 }
 
-
 /* #Media
 ================================================== */
 
 @media (max-width: 767px) {
-
 }
 
 /* up arrow soon......
@@ -173,114 +166,108 @@ position: relative;
 
 /*Media Query Home Pgge */
 
-
 /* Small devices (landscape phones, less than 768px*/
 @media (max-width: 767.98px) {
-/*Nav Media */
-h1 {
-  font-size: 38px;
-}
-.nav-item:after {
-  display: none;
-}
-.nav-item::before {
-  position: absolute;
-  display: block;
-  top: 15px;
-  left: 0;
-  width: 11px;
-  height: 1px;
-  content: "";
-  border: none;
-  background-color: #000;
-  vertical-align: 0;
-}
-.dropdown-toggle::after {
-  position: absolute;
-  display: block;
-  top: 10px;
-  left: -23px;
-  width: 1px;
-  height: 11px;
-  content: "";
-  border: none;
-  background-color: #000;
-  vertical-align: 0;
-  transition: all 200ms linear;
-}
-.dropdown-toggle[aria-expanded="true"]::after {
-  transform: rotate(90deg);
-  opacity: 0;
-}
-.dropdown-menu {
-  padding: 0 !important;
-  background-color: transparent;
-  box-shadow: none;
-  transition: all 200ms linear;
-}
-.dropdown-toggle[aria-expanded="true"] + .dropdown-menu {
-  margin-top: 10px !important;
-  margin-bottom: 20px !important;
-}
-.dark .nav-item::before {
-  background-color: #fff;
-}
-.dark .dropdown-toggle::after {
-  background-color: #fff;
-}
-.dark .dropdown-menu {
-  background-color: transparent;
-  box-shadow: none;
-}
-
-/*End Nav Media */
-
-header::after{
-  display: none;
-}
-header .header-content h1{
-  margin-top: 15px;
-  font-size: 35px;
-}
-header .header-content p{
-  margin-top: 15px;
-  font-size: 25px;
-}
-.headerimg{
-  margin-top: 20px;;
-  width: 90%;
-}
-.Home-section-1{
-text-align: center;
-}
-.Home-section-1 .imgs{
-  margin-top: 40px;
+  /*Nav Media */
+  h1 {
+    font-size: 38px;
+  }
+  .nav-item:after {
+    display: none;
+  }
+  .nav-item::before {
+    position: absolute;
+    display: block;
+    top: 15px;
+    left: 0;
+    width: 11px;
+    height: 1px;
+    content: "";
+    border: none;
+    background-color: #000;
+    vertical-align: 0;
+  }
+  .dropdown-toggle::after {
+    position: absolute;
+    display: block;
+    top: 10px;
+    left: -23px;
+    width: 1px;
+    height: 11px;
+    content: "";
+    border: none;
+    background-color: #000;
+    vertical-align: 0;
+    transition: all 200ms linear;
+  }
+  .dropdown-toggle[aria-expanded="true"]::after {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+  .dropdown-menu {
+    padding: 0 !important;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 200ms linear;
+  }
+  .dropdown-toggle[aria-expanded="true"] + .dropdown-menu {
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+  }
+  .dark .nav-item::before {
+    background-color: #fff;
+  }
+  .dark .dropdown-toggle::after {
+    background-color: #fff;
+  }
+  .dark .dropdown-menu {
+    background-color: transparent;
+    box-shadow: none;
   }
 
+  /*End Nav Media */
 
+  header::after {
+    display: none;
+  }
+  header .header-content h1 {
+    margin-top: 15px;
+    font-size: 35px;
+  }
+  header .header-content p {
+    margin-top: 15px;
+    font-size: 25px;
+  }
+  .headerimg {
+    margin-top: 20px;
+    width: 90%;
+  }
+  .Home-section-1 {
+    text-align: center;
+  }
+  .Home-section-1 .imgs {
+    margin-top: 40px;
+  }
 }
-
-
 
 /* Medium devices (tablets, less than 992px)*/
 @media (max-width: 991.98px) {
-  header .header-content{
+  header .header-content {
     margin: 30px 0px;
     text-align: center;
   }
-  header .header-content h1{
+  header .header-content h1 {
     margin-top: 0px;
   }
-  .headerimg{
-    margin-top: 40px;;
+  .headerimg {
+    margin-top: 40px;
     width: 60%;
   }
-  header .btn-home{
+  header .btn-home {
     position: relative;
   }
 
-  header::after{
+  header::after {
     display: none;
   }
- }
-
+}

@@ -1,78 +1,76 @@
-<header>
-<div class="container">
-  <div class="header-content">
-    <div class="row">
-      <div class="col-lg-6 col-12">
-        <h1>A New Way to Learn </h1>
-        <p>Grad-Proj is the best platform to help you enhance your skills, expand your knowledge and prepare for technical interviews.
-        </p>
-        <a href="#" class="btn-home">Create Account Now <span class="chevRight"><fa-icon [icon]="faChevronRight"></fa-icon></span> </a>
-      </div>
+<span [class.rtl]="isInRtlMode">
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <h1>{{ lexicon.homeFirstParagraphTitle }}</h1>
+            <p>
+              {{ lexicon.homeFirstParagraphBody }}
+            </p>
+            <a [routerLink]="['/sign-up']" class="btn-home"
+              >{{ lexicon.createAccountLinkText }}
+              <span class="chevRight"
+                ><fa-icon [icon]="faChevronRight"></fa-icon
+              ></span>
+            </a>
+          </div>
 
-      <div class="col-lg-6 col-12">
-        <img  class="img-responsive headerimg" src="https://cdn.citymapia.com/kottayam/graffiti9-digital-marketing-agency/16873/Portfolio.jpg?biz=2875" alt="">
+          <div class="col-lg-6 col-12">
+            <img
+              class="img-responsive headerimg"
+              src="https://cdn.citymapia.com/kottayam/graffiti9-digital-marketing-agency/16873/Portfolio.jpg?biz=2875"
+              alt=""
+            />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-</header>
-<!--End Header Home Page-->
+  </header>
+  <!--End Header Home Page-->
 
-<!--Start  Home Section 1 -->
-<div class="Home-section-1">
-<div class="container">
-  <div class="row">
-<div class="col-md-6 content">
-<h2>Start Exploring</h2>
-<p>Explore is a well-organized tool that helps you get the most out of LeetCode by providing structure to guide your progress towards the next step in your programming career.
-</p>
-<a href="#">Get Started <span class="chevRight"><fa-icon [icon]="faChevronRight"></fa-icon></span> </a>
-</div>
-<div class="col-md-6 imgs">
-<img class="img-responsive" src="https://www.zydesoft.com/wp-content/uploads/2019/12/abt_img.png" alt="">
-</div>
-</div>
-</div>
-<div class="waves"></div>
-</div>
-
-
-
-<section class="section-22" style="padding: 80px 0px;">
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p><p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p><p>Test</p>
-<p>Test</p><p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-<p>Test</p>
-
-<p>Test</p>
-</section>
- <!--
-  Swiper
- <div class="swiper-container">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="https://img.freepik.com/free-vector/dynamic-fluid-gradient-background-liquid-shape-composition_53295-284.jpg?size=626&ext=jpg"> Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
+  <!--Start  Home Section 1 -->
+  <div class="Home-section-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 content">
+          <h2>{{ lexicon.homeSecondParagphTitle }}</h2>
+          <p>
+            {{ lexicon.homeSecondParagphBody }}
+          </p>
+          <a [routerLink]="['/post']"
+            >{{ lexicon.getStartedLinkText }}
+            <span class="chevRight"
+              ><fa-icon [icon]="faChevronRight"></fa-icon
+            ></span>
+          </a>
+        </div>
+        <div class="col-md-6 imgs">
+          <img
+            class="img-responsive"
+            src="https://www.zydesoft.com/wp-content/uploads/2019/12/abt_img.png"
+            alt=""
+          />
+        </div>
+      </div>
     </div>
-     Add Pagination
-    <div class="swiper-pagination"></div>
-     Add Arrows
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+    <div class="waves"></div>
   </div>
--->
+
+  <section class="section-22" style="padding: 80px 0px;"></section>
+  <!--
+    Swiper
+   <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="https://img.freepik.com/free-vector/dynamic-fluid-gradient-background-liquid-shape-composition_53295-284.jpg?size=626&ext=jpg"> Slide 1</div>
+        <div class="swiper-slide">Slide 2</div>
+        <div class="swiper-slide">Slide 3</div>
+      </div>
+       Add Pagination
+      <div class="swiper-pagination"></div>
+       Add Arrows
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  -->
+</span>

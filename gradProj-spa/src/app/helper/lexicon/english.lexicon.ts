@@ -367,4 +367,13 @@ export const englishLexicon = {
   share: "Share",
   dateEdited: "Date of the Last Edit",
   dateAdded: "Date of Creation",
+  homeFirstParagraphTitle: "A New Place to Find Solutions For Your Bugs",
+  homeFirstParagraphBody:
+    "Grad-Proj is a new platform to help you enhance your skills, expand your knowledge and fix your bugs.",
+  createAccountLinkText: "Create Account Now",
+  homeSecondParagphTitle: "Start Exploring",
+  homeSecondParagphBody: `Grad-Proj is a project that focuses on helping out both the Arab and
+   non-Arab developers of the world, explore its posts in which you canhelp others or create your
+    own post and ask for other developers' help.`,
+  getStartedLinkText: "Get Started",
 };

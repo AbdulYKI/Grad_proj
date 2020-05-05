@@ -31,6 +31,10 @@ export class AppComponent implements OnInit {
   ) {
     router.events.subscribe((event: RouterEvent) => {
       this.navigationInterceptor(event);
+      if (!(event instanceof NavigationEnd)) {
+        return;
+      }
+      window.scrollTo(0, 0);
     });
     registerLocaleData(ar);
   }
