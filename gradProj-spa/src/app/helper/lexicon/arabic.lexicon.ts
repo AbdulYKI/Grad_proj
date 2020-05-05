@@ -365,4 +365,13 @@ export const arabicLexicon = {
   share: "مشاركة",
   dateEdited: "تاريخ التعديل الأخير",
   dateAdded: "تاريخ الإنشاء",
+  homeFirstParagraphTitle: "مكان جديد لتجد حلولًا لمشاكلك البرمجية",
+  homeFirstParagraphBody:
+    "   Grad-Proj عبارة عن منصة جديدة لمساعدتك على تحسين مهاراتك و توسيع معرفتك و مساعدتك في حل مشاكلك البرمجية ",
+  createAccountLinkText: "أنشئ حسابك الآن",
+  homeSecondParagphTitle: "إبدأ بالاستكشاف",
+  homeSecondParagphBody: ` مشروعنا يركز على مساعدة
+   المبرجين العرب وغيرهم في العالم, استكشف منشوراته التي تستطيع فيها مساعدة الآخرين
+  أو أنشئ منشورك الخاص لتطلب مساعدة من ذوي الخبرة`,
+  getStartedLinkText: "لنبدأ",
 };
