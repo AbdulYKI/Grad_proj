@@ -1,6 +1,7 @@
-<nav
-  class="bg-light navbar-expand-md start-header start-style fixed-top"
-  [ngClass]="onScroll()"
+<div
+  class="bg-light navbar-expand-md fixed-top bottom-border"
+  [class.on-scroll]="shouldIncludeOnScrollClass"
+  [class.start-header]="shouldHaveStartHeaderClass"
 >
   <div [ngClass]="containerClasses">
     <div class="row">
@@ -107,4 +108,4 @@
       </div>
     </div>
   </div>
-</nav>
+</div>

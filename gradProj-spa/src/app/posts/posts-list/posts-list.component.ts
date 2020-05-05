@@ -1,7 +1,8 @@
+import { paginationDefaults } from "./../../helper/pagination/pagination-defaults.constants";
 import { PostService } from "src/app/services/post.service";
 import { PaginationResult } from "./../../helper/pagination/pagination-result";
 import { Subject } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "./../../services/auth.service";
 import { SharedService } from "../../services/shared.service";
 import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
@@ -22,7 +23,7 @@ import { Pagination } from "src/app/helper/pagination/pagination";
   styleUrls: ["./posts-list.component.css"],
 })
 export class PostsListComponent implements OnInit, OnDestroy {
-  showEditorFlag = false;
+  shouldShowEditor = false;
   status = false;
   posts: Post[];
   pagination: Pagination;
@@ -32,7 +33,8 @@ export class PostsListComponent implements OnInit, OnDestroy {
     private sharedService: SharedService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private postService: PostService
+    private postService: PostService,
+    private router: Router
   ) {}
 
   get faPlus() {
@@ -49,14 +51,19 @@ export class PostsListComponent implements OnInit, OnDestroy {
         }
       );
   }
-  showEditor() {
-    this.showEditorFlag = true;
-  }
-  hideEditor(newPost: Post) {
-    if (newPost != null) {
-      this.posts.push(newPost);
+  newPostButtonPressed() {
+    if (this.signedIn()) {
+      this.shouldShowEditor = true;
+    } else {
+      this.router.navigate(["/sign-in"]);
     }
-    this.showEditorFlag = false;
+  }
+  hideEditor(hasNewPostAdded: boolean) {
+    if (hasNewPostAdded) {
+      this.pageChange(this.pagination.currentPage);
+    }
+
+    this.shouldShowEditor = false;
   }
 
   get lexicon() {

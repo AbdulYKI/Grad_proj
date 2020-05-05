@@ -8,11 +8,5 @@ namespace grad_proj_api.Dtos {
 
         public string Content { get; set; }
 
-        public DateTime MessageSentUtc { get; set; }
-
-        public MessageForSendingDto () {
-            MessageSentUtc = DateTime.UtcNow;
-
-        }
     }
 }

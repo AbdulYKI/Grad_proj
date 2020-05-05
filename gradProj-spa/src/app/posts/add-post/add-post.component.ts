@@ -26,7 +26,8 @@ import { takeUntil } from "rxjs/operators";
 export class AddPostComponent implements OnInit, OnDestroy {
   @ViewChild("tinymce") tinymce: any;
   @ViewChild("postForm") postForm: NgForm;
-  @Output() editorClosedEvent = new EventEmitter<Post>();
+  @Output() editorClosedEvent = new EventEmitter<boolean>();
+
   html = ``;
   post: Post = new Post();
   config: any = {
@@ -72,10 +73,10 @@ export class AddPostComponent implements OnInit, OnDestroy {
       if (
         confirm(this.sharedService.lexicon.preventUnsavedChangesGuardMessage)
       ) {
-        this.editorClosedEvent.emit(null);
+        this.editorClosedEvent.emit(true);
       }
     } else {
-      this.editorClosedEvent.emit(null);
+      this.editorClosedEvent.emit(false);
     }
   }
   get faPaperPlane() {
@@ -101,10 +102,12 @@ export class AddPostComponent implements OnInit, OnDestroy {
       .subscribe(
         (post: any) => {
           this.editorClosedEvent.emit(post);
-          this.alertifyService.success("Post Successfully Created");
+          this.alertifyService.success(
+            this.lexicon.postSuccessfullySubmittedMessage
+          );
         },
         (error) => {
-          this.alertifyService.error("Post Failed To Be Created");
+          this.alertifyService.error(this.lexicon.postFailedSubmittionMessage);
         }
       );
   }

@@ -1,10 +1,14 @@
 <div [ngClass]="editorHeaderClasses">
-  <button class="btn cancel" (click)="hideEditor()">
+  <button class="btn cancel-button mb-2" (click)="hideEditor()">
     {{ lexicon.cancel }} <fa-icon [icon]="faTimes"></fa-icon>
   </button>
 
   <form (ngSubmit)="onSubmit()" id="postForm" #postForm="ngForm">
-    <button class="btn form-button" type="submit" [disabled]="postForm.invalid">
+    <button
+      class="btn form-button create-button mb-2"
+      type="submit"
+      [disabled]="postForm.invalid"
+    >
       {{ lexicon.create }} <fa-icon [icon]="faPaperPlane"></fa-icon>
     </button>
     <div class="title">

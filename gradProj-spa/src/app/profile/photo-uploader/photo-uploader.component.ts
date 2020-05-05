@@ -28,7 +28,7 @@ export class PhotoUploaderComponent implements OnInit, OnDestroy {
   // has to be null or I can't access it from outside
   photoUrl: string = null;
   defaultPhoto = environment.defaultPhoto;
-  uploadingFlag = false;
+  isUploading = false;
   allowedExtensions = ["jpg", "jpeg", "png"];
   ngOnInit(): void {}
   get faImage() {
@@ -41,7 +41,7 @@ export class PhotoUploaderComponent implements OnInit, OnDestroy {
     const newPhoto: File = event.target.files[0];
 
     if (this.validatePhoto(newPhoto)) {
-      this.uploadingFlag = true;
+      this.isUploading = true;
       const formData = new FormData();
       formData.append("file", newPhoto, newPhoto.name);
       this.photoService
@@ -51,15 +51,15 @@ export class PhotoUploaderComponent implements OnInit, OnDestroy {
           (photo: Photo) => {
             this.authService.changeMemeberPhotoUrl(photo.url);
             this.photoUrl = photo.url;
-            this.uploadingFlag = false;
+            this.isUploading = false;
           },
           (error) => {
             this.alertifyService.error(error);
-            this.uploadingFlag = false;
+            this.isUploading = false;
           }
         );
     } else {
-      this.uploadingFlag = false;
+      this.isUploading = false;
     }
   }
   validatePhoto(photo: File): boolean {

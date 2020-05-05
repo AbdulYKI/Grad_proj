@@ -11,14 +11,14 @@
 .title .input-group input {
   background: transparent;
 }
-.editor-header .cancel {
+.editor-header .cancel-button {
   background-color: #ffffff;
   color: #90a4ae;
   outline: none;
   transition-duration: 0.4s;
   border-color: #cfd8dc;
 }
-.editor-header .cancel:hover {
+.editor-header .cancel-button:hover {
   background-color: #90a4ae47;
   color: #999;
   outline: none;
@@ -26,10 +26,16 @@
   border-color: #e3e4e4;
 }
 
-.rtl.editor-header .cancel {
+.rtl.editor-header .cancel-button {
+  float: right;
+}
+.editor-header .cancel-button {
   float: left;
 }
-.editor-header .cancel {
+.rtl.editor-header .create-button {
+  float: left;
+}
+.editor-header .create-button {
   float: right;
 }
 .editor-wrapper {

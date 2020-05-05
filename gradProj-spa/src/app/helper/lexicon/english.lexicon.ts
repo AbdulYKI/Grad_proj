@@ -359,4 +359,12 @@ export const englishLexicon = {
   edit: "Edit",
   save: "Save",
   report: "Report",
+  signInToCommentMessage: "Sign in to Comment...",
+  postSuccessfullySubmittedMessage: "Post Successfully Created!",
+  commentSuccessfullySubmittedMessege: "Comment Successfully Created!",
+  postFailedSubmittionMessage: "Post Failed to be Created",
+  commentFailedSubmittionMessage: "Comment Failed to be Created",
+  share: "Share",
+  dateEdited: "Date of the Last Edit",
+  dateAdded: "Date of Creation",
 };

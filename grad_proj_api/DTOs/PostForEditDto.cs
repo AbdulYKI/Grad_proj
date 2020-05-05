@@ -15,11 +15,6 @@ namespace grad_proj_api.DTOs {
         [CustomValidation (typeof (Extension), nameof (Extension.ValidateContent))]
         public string Content { get; set; }
 
-        public DateTime DateEditedUtc { get; set; }
-        public PostForEditDto () {
-            DateEditedUtc = DateTime.UtcNow;
-        }
-
     }
 
 }

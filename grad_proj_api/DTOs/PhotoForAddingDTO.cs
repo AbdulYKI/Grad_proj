@@ -7,9 +7,5 @@ namespace grad_proj_api.Dtos {
 
         [Required]
         public IFormFile File { get; set; }
-        public DateTime DateAddedUtc { get; set; }
-        public PhotoForAddingDto () {
-            DateAddedUtc = DateTime.UtcNow;
-        }
     }
 }

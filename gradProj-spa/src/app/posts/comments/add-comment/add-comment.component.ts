@@ -4,7 +4,14 @@ import { AuthService } from "./../../../services/auth.service";
 import { CommentService } from "./../../../services/comment.service";
 import { environment } from "src/environments/environment";
 import { SharedService } from "./../../../services/shared.service";
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter,
+} from "@angular/core";
 import { LanguageEnum } from "src/app/helper/enums/language.enum";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { Patterns } from "src/app/helper/validation/patterns";
@@ -19,7 +26,8 @@ export class AddCommentComponent implements OnInit {
   @ViewChild("tinymce") tinymce: any;
   comment: Comment;
   oldContentBeforeRefresh = "";
-  loadingFlag = false;
+  @Output() newCommentAdded = new EventEmitter();
+  isLoading = false;
   config: any = {
     width: "100%",
     base_url: "/tinymce",
@@ -48,10 +56,10 @@ export class AddCommentComponent implements OnInit {
   }
   refreshEditor() {
     this.oldContentBeforeRefresh = this.comment.content;
-    this.loadingFlag = true;
+    this.isLoading = true;
     setTimeout(() => {
       this.comment.content = this.oldContentBeforeRefresh;
-      this.loadingFlag = false;
+      this.isLoading = false;
     }, 500);
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       this.config.language = "ar";
@@ -90,10 +98,16 @@ export class AddCommentComponent implements OnInit {
       )
       .subscribe(
         () => {
-          this.alertifyService.success("comment added");
+          this.alertifyService.success(
+            this.lexicon.commentSuccessfullySubmittedMessege
+          );
+          this.newCommentAdded.emit();
+          this.comment.content = "";
         },
         (error) => {
-          this.alertifyService.error("error");
+          this.alertifyService.error(
+            this.lexicon.commentFailedSubmittionMessage
+          );
         }
       );
   }
@@ -102,5 +116,8 @@ export class AddCommentComponent implements OnInit {
       return true;
     }
     return Patterns.emptyEditorPattern.test(this.comment.content);
+  }
+  signedIn() {
+    return this.authService.signedIn();
   }
 }

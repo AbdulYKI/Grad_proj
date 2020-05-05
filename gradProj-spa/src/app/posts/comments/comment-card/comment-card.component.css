@@ -1,23 +1,23 @@
-.comment-section{
+.comment-section {
   padding: 45px 0px;
 }
-.pd-comment{
+.pd-comment {
   padding-bottom: 50px;
   margin: 0px 10px;
 }
-.date{
+.date {
   background-color: #adadad1c;
   padding: 5px;
 }
-.comment-date{
+.comment-date {
   margin-left: 5px;
   display: inline;
   font-size: 12px;
   color: #adadad;
 }
 
-.comment-info-section{
-padding: 20px 15px;
+.comment-info-section {
+  padding: 20px 15px;
 }
 .avatar {
   width: 40px;
@@ -26,71 +26,159 @@ padding: 20px 15px;
   background-color: #f5f5f5;
   vertical-align: middle;
 }
-.username , .rating{
+.username,
+.voting-section {
   display: inline;
   vertical-align: middle;
 }
-.username{
+.username {
   font-size: 12px;
   color: #bdbdbd;
   cursor: pointer;
   transition: 0.6s ease-in-out;
 }
-.username:hover{
+.username:hover {
   color: blue;
 }
 
-.rating{
+.voting-section {
   margin: 0px 14px;
 }
-.up{
+.up-vote-container {
   vertical-align: middle;
 }
-.down{
+.down-vote-container {
   vertical-align: text-bottom;
 }
-.rating-up,
-  .rating-down {
-    background-color: #88888836;
-    border-radius: 15%;
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-    margin: auto;
-    display: inline-block;
-    cursor: pointer;
-  }
 
-  .rating-up {
-    color: green;
-    line-height: 28px;
-    text-align: center;
-    transition: 0.6s ease-in-out;
-  }
-  .rating-down {
-    color: red;
-    line-height: 16px;
-    text-align: center;
-    transition: 0.6s ease-in-out;
-  }
-  .rating-up:hover {
-    background-color: green !important;
-    color: white;
-  }
-  .rating-down:hover {
-    background-color: red !important;
-    color: white;
-  }
-  .rating-count {
-    padding: 10px 0px;
-    font-size: 15px;
-    font-weight: 500;
-    text-shadow: 1px 1px 1px;
-    margin: 0px 14px;
-  }
+.up-vote,
+.down-vote {
+  background-color: #88888836;
+  border-radius: 15%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  margin: auto;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.up-vote {
+  color: green;
+  line-height: 28px;
+  text-align: center;
+  transition: 0.6s ease-in-out;
+}
+.down-vote {
+  color: red;
+  line-height: 16px;
+  text-align: center;
+  transition: 0.6s ease-in-out;
+}
+
+.is-up-voted {
+  background-color: green !important;
+  color: white;
+  line-height: 28px;
+  text-align: center;
+  transition: 0.6s ease-in-out;
+  border-radius: 15%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  margin: auto;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.is-down-voted {
+  background-color: red !important;
+  color: white;
+  line-height: 16px;
+  text-align: center;
+  transition: 0.6s ease-in-out;
+  border-radius: 15%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  margin: auto;
+  display: inline-block;
+  cursor: pointer;
+}
+.up-vote:hover {
+  background-color: green !important;
+  color: white;
+}
+
+.down-vote:hover {
+  background-color: red !important;
+  color: white;
+}
+.vote-count {
+  padding: 10px 0px;
+  font-size: 15px;
+  font-weight: 500;
+  text-shadow: 1px 1px 1px;
+  margin: 0px 14px;
+}
 
 /* rtl classes */
-.rtl .username{
+.rtl .username {
   margin: 0px 12px;
   display: inline-block;
+}
+.comment-tools {
+  padding: 15px 20px;
+}
+.comment-tools .box {
+  background-color: #adadad1c;
+  width: max-content;
+  padding: 4px 20px;
+  border-radius: 50px;
+  margin: 12px 0px;
+}
+.comment-tools .box span {
+  margin-right: 20px;
+  cursor: pointer;
+  color: #8888;
+  transition: 0.6s ease-in-out;
+}
+.comment-tools .box span:hover {
+  color: black;
+}
+.save-button:enabled,
+.cancel-button:enabled {
+  cursor: pointer !important;
+}
+.save-button:hover,
+.cancel-button:hover {
+  opacity: 0.8;
+}
+.save-button:disabled {
+  cursor: auto !important;
+  background-color: #989494 !important;
+  border-color: #989494 !important;
+  cursor: auto !important;
+}
+
+.save-button {
+  background-color: #3dc867 !important;
+  opacity: 1;
+  float: right;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
+  color: white !important;
+  margin: 0px 15px 0px 5px;
+}
+
+.cancel-button {
+  background-color: #ec2626 !important;
+  opacity: 1;
+  float: left;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
+  color: white !important;
+  margin: 0px 15px 0px 5px;
 }

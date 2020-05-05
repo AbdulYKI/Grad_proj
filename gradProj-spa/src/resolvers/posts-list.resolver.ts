@@ -1,3 +1,4 @@
+import { paginationDefaults } from "./../app/helper/pagination/pagination-defaults.constants";
 import { PaginationResult } from "./../app/helper/pagination/pagination-result";
 import { PostsListComponent } from "./../app/posts/posts-list/posts-list.component";
 import { PostService } from "./../app/services/post.service";
@@ -24,12 +25,14 @@ export class PostsListResolver implements Resolve<Post[]> {
   resolve(snapShot: ActivatedRouteSnapshot): any {
     const posts: Observable<PaginationResult<
       Post[]
-    >> = this.postService.getPosts(5).pipe(
-      catchError((error) => {
-        this.handleError();
-        return of(null);
-      })
-    );
+    >> = this.postService
+      .getPosts(paginationDefaults.postsPaginationPageSize)
+      .pipe(
+        catchError((error) => {
+          this.handleError();
+          return of(null);
+        })
+      );
 
     return posts;
   }

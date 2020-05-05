@@ -1,3 +1,9 @@
+import { paginationDefaults } from "./../../helper/pagination/pagination-defaults.constants";
+import { CommentService } from "src/app/services/comment.service";
+import { Pagination } from "./../../helper/pagination/pagination";
+import { Comment } from "./../../models/comment";
+import { ViewPostResolverData } from "./../../helper/view-post-resolver-data";
+import { element } from "protractor";
 import { Patterns } from "../../helper/validation/patterns";
 import { AlertifyService } from "./../../services/alertify.service";
 import { PostService } from "src/app/services/post.service";
@@ -5,7 +11,7 @@ import { AuthService } from "./../../services/auth.service";
 import { LocaliseDatePipe } from "../../helper/pipes/localiseDate.pipe";
 import { SharedService } from "./../../services/shared.service";
 import { ActivatedRoute } from "@angular/router";
-import { Component, OnInit, Input, ViewChild } from "@angular/core";
+import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
 import { Post } from "src/app/models/post";
 import {
   faSortUp,
@@ -19,16 +25,18 @@ import {
   faUndo,
   faSave,
   faShareAlt,
-  faExclamationTriangle
+  faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
 import { LanguageEnum } from "src/app/helper/enums/language.enum";
 import { environment } from "src/environments/environment";
+import { EditorComponent } from "@tinymce/tinymce-angular";
 @Component({
   selector: "app-view-post",
   templateUrl: "./view-post.component.html",
   styleUrls: ["./view-post.component.css"],
 })
 export class ViewPostComponent implements OnInit {
+  @ViewChild("tinymce") tinymce: EditorComponent;
   defaulPhotoUrl: string = environment.defaultPhoto;
   fakeComment = {
     content: "new comment",
@@ -46,16 +54,20 @@ export class ViewPostComponent implements OnInit {
     private sharedService: SharedService,
     private authService: AuthService,
     private postService: PostService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private commentService: CommentService
   ) {}
+  loadingDivHeight: string;
+  loadingDivWidth: string;
   post: Post;
-  loadingFlag = false;
-  contentBeforeRefresh = "";
+  comments: Comment[];
+  commentsPagination: Pagination;
+  isLoading = false;
   contentBeforeEdit: string;
   toolbarsForEditMode =
     // tslint:disable-next-line: max-line-length
     "formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat | preview";
-  inEditModeFlag = false;
+  isInEditMode = false;
   config: any = {
     width: "100%",
     base_url: "/tinymce",
@@ -70,10 +82,16 @@ export class ViewPostComponent implements OnInit {
     statusbar: false,
   };
   ngOnInit(): void {
-    this.route.data.subscribe((data: { post: Post }) => {
-      this.post = data.post;
-      this.contentBeforeEdit = this.post.content;
-    });
+    this.route.data.subscribe(
+      (data: { viewPostResolverData: ViewPostResolverData }) => {
+        this.post = data.viewPostResolverData.post;
+        this.comments =
+          data.viewPostResolverData.commentsPaginationResult.result;
+        this.commentsPagination =
+          data.viewPostResolverData.commentsPaginationResult.pagination;
+        this.contentBeforeEdit = this.post.content;
+      }
+    );
     this.sharedService.currentLanguage.subscribe(() => this.refreshEditor());
   }
   emptyEditorCheck() {
@@ -143,7 +161,7 @@ export class ViewPostComponent implements OnInit {
   enterEditMode() {
     this.config.toolbar = this.toolbarsForEditMode;
     this.config.menubar = true;
-    this.inEditModeFlag = true;
+    this.isInEditMode = true;
     this.contentBeforeEdit = this.post.content;
     this.refreshEditor();
   }
@@ -153,21 +171,28 @@ export class ViewPostComponent implements OnInit {
       .subscribe(
         () => {
           this.alertifyService.success("Your Editing Has Been Saved");
-          this.cancelEditMode(false);
+          this.cancelEditMode();
         },
         (error) => {
           this.alertifyService.error(error);
         }
       );
   }
+
+  cancelEditMode() {
+    this.isInEditMode = false;
+    this.config.toolbar = "";
+    this.config.menubar = false;
+    this.refreshEditor();
+  }
+
   refreshEditor() {
-    this.contentBeforeRefresh = this.post.content;
-    this.loadingFlag = true;
-    setTimeout(() => {
-      this.post.content = this.contentBeforeRefresh;
-      this.loadingFlag = false;
-      console.log(this.config);
-    }, 500);
+    this.loadingDivHeight =
+      this.tinymce?.editor.editorContainer.clientHeight + "px";
+    this.loadingDivWidth =
+      this.tinymce?.editor.editorContainer.clientWidth + "px";
+
+    this.getPost();
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       this.config.language = "ar";
     } else {
@@ -177,16 +202,86 @@ export class ViewPostComponent implements OnInit {
   get loadingSvgPath() {
     return environment.editorLoadingSvg;
   }
-  cancelEditMode(revertToOldContent: boolean) {
-    if (revertToOldContent) {
-      this.post.content = this.contentBeforeEdit;
-    }
-    this.inEditModeFlag = false;
-    this.config.toolbar = "";
-    this.config.menubar = false;
-    this.refreshEditor();
-  }
+
   signedIn() {
     return this.authService.signedIn();
+  }
+  commentsPageChange(pageNumber: number) {
+    this.commentService
+      .getComments(
+        this.post.id,
+        paginationDefaults.commentsPaginationPageSize,
+        pageNumber
+      )
+      .subscribe((commentsPaginationResult) => {
+        this.comments = commentsPaginationResult.result;
+        this.commentsPagination = commentsPaginationResult.pagination;
+      });
+  }
+  getPost() {
+    this.isLoading = true;
+    this.postService.getPost(this.post.id).subscribe((post) => {
+      const currentContent = this.post.content;
+      this.post = post;
+      if (this.isInEditMode) {
+        this.post.content = currentContent;
+      }
+      this.isLoading = false;
+    });
+  }
+
+  createDownVote() {
+    this.postService
+      .createDownVote(this.authService.decodedToken.nameid, this.post.id)
+      .subscribe(
+        () => {
+          this.getPost();
+        },
+        (error) => {
+          console.log(error);
+          this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
+        }
+      );
+  }
+
+  createUpVote() {
+    this.postService
+      .createUpVote(this.authService.decodedToken.nameid, this.post.id)
+      .subscribe(
+        () => {
+          this.getPost();
+        },
+        (error) => {
+          console.log(error);
+          this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
+        }
+      );
+  }
+
+  deleteUpVote() {
+    this.postService
+      .deleteUpVote(this.authService.decodedToken.nameid, this.post.id)
+      .subscribe(
+        () => {
+          this.getPost();
+        },
+        (error) => {
+          console.log(error);
+          this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
+        }
+      );
+  }
+  deleteDownVote() {
+    this.postService
+      .deleteDownVote(this.authService.decodedToken.nameid, this.post.id)
+      .subscribe(
+        () => {
+          this.getPost();
+        },
+        (error) => {
+          console.log(error);
+          this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
+        }
+      );
   }
 }

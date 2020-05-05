@@ -12,8 +12,8 @@ namespace grad_proj_api.Models {
         public User Admin { get; set; }
         public int? AdminId { get; set; }
         public ICollection<ViewedPost> PostViewers { get; set; }
-        public ICollection<UpVotedPost> PostUpVoters { get; set; }
-        public ICollection<DownVotedPost> PostDownVoters { get; set; }
+        public ICollection<UpVotedPost> UpVoters { get; set; }
+        public ICollection<DownVotedPost> DownVoters { get; set; }
 
         public DateTime DateAddedUtc { get; set; }
 

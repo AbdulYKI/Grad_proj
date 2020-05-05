@@ -357,4 +357,12 @@ export const arabicLexicon = {
   edit: "تعديل",
   save: "حفظ",
   report: "إبلاغ",
+  signInToCommentMessage: "قم بالدخول للتعليق...",
+  postSuccessfullySubmittedMessage: "تم إنشاء المنشور بنجاح!",
+  commentSuccessfullySubmittedMessege: "تم إنشاء التعليق نجاح!",
+  postFailedSubmittionMessage: "فشل بإنشاء المنشور",
+  commentFailedSubmittionMessage: "فشل بإنشاء التعليق",
+  share: "مشاركة",
+  dateEdited: "تاريخ التعديل الأخير",
+  dateAdded: "تاريخ الإنشاء",
 };

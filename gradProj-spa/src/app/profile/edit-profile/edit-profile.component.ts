@@ -23,7 +23,11 @@ import {
   Validators,
   NgForm,
 } from "@angular/forms";
-import { faCalendar, faCamera } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendar,
+  faCamera,
+  faSave,
+} from "@fortawesome/free-solid-svg-icons";
 import { Subject } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { UserService } from "../../services/user.service";
@@ -114,14 +118,14 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.route.data
       .pipe(takeUntil(this.destroy))
       .subscribe(
-        (data: { EditProfileResolverData: EditProfileResolverData }) => {
-          this.user = data.EditProfileResolverData.user;
+        (data: { editProfileResolverData: EditProfileResolverData }) => {
+          this.user = data.editProfileResolverData.user;
           this.photoUrl = this.user.photoUrl || environment.defaultPhoto;
           this.setProfileFormData();
           this.setProgrammingLanguagesDataSource(
-            data.EditProfileResolverData.programmingLanguages
+            data.editProfileResolverData.programmingLanguages
           );
-          this.setCountriesDataSource(data.EditProfileResolverData.countries);
+          this.setCountriesDataSource(data.editProfileResolverData.countries);
           this.setSelectedProgrammingLanguages();
         }
       );
@@ -338,5 +342,8 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       this.modalOption
     );
     modalRef.componentInstance.photoUrl = this.photoUrl;
+  }
+  get faSave() {
+    return faSave;
   }
 }

@@ -1,77 +1,123 @@
-<div [ngClass]="containerClasses" class=" comment-section">
+<div [ngClass]="containerClasses" class="comment-section">
   <div class="card pd-comment">
     <div class="container">
-  <div class="row">
-    <!-- Date comment Section-->
-  <div class="col-12 date">
-    <div class="comment-date">
-      <span class="caption col-4">
-        <fa-icon [icon]="faCalender"></fa-icon>
+      <div class="row">
+        <!-- Date comment Section-->
+        <div class="col-12 date">
+          <div class="comment-date">
+            <span class="caption col-4">
+              <span placement="top" [ngbTooltip]="lexicon.dateAdded">
+                <fa-icon [icon]="faCalender"></fa-icon>
 
-        {{ comment.dateAddedUtc | localiseDate: "long":localeCode }}
-      </span>
-    </div>
-  </div>
-    <!-- End   Date comment Section-->
-  <!-- Start  comment-info-section-->
-  <div class="col-12 comment-info-section">
-    <a>
-      <img
-        class="avatar"
-        [src]="comment.userPhotoUrl || null"
-      />
-    </a>
-    <div class="username">
-    <a> {{ comment.username }}</a>
-    </div>
+                {{ comment.dateAddedUtc | localiseDate: "medium":localeCode }}
+              </span>
 
-  <div class="rating">
-  <span class="up"> <fa-icon class="rating-up" [icon]="faSortUp"></fa-icon></span>
-  <span class="rating-count">{{ comment.votesCount }}</span>
-  <span class="down"> <fa-icon class="rating-down" [icon]="faSortDown"></fa-icon>  </span>
-  </div>
+              <span
+                class="ml-2 mr-2"
+                *ngIf="comment.dateEditedUtc"
+                placement="top"
+                [ngbTooltip]="lexicon.dateEdited"
+              >
+                <fa-icon [icon]="faEdit"></fa-icon>
 
-  </div>
-  <!-- End  comment-info-section-->
-  <!-- Start Content comment section-->
-  <div class="col-12">
-    <div class="wrapper comment">
-      <form (ngSubmit)="submitEditedPost()" #editPostForm="ngForm">
-        <editor
-          *ngIf="!loadingFlag"
-          #content="ngModel"
-          [(ngModel)]="comment.content"
-          name="content"
-          [init]="config"
-          [disabled]="!inEditModeFlag"
-        ></editor>
-        <div class="text-center" *ngIf="loadingFlag">
-          <img [src]="loadingSvgPath" />
+                {{ comment.dateEditedUtc | localiseDate: "medium":localeCode }}
+              </span>
+            </span>
+          </div>
         </div>
-        <div>
-          <button
-            class="btn edit-button mt-2"
-            *ngIf="inEditModeFlag && !loadingFlag"
-            type="submit"
-            [disabled]="emptyEditorCheck()"
-          >
-            {{ lexicon.save }} <fa-icon [icon]="faEdit"></fa-icon>
-          </button>
-          <button
-            class="btn cancel-button mt-2"
-            (click)="cancelEditMode(true)"
-            *ngIf="inEditModeFlag && !loadingFlag"
-          >
-            {{ lexicon.cancel }}
-            <fa-icon [icon]="faUndo"></fa-icon>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <!-- End Content post section-->
+        <!-- End   Date comment Section-->
+        <!-- Start  comment-info-section-->
+        <div class="col-12 comment-info-section">
+          <a>
+            <img class="avatar" [src]="comment.userPhotoUrl || null" />
+          </a>
+          <div class="username">
+            <a> {{ comment.username }}</a>
+          </div>
 
-  </div>
+          <div class="voting-section">
+            <span
+              class="up-vote-container"
+              (click)="
+                comment.isUpVotedByUser ? deleteUpVote() : createUpVote()
+              "
+            >
+              <fa-icon
+                [class.is-up-voted]="comment.isUpVotedByUser"
+                [class.up-vote]="!comment.isUpVotedByUser"
+                [icon]="faSortUp"
+              ></fa-icon
+            ></span>
+            <span class="vote-count">{{ comment.votesCount }}</span>
+            <span
+              class="down-vote-container"
+              (click)="
+                comment.isDownVotedByUser ? deleteDownVote() : createDownVote()
+              "
+            >
+              <fa-icon
+                [class.is-down-voted]="comment.isDownVotedByUser"
+                [class.down-vote]="!comment.isDownVotedByUser"
+                [icon]="faSortDown"
+              ></fa-icon>
+            </span>
+          </div>
+        </div>
+        <!-- End  comment-info-section-->
+        <!-- Start Content comment section-->
+        <div class="col-12">
+          <div class="wrapper comment">
+            <form (ngSubmit)="submitEditedComment()" #editPostForm="ngForm">
+              <editor
+                *ngIf="!isLoading"
+                #content="ngModel"
+                [(ngModel)]="comment.content"
+                name="content"
+                [init]="config"
+                [disabled]="!isInEditMode"
+              ></editor>
+              <div class="text-center" *ngIf="isLoading">
+                <img [src]="loadingSvgPath" />
+              </div>
+              <div>
+                <button
+                  class="btn save-button mt-2"
+                  *ngIf="isInEditMode && !isLoading"
+                  type="submit"
+                  [disabled]="emptyEditorCheck()"
+                >
+                  {{ lexicon.save }} <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+                <button
+                  class="btn cancel-button mt-2"
+                  (click)="cancelEditMode()"
+                  *ngIf="isInEditMode && !isLoading"
+                >
+                  {{ lexicon.cancel }}
+                  <fa-icon [icon]="faUndo"></fa-icon>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- End Content post section-->
+        <div class="col-12 comment-tools">
+          <div class="box">
+            <span
+              *ngIf="checkCommentOwnership() && !isInEditMode"
+              (click)="enterEditMode()"
+            >
+              {{ lexicon.edit }} <fa-icon [icon]="faEdit"></fa-icon
+            ></span>
+            <span
+              >{{ lexicon.share }} <fa-icon [icon]="faShareAlt"></fa-icon
+            ></span>
+            <span
+              >{{ lexicon.report }} <fa-icon [icon]="faTriangle"></fa-icon
+            ></span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

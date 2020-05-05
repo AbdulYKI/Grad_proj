@@ -92,7 +92,7 @@ namespace grad_proj_api.Data {
                 .OnDelete (DeleteBehavior.Restrict);
             modelBuilder.Entity<UpVotedPost> ()
                 .HasOne (p => p.Post)
-                .WithMany (u => u.PostUpVoters)
+                .WithMany (u => u.UpVoters)
                 .HasForeignKey (p => p.PostId)
                 .OnDelete (DeleteBehavior.Restrict);
 
@@ -103,7 +103,7 @@ namespace grad_proj_api.Data {
                 .OnDelete (DeleteBehavior.Restrict);
             modelBuilder.Entity<DownVotedPost> ()
                 .HasOne (p => p.Post)
-                .WithMany (u => u.PostDownVoters)
+                .WithMany (u => u.DownVoters)
                 .HasForeignKey (p => p.PostId)
                 .OnDelete (DeleteBehavior.Restrict);
 
@@ -120,7 +120,7 @@ namespace grad_proj_api.Data {
                 .OnDelete (DeleteBehavior.Restrict);
             modelBuilder.Entity<DownVotedComment> ()
                 .HasOne (c => c.Comment)
-                .WithMany (u => u.CommentDownVoters)
+                .WithMany (u => u.DownVoters)
                 .HasForeignKey (c => c.CommentId)
                 .OnDelete (DeleteBehavior.Restrict);
 
@@ -131,7 +131,7 @@ namespace grad_proj_api.Data {
                 .OnDelete (DeleteBehavior.Restrict);
             modelBuilder.Entity<UpVotedComment> ()
                 .HasOne (c => c.Comment)
-                .WithMany (u => u.CommentUpVoters)
+                .WithMany (u => u.UpVoters)
                 .HasForeignKey (c => c.CommentId)
                 .OnDelete (DeleteBehavior.Restrict);
 

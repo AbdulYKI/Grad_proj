@@ -1,4 +1,4 @@
-namespace grad_proj_api.Helpers {
+namespace grad_proj_api.Helpers.Pagination {
     public class PaginationHeader {
         public PaginationHeader (int currentPage, int totalPages, int pageSize, int totalItems) {
             CurrentPage = currentPage;

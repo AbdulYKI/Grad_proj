@@ -5,6 +5,7 @@ export class Post {
   username: string;
   votesCount: number;
   dateAddedUtc: Date;
+  dateEditedUtc: Date;
   viewersCount: number;
   id: number;
   userId: number;
@@ -12,4 +13,6 @@ export class Post {
     this.content = "";
     this.title = "";
   }
+  isUpVotedByUser: boolean;
+  isDownVotedByUser: boolean;
 }

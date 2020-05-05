@@ -1,3 +1,4 @@
+import { ViewPostResolverData } from "./helper/view-post-resolver-data";
 import { ViewPostComponent } from "./posts/view-post/view-post.component";
 import { PostsListResolver } from "./../resolvers/posts-list.resolver";
 import { PreventUnsavedChangesGuardForCreatePost } from "./guards/prevent-unsaved-changes-for-create-post.guard";
@@ -24,7 +25,7 @@ const routes: Routes = [
         path: "edit",
         component: EditProfileComponent,
         canDeactivate: [PreventUnsavedChangesGuardForEditProfile],
-        resolve: { EditProfileResolverData: EditProfileResolver },
+        resolve: { editProfileResolverData: EditProfileResolver },
       },
     ],
   },
@@ -47,7 +48,7 @@ const routes: Routes = [
   {
     path: "post/:id",
     component: ViewPostComponent,
-    resolve: { post: ViewPostResolver },
+    resolve: { viewPostResolverData: ViewPostResolver },
     canDeactivate: [PreventUnsavedChangesGuardForCreatePost],
   },
 

@@ -1,6 +1,6 @@
 <div [ngClass]="containerClasses">
-  <div *ngIf="signedIn()" class="btn-new">
-    <button (click)="showEditor()" class="btn">
+  <div class="btn-new">
+    <button (click)="newPostButtonPressed()" class="btn">
       {{ lexicon.new }} <fa-icon [icon]="faPlus"></fa-icon>
     </button>
   </div>
@@ -9,11 +9,11 @@
     <app-single-post-card [post]="post"></app-single-post-card>
   </span>
 
-  <div class="editor" [class.show]="showEditorFlag">
+  <div class="editor" [class.show]="shouldShowEditor">
     <app-add-post
       #addPostComponent
       (editorClosedEvent)="hideEditor($event)"
-      *ngIf="showEditorFlag"
+      *ngIf="shouldShowEditor"
     ></app-add-post>
   </div>
   <ngb-pagination
