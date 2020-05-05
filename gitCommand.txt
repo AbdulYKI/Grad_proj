@@ -6,7 +6,7 @@ git fetch ==> gives you latest HEADs of branches
 git rebase master ==> gives you the changes made on the master
 
 whenever you are done:
-stage + commit 
+stage + commit
 git rebase master ==> gives you the changes made on the master
 then create a pull request and merge it with the master.
 
