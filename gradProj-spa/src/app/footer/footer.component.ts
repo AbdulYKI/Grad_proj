@@ -2,6 +2,7 @@ import { SharedService } from "./../services/shared.service";
 import { Component, OnInit } from "@angular/core";
 import { LanguageEnum } from "../helper/enums/language.enum";
 import { faPhone, faMapMarker, faAt } from "@fortawesome/free-solid-svg-icons";
+import { environment } from "./../../environments/environment";
 import { Subject } from "rxjs";
 @Component({
   selector: "app-footer",
@@ -12,7 +13,8 @@ export class FooterComponent implements OnInit {
   constructor(private sharedService: SharedService) {}
   language: LanguageEnum = LanguageEnum.Arabic;
   isMenuCollapsed = true;
-
+   arLang:string = environment.langAr;
+   enLang:string = environment.langEn;
   ngOnInit() {}
   changeLanguage(language: LanguageEnum) {
     localStorage.setItem("language", language.toString());

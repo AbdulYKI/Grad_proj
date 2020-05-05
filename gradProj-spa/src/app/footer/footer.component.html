@@ -73,7 +73,7 @@
             <li>
               <a>
                 <img
-                  src="https://fxriver.com/wp-content/uploads/flags/jordan_flag_300 (1).png"
+                  [src]="arLang"
                 />
                 <span
                   (click)="changeLanguage(languageEnum.Arabic)"
@@ -86,7 +86,7 @@
             <li>
               <a>
                 <img
-                  src="https://fxriver.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.png"
+                  [src]="enLang"
                 />
                 <span
                   (click)="changeLanguage(languageEnum.English)"

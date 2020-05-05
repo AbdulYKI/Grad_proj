@@ -13,6 +13,9 @@ export const environment = {
   instagramLogo: "../assets/icons/instagram.png",
   defaultPhoto: "../assets/icons/user.png",
   tokenName: "gradProjToken",
+  langAr:"../assets/langIcons/arFlag.png",
+  langEn:"../assets/langIcons/enFlag.png"
+
 };
 
 /*
