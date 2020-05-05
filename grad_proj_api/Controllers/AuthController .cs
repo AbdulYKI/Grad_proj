@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace DatingApp.API.Controllers {
+namespace grad_proj_api.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
 
@@ -45,7 +45,7 @@ namespace DatingApp.API.Controllers {
                 if (await _repo.UserExists (userForSignUpDTO.Username))
                     throw new UsernameUsedException (ExceptionsEnum.USERNAME_USED_EXCEPTION.ToString ("D"));
                 var userTobeCreated = _mapper.Map<User> (userForSignUpDTO);
-
+                userTobeCreated.CreatedUtc = DateTime.UtcNow;
                 var createdUser = await _repo.SignUp (userTobeCreated, userForSignUpDTO.Password);
                 var userToReturn = _mapper.Map<UserToReturnDto> (createdUser);
 
