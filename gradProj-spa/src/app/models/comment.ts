@@ -9,4 +9,8 @@ export class Comment {
   constructor() {
     this.content = "";
   }
+  isUpVotedByUser: boolean;
+  isDownVotedByUser: boolean;
+  postId: number;
+  dateEditedUtc: Date;
 }

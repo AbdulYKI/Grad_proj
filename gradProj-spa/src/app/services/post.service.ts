@@ -30,9 +30,9 @@ export class PostService {
     postPaginationParams?: PostPaginationParams
   ): Observable<PaginationResult<Post[]>> {
     const paginationResult = new PaginationResult<Post[]>();
-    let params = new HttpParams();
+    let httpParams = new HttpParams();
     if (postPaginationParams?.orderBy != null) {
-      params.append(
+      httpParams.append(
         PropertyNameToStringConverter.propertyNameToString(
           postPaginationParams,
           postPaginationParams.orderBy
@@ -41,17 +41,20 @@ export class PostService {
       );
     }
     if (pageSize != null) {
-      params = params.append(Object.keys({ pageSize })[0], pageSize.toString());
+      httpParams = httpParams.append(
+        Object.keys({ pageSize })[0],
+        pageSize.toString()
+      );
     }
     if (pageNumber != null) {
-      params = params.append(
+      httpParams = httpParams.append(
         Object.keys({ pageNumber })[0],
         pageNumber.toString()
       );
     }
 
     return this.http
-      .get<Post[]>(this.baseUrl, { observe: "response", params: params })
+      .get<Post[]>(this.baseUrl, { observe: "response", params: httpParams })
       .pipe(
         map((response) => {
           paginationResult.result = response.body;
@@ -69,5 +72,27 @@ export class PostService {
   }
   updatePost(userId: number, id: number, post: Post) {
     return this.http.put(this.baseUrl + userId + "/" + id, post);
+  }
+
+  createUpVote(userId: number, postId: number) {
+    return this.http.post(
+      this.baseUrl + "up-vote/" + postId + "/" + userId,
+      {}
+    );
+  }
+  createDownVote(userId: number, postId: number) {
+    return this.http.post(
+      this.baseUrl + "down-vote/" + postId + "/" + userId,
+      {}
+    );
+  }
+
+  deleteUpVote(userId: number, postId: number) {
+    return this.http.delete(this.baseUrl + "up-vote/" + postId + "/" + userId);
+  }
+  deleteDownVote(userId: number, postId: number) {
+    return this.http.delete(
+      this.baseUrl + "down-vote/" + postId + "/" + userId
+    );
   }
 }

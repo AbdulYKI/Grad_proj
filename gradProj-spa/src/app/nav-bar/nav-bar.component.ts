@@ -7,6 +7,10 @@ import {
   OnInit,
   HostListener,
   ViewEncapsulation,
+  ChangeDetectorRef,
+  AfterContentInit,
+  AfterContentChecked,
+  AfterViewChecked,
 } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { SharedService } from "../services/shared.service";
@@ -20,18 +24,21 @@ import { takeUntil } from "rxjs/operators";
   templateUrl: "./nav-bar.component.html",
   styleUrls: ["./nav-bar.component.css"],
 })
-export class NavBarComponent implements OnInit {
+export class NavBarComponent implements OnInit, AfterViewChecked {
   isMenuCollapsed = true;
   scrolled = 0;
   logoUrl = environment.logo;
   photoUrl: string;
+  shouldIncludeOnScrollClass = false;
+  shouldHaveStartHeaderClass = false;
   destroy: Subject<boolean> = new Subject<boolean>();
   defaultPhoto = environment.defaultPhoto;
   constructor(
     private authService: AuthService,
     private alertifyService: AlertifyService,
     private router: Router,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -48,14 +55,12 @@ export class NavBarComponent implements OnInit {
 
   @HostListener("window:scroll", ["$event"])
   onWindowScroll($event) {
-    this.scrolled = window.scrollY;
-  }
-
-  onScroll(): string {
     if (window.scrollY >= 15) {
-      return "scroll-on";
+      this.shouldIncludeOnScrollClass = true;
+      this.shouldHaveStartHeaderClass = false;
     } else {
-      return "start-header";
+      this.shouldIncludeOnScrollClass = false;
+      this.shouldHaveStartHeaderClass = true;
     }
   }
   signedIn() {
@@ -96,5 +101,8 @@ export class NavBarComponent implements OnInit {
   ngOnDestory() {
     this.destroy.next(true);
     this.destroy.unsubscribe();
+  }
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace grad_proj_api.Helpers {
+namespace grad_proj_api.Helpers.Pagination {
     public class PagedList<T> : List<T> {
         public int PageSize { get; set; }
         public int CurrentPage { get; set; }
@@ -19,7 +19,7 @@ namespace grad_proj_api.Helpers {
 
         }
 
-        public static async Task<PagedList<T>> CreateAsync (IQueryable<T> source, int pageNumber, int pageSize) {
+        public static async Task<PagedList<T>> CreateAsync (IQueryable<T> source, int pageSize, int pageNumber) {
 
             var items = await source.Skip ((pageNumber - 1) * pageSize).Take (pageSize).ToListAsync ();
             var count = await source.CountAsync ();

@@ -34,13 +34,6 @@ namespace grad_proj_api.Dtos {
 
         }
 
-        public DateTime CreatedUtc { get; set; }
-        public DateTime LastActiveUtc { get; set; }
-        public UserForSignUpDto () {
-            LastActiveUtc = DateTime.UtcNow;
-            CreatedUtc = DateTime.UtcNow;
-        }
-
         [Required]
         public GenderEnum Gender { get; set; }
     }

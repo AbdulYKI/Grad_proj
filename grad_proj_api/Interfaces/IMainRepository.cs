@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using grad_proj_api.Helpers;
+using grad_proj_api.Helpers.Pagination;
 using grad_proj_api.Models;
 
 namespace grad_proj_api.Interfaces {
@@ -15,8 +16,12 @@ namespace grad_proj_api.Interfaces {
         Task<Photo> GetPhoto (int id);
         Task<List<Country>> GetCountries ();
         Task<Post> GetPost (int id);
-        Task<PagedList<Post>> GetPosts (PostPagingParams postPagingParams);
+        Task<PagedList<Post>> GetPosts (PostPaginationParams postPagingParams);
         Task<Comment> GetComment (int id);
-        Task<List<Comment>> GetComments (int postId);
+        Task<PagedList<Comment>> GetComments (int postId, CommentPaginationParams commentPaginationParams);
+        Task<UpVotedComment> GetUpVoteForComment (int userId, int id);
+        Task<DownVotedComment> GetDownVoteForComment (int userId, int id);
+        Task<DownVotedPost> GetDownVoteForPost (int userId, int id);
+        Task<UpVotedPost> GetUpVoteForPost (int userId, int id);
     }
 }

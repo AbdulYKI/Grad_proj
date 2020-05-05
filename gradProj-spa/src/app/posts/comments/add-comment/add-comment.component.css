@@ -8,8 +8,14 @@
 
 .add-comment-card .form-button {
   max-width: 100px;
-  float: left;
+  float: right;
 }
 .rtl.add-comment-card .form-button {
-  float: right;
+  float: left;
+}
+
+.login-to-comment {
+  background-color: #fafafa;
+  border-radius: 0.25rem;
+  min-height: 10vh;
 }

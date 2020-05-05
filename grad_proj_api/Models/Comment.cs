@@ -12,9 +12,9 @@ namespace grad_proj_api.Models {
         public Post Post { get; set; }
         public int PostId { get; set; }
 
-        public ICollection<UpVotedComment> CommentUpVoters { get; set; }
+        public ICollection<UpVotedComment> UpVoters { get; set; }
 
-        public ICollection<DownVotedComment> CommentDownVoters { get; set; }
+        public ICollection<DownVotedComment> DownVoters { get; set; }
 
         public DateTime? DateEditedUtc { get; set; }
 

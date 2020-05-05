@@ -9,6 +9,8 @@ import {
   faUndo,
   faEdit,
   faCalendarAlt,
+  faShareAlt,
+  faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
 import { Patterns } from "src/app/helper/validation/patterns";
 import { AuthService } from "src/app/services/auth.service";
@@ -28,13 +30,13 @@ export class CommentCardComponent implements OnInit {
     private sharedService: SharedService
   ) {}
   @Input() comment: Comment;
-  loadingFlag = false;
+  isLoading = false;
   contentBeforeRefresh = "";
   contentBeforeEdit: string;
   toolbarsForEditMode =
     // tslint:disable-next-line: max-line-length
     "formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat | preview";
-  inEditModeFlag = false;
+  isInEditMode = false;
   config: any = {
     width: "100%",
     base_url: "/tinymce",
@@ -63,7 +65,7 @@ export class CommentCardComponent implements OnInit {
   get faUndo() {
     return faUndo;
   }
-  checkPostOwnership() {
+  checkCommentOwnership() {
     if (this.signedIn()) {
       return (
         this.comment.userId ===
@@ -75,10 +77,10 @@ export class CommentCardComponent implements OnInit {
   enterEditMode() {
     this.config.toolbar = this.toolbarsForEditMode;
     this.config.menubar = true;
-    this.inEditModeFlag = true;
+    this.isInEditMode = true;
     this.refreshEditor();
   }
-  submitEditedPost() {
+  submitEditedComment() {
     this.commentService
       .editComment(
         this.authService.decodedToken.nameid,
@@ -88,7 +90,7 @@ export class CommentCardComponent implements OnInit {
       .subscribe(
         () => {
           this.alertifyService.success("Your Editing Has Been Saved");
-          this.cancelEditMode(false);
+          this.cancelEditMode();
         },
         (error) => {
           this.alertifyService.error(error);
@@ -96,13 +98,7 @@ export class CommentCardComponent implements OnInit {
       );
   }
   refreshEditor() {
-    this.contentBeforeRefresh = this.comment.content;
-    this.loadingFlag = true;
-    setTimeout(() => {
-      this.comment.content = this.contentBeforeRefresh;
-      this.loadingFlag = false;
-      console.log(this.config);
-    }, 500);
+    this.getComment();
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
       this.config.language = "ar";
     } else {
@@ -112,11 +108,8 @@ export class CommentCardComponent implements OnInit {
   get loadingSvgPath() {
     return environment.editorLoadingSvg;
   }
-  cancelEditMode(revertToOldContent: boolean) {
-    if (revertToOldContent) {
-      this.comment.content = this.contentBeforeEdit;
-    }
-    this.inEditModeFlag = false;
+  cancelEditMode() {
+    this.isInEditMode = false;
     this.config.toolbar = "";
     this.config.menubar = false;
     this.refreshEditor();
@@ -147,5 +140,80 @@ export class CommentCardComponent implements OnInit {
   }
   get localeCode() {
     return this.sharedService.localeCode;
+  }
+
+  createDownVote() {
+    this.commentService
+      .createDownVote(this.authService.decodedToken.nameid, this.comment.id)
+      .subscribe(
+        () => {
+          this.getComment();
+        },
+        (error) => {
+          console.log(error);
+          this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
+        }
+      );
+  }
+
+  createUpVote() {
+    this.commentService
+      .createUpVote(this.authService.decodedToken.nameid, this.comment.id)
+      .subscribe(
+        (c) => {
+          this.getComment();
+        },
+        (error) => {
+          console.log(error);
+          this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
+        }
+      );
+  }
+
+  deleteUpVote() {
+    this.commentService
+      .deleteUpVote(this.authService.decodedToken.nameid, this.comment.id)
+      .subscribe(
+        () => {
+          this.getComment();
+        },
+        (error) => {
+          console.log(error);
+          this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
+        }
+      );
+  }
+  deleteDownVote() {
+    this.commentService
+      .deleteDownVote(this.authService.decodedToken.nameid, this.comment.id)
+      .subscribe(
+        () => {
+          this.getComment();
+        },
+        (error) => {
+          console.log(error);
+          this.alertifyService.error(this.lexicon.retrievingDataErrorMessage);
+        }
+      );
+  }
+
+  getComment() {
+    this.isLoading = true;
+    this.commentService
+      .getComment(this.comment.postId, this.comment.id)
+      .subscribe((comment) => {
+        const currentContent = this.comment.content;
+        this.comment = comment;
+        if (this.isInEditMode) {
+          this.comment.content = currentContent;
+        }
+        this.isLoading = false;
+      });
+  }
+  get faShareAlt() {
+    return faShareAlt;
+  }
+  get faTriangle() {
+    return faExclamationTriangle;
   }
 }

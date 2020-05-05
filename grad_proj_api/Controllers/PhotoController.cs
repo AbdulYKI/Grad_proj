@@ -72,6 +72,7 @@ namespace grad_proj_api.Controllers {
             photo.UserId = userId;
             photo.PublicId = uploadResult.PublicId;
             photo.Url = uploadResult.Uri.ToString ();
+            photo.DateAddedUtc = DateTime.UtcNow;
             await _repo.Add (photo);
 
             if (await _repo.SaveAll ()) {

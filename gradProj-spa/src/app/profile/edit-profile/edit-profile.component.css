@@ -149,6 +149,9 @@ input[type="file"] {
   font-weight: 600;
   outline: none;
 }
+.btn-save button:enabled {
+  background-color: #3dc867 !important;
+}
 textarea {
   resize: none;
 }
@@ -222,13 +225,13 @@ ngb-datepicker-navigation-select > .custom-select {
   padding-left: 1px;
 }
 
-.img-row-col img {
+.img-grid img {
   border-radius: 50%;
 }
-.rtl .img-row-col .row .col-6.col-md-6 .card {
+.rtl .img-grid .row .col-6.col-md-6 .card {
   float: left;
 }
-.img-row-col .row .col-6.col-md-6 .card {
+.img-grid .row .col-6.col-md-6 .card {
   min-width: 137.5px;
   max-width: 150px;
   max-height: 150px;
@@ -238,7 +241,7 @@ ngb-datepicker-navigation-select > .custom-select {
   border: none;
   box-shadow: 0px 0px 17px 0px #777676;
 }
-.img-row-col .row .col-6.col-md-6 .card .card-img {
+.img-grid .row .col-6.col-md-6 .card .card-img {
   border-radius: 50%;
   max-width: 150px;
   max-height: 150px;
@@ -246,13 +249,13 @@ ngb-datepicker-navigation-select > .custom-select {
   min-height: 137.5px;
 }
 
-.img-row-col .row .col-6.col-md-6 .card .card-img-overlay {
+.img-grid .row .col-6.col-md-6 .card .card-img-overlay {
   opacity: 0;
   border-radius: 50%;
   cursor: pointer;
   transition: 0.5s ease;
 }
-.img-row-col .row .col-6.col-md-6 .card:hover .card-img-overlay {
+.img-grid .row .col-6.col-md-6 .card:hover .card-img-overlay {
   opacity: 0.7;
   background-color: #777;
 }

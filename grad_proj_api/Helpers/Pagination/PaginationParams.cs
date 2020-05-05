@@ -1,8 +1,8 @@
-namespace grad_proj_api.Helpers {
+namespace grad_proj_api.Helpers.Pagination {
 
     public enum OrderBy { NEWEST = 1, OLDEST = 2 }
 
-    public class PagingParams {
+    public class PaginationParams {
         private const int MaxPageSize = 50;
         public int PageNumber { get; set; } = 1;
         private int pageSize;

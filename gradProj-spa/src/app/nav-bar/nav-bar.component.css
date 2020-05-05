@@ -213,3 +213,6 @@
     padding-right: 1.5rem;
   }
 }
+.bottom-border {
+  border-bottom: 2px solid aliceblue;
+}

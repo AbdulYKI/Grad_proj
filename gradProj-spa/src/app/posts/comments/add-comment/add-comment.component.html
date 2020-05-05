@@ -1,22 +1,30 @@
 <div [ngClass]="containerClasses">
-  <h2>{{ lexicon.leaveAComment }}</h2>
-  <editor
-    *ngIf="!loadingFlag"
-    #tinymce
-    [(ngModel)]="comment.content"
-    name="content"
-    [init]="config"
-  ></editor>
-  <div class="text-center" *ngIf="loadingFlag">
-    <img [src]="loadingSvgPath" />
+  <div *ngIf="!signedIn()" class="card text-center login-to-comment">
+    <a [routerLink]="['/sign-in']" class="m-auto"
+      >{{ lexicon.signInToCommentMessage }}
+    </a>
   </div>
-  <div>
-    <button
-      class="btn form-button mt-2"
-      (click)="createComment()"
-      [disabled]="emptyEditorCheck()"
-    >
-      {{ lexicon.create }} <fa-icon [icon]="faPaperPlane"></fa-icon>
-    </button>
+
+  <div *ngIf="signedIn()">
+    <h2>{{ lexicon.leaveAComment }}</h2>
+    <editor
+      *ngIf="!isLoading"
+      #tinymce
+      [(ngModel)]="comment.content"
+      name="content"
+      [init]="config"
+    ></editor>
+    <div class="text-center" *ngIf="isLoading">
+      <img [src]="loadingSvgPath" />
+    </div>
+    <div>
+      <button
+        class="btn form-button mt-2"
+        (click)="createComment()"
+        [disabled]="emptyEditorCheck()"
+      >
+        {{ lexicon.create }} <fa-icon [icon]="faPaperPlane"></fa-icon>
+      </button>
+    </div>
   </div>
 </div>

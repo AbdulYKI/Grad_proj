@@ -39,7 +39,7 @@ namespace grad_proj_api.Controllers {
             var userFromRepo = await _repo.GetUser (id);
             _mapper.Map (userForEditDTO, userFromRepo);
             await updateUserProgrammingLanguages (userForEditDTO.ProgrammingLanguagesIds, id);
-
+            userFromRepo.DateUpdatedUtc = DateTime.UtcNow;
             if (await _repo.SaveAll ())
                 return NoContent ();
 

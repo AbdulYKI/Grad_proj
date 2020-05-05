@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using grad_proj_api.Helpers;
+using grad_proj_api.Helpers.Pagination;
 using grad_proj_api.Interfaces;
 using grad_proj_api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -60,28 +61,28 @@ namespace grad_proj_api.Data {
                 .Posts
                 .Include (c => c.User)
                 .ThenInclude (ph => ph.Photo)
-                .Include (uv => uv.PostUpVoters)
-                .Include (dv => dv.PostDownVoters)
+                .Include (uv => uv.UpVoters)
+                .Include (dv => dv.DownVoters)
                 .Include (v => v.PostViewers)
                 .FirstOrDefaultAsync (p => p.Id == id);
 
             return post;
         }
 
-        public async Task<PagedList<Post>> GetPosts (PostPagingParams postPagingParams) {
+        public async Task<PagedList<Post>> GetPosts (PostPaginationParams postPagingParams) {
             var posts = _context
                 .Posts
                 .Include (c => c.User)
                 .ThenInclude (ph => ph.Photo)
-                .Include (uv => uv.PostUpVoters)
-                .Include (dv => dv.PostDownVoters)
+                .Include (uv => uv.UpVoters)
+                .Include (dv => dv.DownVoters)
                 .Include (v => v.PostViewers);
             if (postPagingParams.OrderBy == OrderBy.NEWEST)
                 posts.OrderByDescending ((p) => p.DateAddedUtc);
             else if (postPagingParams.OrderBy == OrderBy.OLDEST)
                 posts.OrderBy ((p) => p.DateAddedUtc);
 
-            return await PagedList<Post>.CreateAsync (posts, postPagingParams.PageNumber, postPagingParams.PageSize);
+            return await PagedList<Post>.CreateAsync (posts, postPagingParams.PageSize, postPagingParams.PageNumber);
 
         }
 
@@ -90,19 +91,43 @@ namespace grad_proj_api.Data {
                 .Comments
                 .Include (c => c.User)
                 .ThenInclude (ph => ph.Photo)
-                .Include (uv => uv.CommentUpVoters)
-                .Include (dv => dv.CommentDownVoters)
+                .Include (uv => uv.UpVoters)
+                .Include (dv => dv.DownVoters)
                 .FirstOrDefaultAsync (c => c.Id == id);
         }
 
-        public async Task<List<Comment>> GetComments (int postId) {
-            return await _context
+        public async Task<PagedList<Comment>> GetComments (int postId, CommentPaginationParams commentPaginationParams) {
+            var comments = _context
                 .Comments
                 .Include (c => c.User)
                 .ThenInclude (ph => ph.Photo)
-                .Include (uv => uv.CommentUpVoters)
-                .Include (dv => dv.CommentDownVoters)
-                .Where (c => c.PostId == postId).ToListAsync ();
+                .Include (uv => uv.UpVoters)
+                .Include (dv => dv.DownVoters)
+                .Where (c => c.PostId == postId);
+
+            if (commentPaginationParams.OrderBy == OrderBy.NEWEST) {
+                comments.OrderByDescending ((c) => c.DateAddedUtc);
+            } else {
+                comments.OrderBy ((c) => c.DateAddedUtc);
+            }
+            return await PagedList<Comment>.CreateAsync (comments, commentPaginationParams.PageSize, commentPaginationParams.PageNumber);
+
+        }
+
+        public async Task<UpVotedComment> GetUpVoteForComment (int userId, int id) {
+            return await _context.UpVotedComments.FirstOrDefaultAsync (uvc => uvc.UserId == userId && uvc.CommentId == id);
+        }
+
+        public async Task<DownVotedComment> GetDownVoteForComment (int userId, int id) {
+            return await _context.DownVotedComments.FirstOrDefaultAsync (dvc => dvc.UserId == userId && dvc.CommentId == id);
+        }
+
+        public async Task<DownVotedPost> GetDownVoteForPost (int userId, int id) {
+            return await _context.DownVotedPosts.FirstOrDefaultAsync (dvp => dvp.UserId == userId && dvp.PostId == id);
+        }
+
+        public async Task<UpVotedPost> GetUpVoteForPost (int userId, int id) {
+            return await _context.UpVotedPosts.FirstOrDefaultAsync (uvp => uvp.UserId == userId && uvp.PostId == id);
         }
     }
 }
