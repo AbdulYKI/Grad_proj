@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Owin;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,7 +16,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
@@ -60,27 +60,31 @@ namespace grad_proj_api
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
-                    // options.Events = new JwtBearerEvents
-                    // {
-                    //     OnMessageReceived = context =>
-                    //     {
-                    //         var path = context.HttpContext.Request.Path;
-                    //         var accessToken = context.Request.Query["access_token"];
-                    //         if (!string.IsNullOrEmpty(accessToken) &&
-                    //        (path.StartsWithSegments("/api/chat")))
-                    //         {
-                    //             context.Token = accessToken;
-                    //         }
-                    //         return Task.CompletedTask;
-                    //     }
-                    // };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var path = context.HttpContext.Request.Path;
+                            var accessToken = context.Request.Query["access_token"];
+                            if (!string.IsNullOrEmpty(accessToken) &&
+                           (path.StartsWithSegments("/api/chat")))
+                            {
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
 
             //adds Seed so I can use it in seed
             services.AddTransient<Seed>();
             services.AddTransient<LogUserActivity>();
+            services.AddSignalR();
             services.AddControllers()
-            .AddNewtonsoftJson(opt => opt.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc);
+            .AddNewtonsoftJson(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                opt.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc});
 
         }
 
@@ -97,6 +101,12 @@ namespace grad_proj_api
             app.UseRouting();
             app.UseAuthentication();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseEndpoints(routes =>
+            {
+                routes.MapHub<ChatHub>("/api/chat");
+            });
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
