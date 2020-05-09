@@ -43,7 +43,8 @@ namespace grad_proj_api.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> AddPhotoForUser (int userId, [FromForm] PhotoForAddingDto photoForAddingDTO) {
-            if (userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
+            if (User.FindFirst (ClaimTypes.NameIdentifier) == null ||
+                userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
                 return Unauthorized ();
 
             var userFromRepo = await _repo.GetUser (userId);

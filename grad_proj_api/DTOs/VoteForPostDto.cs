@@ -1,5 +1,7 @@
-namespace grad_proj_api.DTOs {
-    public class VoteForPostDto {
+namespace grad_proj_api.Dtos
+{
+    public class VoteForPostDto
+    {
         public int PostId { get; set; }
         public int UserId { get; set; }
 

@@ -10,7 +10,7 @@ import { PostService } from "src/app/services/post.service";
 import { AuthService } from "./../../services/auth.service";
 import { LocaliseDatePipe } from "../../helper/pipes/localiseDate.pipe";
 import { SharedService } from "./../../services/shared.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
 import { Post } from "src/app/models/post";
 import {
@@ -38,24 +38,15 @@ import { EditorComponent } from "@tinymce/tinymce-angular";
 export class ViewPostComponent implements OnInit {
   @ViewChild("tinymce") tinymce: EditorComponent;
   defaulPhotoUrl: string = environment.defaultPhoto;
-  fakeComment = {
-    content: "new comment",
-    dateEditedUtc: null,
-    dateAddedUtc: "2020-04-30T14:59:58.6989271Z",
-    id: 8,
-    userId: 2,
-    username: "username1234",
-    userPhotoUrl:
-      "http://res.cloudinary.com/da57tn2gm/image/upload/v1588097061/uxf2ij9vf2hcdic44kky.jpg",
-    votesCount: 0,
-  };
+
   constructor(
     private route: ActivatedRoute,
     private sharedService: SharedService,
     private authService: AuthService,
     private postService: PostService,
     private alertifyService: AlertifyService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private router: Router
   ) {}
   loadingDivHeight: string;
   loadingDivWidth: string;
@@ -231,6 +222,9 @@ export class ViewPostComponent implements OnInit {
   }
 
   createDownVote() {
+    if (!this.signedIn()) {
+      this.router.navigate(["/sign-in"]);
+    }
     this.postService
       .createDownVote(this.authService.decodedToken.nameid, this.post.id)
       .subscribe(
@@ -245,6 +239,9 @@ export class ViewPostComponent implements OnInit {
   }
 
   createUpVote() {
+    if (!this.signedIn()) {
+      this.router.navigate(["/sign-in"]);
+    }
     this.postService
       .createUpVote(this.authService.decodedToken.nameid, this.post.id)
       .subscribe(
@@ -259,6 +256,9 @@ export class ViewPostComponent implements OnInit {
   }
 
   deleteUpVote() {
+    if (!this.signedIn()) {
+      this.router.navigate(["/sign-in"]);
+    }
     this.postService
       .deleteUpVote(this.authService.decodedToken.nameid, this.post.id)
       .subscribe(
@@ -272,6 +272,9 @@ export class ViewPostComponent implements OnInit {
       );
   }
   deleteDownVote() {
+    if (!this.signedIn()) {
+      this.router.navigate(["/sign-in"]);
+    }
     this.postService
       .deleteDownVote(this.authService.decodedToken.nameid, this.post.id)
       .subscribe(

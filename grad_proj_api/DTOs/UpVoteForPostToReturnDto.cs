@@ -1,5 +1,7 @@
-namespace grad_proj_api.DTOs {
-    public class UpVoteForPostToReturnDto : VoteForPostDto {
+namespace grad_proj_api.Dtos
+{
+    public class UpVoteForPostToReturnDto : VoteForPostDto
+    {
 
     }
 }

@@ -1,7 +1,9 @@
 using System;
 
-namespace grad_proj_api.DTOs {
-    public class CommentToReturnDto {
+namespace grad_proj_api.Dtos
+{
+    public class CommentToReturnDto
+    {
 
         public string Content { get; set; }
         public DateTime? DateEditedUtc { get; set; }

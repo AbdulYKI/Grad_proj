@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { SharedService } from "./../../../services/shared.service";
 import { AlertifyService } from "./../../../services/alertify.service";
 import { Comment } from "./../../../models/comment";
@@ -27,7 +28,8 @@ export class CommentCardComponent implements OnInit {
     private authService: AuthService,
     private commentService: CommentService,
     private alertifyService: AlertifyService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private router: Router
   ) {}
   @Input() comment: Comment;
   isLoading = false;
@@ -143,6 +145,9 @@ export class CommentCardComponent implements OnInit {
   }
 
   createDownVote() {
+    if (!this.signedIn()) {
+      this.router.navigate(["/sign-in"]);
+    }
     this.commentService
       .createDownVote(this.authService.decodedToken.nameid, this.comment.id)
       .subscribe(
@@ -157,6 +162,9 @@ export class CommentCardComponent implements OnInit {
   }
 
   createUpVote() {
+    if (!this.signedIn()) {
+      this.router.navigate(["/sign-in"]);
+    }
     this.commentService
       .createUpVote(this.authService.decodedToken.nameid, this.comment.id)
       .subscribe(
@@ -171,6 +179,9 @@ export class CommentCardComponent implements OnInit {
   }
 
   deleteUpVote() {
+    if (!this.signedIn()) {
+      this.router.navigate(["/sign-in"]);
+    }
     this.commentService
       .deleteUpVote(this.authService.decodedToken.nameid, this.comment.id)
       .subscribe(
@@ -184,6 +195,9 @@ export class CommentCardComponent implements OnInit {
       );
   }
   deleteDownVote() {
+    if (!this.signedIn()) {
+      this.router.navigate(["/sign-in"]);
+    }
     this.commentService
       .deleteDownVote(this.authService.decodedToken.nameid, this.comment.id)
       .subscribe(
