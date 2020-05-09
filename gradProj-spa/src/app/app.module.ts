@@ -40,6 +40,7 @@ import { ViewPostResolver } from "src/resolvers/post-view.resolver";
 import { CommentCardComponent } from "./posts/comments/comment-card/comment-card.component";
 import { PhotoUploaderComponent } from "./profile/photo-uploader/photo-uploader.component";
 import { AddCommentComponent } from "./posts/comments/add-comment/add-comment.component";
+import { MessageCardComponent } from './message-card/message-card.component';
 
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
@@ -63,6 +64,7 @@ export function tokenGetter() {
     CommentCardComponent,
     LocaliseDatePipe,
     AddCommentComponent,
+    MessageCardComponent,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),

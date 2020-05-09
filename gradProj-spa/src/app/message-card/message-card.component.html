@@ -1,0 +1,115 @@
+<div [class.rtl]="isInRtlMode">
+<div class="container-fluid h-100">
+    <div class="row justify-content-center h-100">
+        <div class="col-md-8  chat">
+            <div class="card">
+                <div class="card-header msg_head">
+                    <div class="d-flex bd-highlight">
+                        <div class="img_cont">
+                            <img src="https://i.pinimg.com/originals/5f/69/65/5f6965066815d3a4acffa1222d5e74f2.jpg" class="rounded-circle user_img">
+                            <!-- Icons Online or offile -->
+                            <span class="online_icon"></span>
+                        </div>
+                        <div class="user_info">
+                            <span>Omar</span>
+                            <p>Online</p>
+                        </div>
+                        <div class="video_cam">
+                            <span><fa-icon [icon]="faVideo"></fa-icon></span>
+                            <span><fa-icon [icon]="faPhone"></fa-icon></span>
+                        </div>
+                    </div>
+                    <!-- Action Menu -->
+                    <span (click)="toggleActionCollapsed()"  class="action_menu_btn"><fa-icon [icon]="faEllipsisV"></fa-icon></span>
+                    <div class="action_menu" [class.show]="isActionCollapsed">
+                        <ul>
+                            <li><fa-icon [icon]="faUserCircle"></fa-icon> View profile</li>
+                            <li><fa-icon [icon]="faBan"></fa-icon> Block</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body msg_card_body">
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="https://i.pinimg.com/originals/5f/69/65/5f6965066815d3a4acffa1222d5e74f2.jpg" class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg-container">
+                            Hi, how are you ?
+                            <span class="msg_time">8:40 AM, Today</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mb-4">
+                        <div class="msg-container-send">
+                            Hi omar i am good tnx how about you?
+                            <span class="msg_time_send">8:55 AM, Today</span>
+                        </div>
+                        <div class="img_cont_msg">
+                    <img src="https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/p960x960/53464689_10213462421974662_1657644693770469376_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_eui2=AeFGXHn9VCQpgFQPH7YSVU_Xr8vC8mb3Zsavy8LyZvdmxk3DRc2fpU8KUoAOJ5d6vNz-_FPJRKy5CeXvPWVcOkJy&_nc_ohc=WRMzkznhBWIAX8l5J0j&_nc_ht=scontent.famm3-1.fna&_nc_tp=6&oh=a584b51a6eb2b9ebc3546ba968646cab&oe=5EDA3DA2" class="rounded-circle user_img_msg">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="https://i.pinimg.com/originals/5f/69/65/5f6965066815d3a4acffa1222d5e74f2.jpg" class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg-container">
+                            I am good too, thank you for your Works .
+                            I am good too, thank you for your Works .
+                            I am good too, thank you for your Works .
+                            I am good too, thank you for your Works .
+                            I am good too, thank you for your Works .
+                            <span class="msg_time">9:00 AM, Today</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mb-4">
+                        <div class="msg-container-send">
+                            You are welcome
+                            <span class="msg_time_send">9:05 AM, Today</span>
+                        </div>
+                        <div class="img_cont_msg">
+                    <img src="https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/p960x960/53464689_10213462421974662_1657644693770469376_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_eui2=AeFGXHn9VCQpgFQPH7YSVU_Xr8vC8mb3Zsavy8LyZvdmxk3DRc2fpU8KUoAOJ5d6vNz-_FPJRKy5CeXvPWVcOkJy&_nc_ohc=WRMzkznhBWIAX8l5J0j&_nc_ht=scontent.famm3-1.fna&_nc_tp=6&oh=a584b51a6eb2b9ebc3546ba968646cab&oe=5EDA3DA2" class="rounded-circle user_img_msg">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="https://i.pinimg.com/originals/5f/69/65/5f6965066815d3a4acffa1222d5e74f2.jpg" class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg-container">
+                            😍😍😍
+                            <span class="msg_time">9:07 AM, Today</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mb-4">
+                        <div class="msg-container-send">
+                            Ok, thank you have a good day
+                            <span class="msg_time_send">9:10 AM, Today</span>
+                        </div>
+                        <div class="img_cont_msg">
+                <img src="https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/p960x960/53464689_10213462421974662_1657644693770469376_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_eui2=AeFGXHn9VCQpgFQPH7YSVU_Xr8vC8mb3Zsavy8LyZvdmxk3DRc2fpU8KUoAOJ5d6vNz-_FPJRKy5CeXvPWVcOkJy&_nc_ohc=WRMzkznhBWIAX8l5J0j&_nc_ht=scontent.famm3-1.fna&_nc_tp=6&oh=a584b51a6eb2b9ebc3546ba968646cab&oe=5EDA3DA2" class="rounded-circle user_img_msg">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="https://i.pinimg.com/originals/5f/69/65/5f6965066815d3a4acffa1222d5e74f2.jpg" class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg-container">
+                            Bye, see you
+                            <span class="msg_time">9:12 AM, Today</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <span class="input-group-text attach_btn"><fa-icon [icon]="faPaperclip"></fa-icon></span>
+                        </div>
+                        <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                        <div class="input-group-append">
+                            <span class="input-group-text send_btn"><fa-icon [icon]="faLocationArrow"></fa-icon></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
