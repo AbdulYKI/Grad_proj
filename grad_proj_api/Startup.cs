@@ -84,7 +84,8 @@ namespace grad_proj_api
             .AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                opt.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc});
+                opt.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+            });
 
         }
 
