@@ -44,7 +44,7 @@
             <img class="avatar" [src]="post.userPhotoUrl || defaulPhotoUrl" />
           </a>
           <div class="username">
-            <a> {{ post.username }}</a>
+            <a [routerLink]="['/profile', post.userId]"> {{ post.username }}</a>
           </div>
 
           <div class="voting-section">

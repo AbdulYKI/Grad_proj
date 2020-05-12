@@ -1,0 +1,110 @@
+/*form button is a class in styles.css*/
+.my-select {
+  padding: 0px;
+}
+.view-profile-container {
+  color: #8888;
+}
+
+.view-profile-container .user-info h4 {
+  color: #000000bd;
+  letter-spacing: 2px;
+  font-weight: bolder;
+}
+.view-profile-container .user-info p {
+  padding: 0px 6px;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.view-profile-container .form-control {
+  width: 70%;
+  margin: auto;
+}
+.view-profile-container .input-group {
+  width: 70%;
+  margin: auto;
+}
+
+.view-profile-container .form-label {
+  text-align: start;
+  margin-bottom: 8px;
+  margin-left: 15%;
+  font-size: 13px;
+}
+
+.view-profile-container textarea {
+  resize: none;
+}
+.view-profile-container .rtl .form-label {
+  margin-left: 0%;
+  margin-right: 15%;
+}
+
+.view-profile-container .flag-span {
+  padding: 0px;
+  padding-left: 1px;
+}
+
+.view-profile-container .img-grid img {
+  border-radius: 50%;
+}
+.view-profile-container .rtl .img-grid .row .col-6.col-md-6 .card {
+  float: left;
+}
+.view-profile-container .cuppa-dropdown {
+  width: 70% !important;
+  margin: auto !important;
+}
+.view-profile-container .img-grid .row .col-6.col-md-6 .card {
+  min-width: 137.5px;
+  max-width: 150px;
+  max-height: 150px;
+  min-height: 137.5px;
+  float: right;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0px 0px 17px 0px #777676;
+}
+.view-profile-container .img-grid .row .col-6.col-md-6 .card .card-img {
+  border-radius: 50%;
+  max-width: 150px;
+  max-height: 150px;
+  max-height: 150px;
+  min-height: 137.5px;
+}
+.view-profile-container .c-remove,
+.view-profile-container .c-angle-down {
+  display: none;
+}
+.view-profile-container .c-btn.disabled {
+  background: transparent;
+}
+.view-profile-container textarea:disabled {
+  background-color: transparent;
+}
+.view-profile-container .no-items .selected-list .c-btn {
+  cursor: auto;
+}
+.view-profile-container .selected-list .c-btn {
+  cursor: pointer;
+}
+
+.view-profile-container .btn-chat {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 2px;
+}
+.view-profile-container .btn-chat button {
+  width: 160px;
+  height: 40px;
+  color: white;
+  border: 0px;
+  border-radius: 20px;
+  box-shadow: 3px 7px 12px #797979;
+  font-weight: 600;
+  outline: none;
+}
+.view-profile-container .btn-chat button:enabled {
+  background-color: #f5d626 !important;
+}

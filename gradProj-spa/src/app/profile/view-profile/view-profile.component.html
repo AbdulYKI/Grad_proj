@@ -1,0 +1,169 @@
+<div class="container view-profile-container">
+  <div class="col-lg-12" [class.rtl]="isLanguageArabic">
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="img-grid">
+          <div class="row">
+            <div class="col-6 col-md-6">
+              <div class="card text-white">
+                <img class="card-img" [src]="user.photoUrl" alt="profile pic" />
+              </div>
+            </div>
+            <div class="col-5 col-md-5 m-auto user-info p-0">
+              <h4>{{ user.username }}</h4>
+              <p>{{ user.email }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="container profile-input">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label
+                [class.form-label-rtl]="isLanguageArabic"
+                class="form-label"
+              >
+                {{ lexicon.firstName }}
+              </label>
+              <div class="form-control">
+                {{ user.firstName }}
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label
+                [class.form-label-rtl]="isLanguageArabic"
+                class="form-label"
+                >{{ lexicon.lastName }}</label
+              >
+              <div class="form-control">
+                {{ user.lastName }}
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label
+                [class.form-label-rtl]="isLanguageArabic"
+                class="form-label"
+                >{{ lexicon.dateOfBirth }}</label
+              >
+              <div class="input-group">
+                <div class="form-control">
+                  {{ user.dateOfBirth | localiseDate: "yyyy-MM-dd":localeCode }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label
+                [class.form-label-rtl]="isLanguageArabic"
+                class="form-label"
+              >
+                {{ lexicon.companyName }}
+              </label>
+              <div class="form-control">
+                {{ user.companyName }}
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label
+                [class.form-label-rtl]="isLanguageArabic"
+                class="form-label"
+              >
+                {{ lexicon.schoolName }}
+              </label>
+              <div class="form-control">
+                {{ user.schoolName }}
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label
+                [class.form-label-rtl]="isLanguageArabic"
+                class="form-label"
+                >{{ lexicon.country }}</label
+              >
+              <div class="input-group">
+                <div class="form-control">
+                  {{
+                    user.countryAlpha2Code != null
+                      ? lexicon[user.countryAlpha2Code]
+                      : ""
+                  }}
+                </div>
+                <div class="input-group-append">
+                  <span
+                    class="input-group-text"
+                    *ngIf="user.countryAlpha2Code == null"
+                  >
+                    <span> &nbsp;</span>
+                  </span>
+                  <span
+                    *ngIf="user.countryAlpha2Code != null"
+                    class="input-group-text flag-span f32"
+                  >
+                    <span
+                      class="flag {{
+                        user.countryAlpha2Code.toLocaleLowerCase()
+                      }}"
+                    ></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label
+                [class.form-label-rtl]="isLanguageArabic"
+                class="form-label"
+              >
+                {{ lexicon.programmingLanguages }}
+              </label>
+              <angular2-multiselect
+                [settings]="programmingLanguagesDropDownSettings"
+                [data]="programmingLanguagesDataSource"
+                [(ngModel)]="selectedProgrammingLanguages"
+                (click)="showProgrammingLanguagesModal()"
+                [class.no-items]="selectedProgrammingLanguages.length === 0"
+              >
+              </angular2-multiselect>
+            </div>
+            <div class="form-group col-md-6">
+              <label
+                [class.form-label-rtl]="isLanguageArabic"
+                class="form-label"
+                >{{ lexicon.gender }}</label
+              >
+
+              <div class="form-control">
+                {{ userGenderName }}
+              </div>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label
+                [class.form-label-rtl]="isLanguageArabic"
+                class="form-label"
+              >
+                {{ lexicon.description }}
+              </label>
+              <textarea
+                class="form-control"
+                type="text"
+                rows="6"
+                [value]="user.description"
+                disabled
+              >
+              </textarea>
+            </div>
+          </div>
+          <div class="btn-chat">
+            <button class="form-button" (click)="navigateToChat()">
+              {{ lexicon.chat }}
+              <fa-icon [icon]="faEnvelope"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <!--End Container-->
+      </div>
+    </div>
+  </div>
+</div>

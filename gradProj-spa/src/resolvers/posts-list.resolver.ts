@@ -1,11 +1,8 @@
 import { paginationDefaults } from "./../app/helper/pagination/pagination-defaults.constants";
 import { PaginationResult } from "./../app/helper/pagination/pagination-result";
-import { PostsListComponent } from "./../app/posts/posts-list/posts-list.component";
 import { PostService } from "./../app/services/post.service";
 import { SharedService } from "../app/services/shared.service";
-import { ProgrammingLanguage } from "../app/models/programming-language";
-import { AuthService } from "../app/services/auth.service";
-import { catchError, map } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 import { Observable, of } from "rxjs";
 import { AlertifyService } from "../app/services/alertify.service";
 import { Injectable } from "@angular/core";
@@ -13,16 +10,17 @@ import { Resolve, Router, ActivatedRouteSnapshot } from "@angular/router";
 import { Post } from "src/app/models/post";
 
 @Injectable()
-export class PostsListResolver implements Resolve<Post[]> {
+export class PostsListResolver implements Resolve<PaginationResult<Post[]>> {
   constructor(
     private alertifyService: AlertifyService,
     private router: Router,
-    private authService: AuthService,
     private sharedService: SharedService,
     private postService: PostService
   ) {}
 
-  resolve(snapShot: ActivatedRouteSnapshot): any {
+  resolve(
+    snapShot: ActivatedRouteSnapshot
+  ): Observable<PaginationResult<Post[]>> {
     const posts: Observable<PaginationResult<
       Post[]
     >> = this.postService

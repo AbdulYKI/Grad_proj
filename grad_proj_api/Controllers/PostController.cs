@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using grad_proj_api.Dtos;
-using grad_proj_api.Dtos;
 using grad_proj_api.Helpers;
 using grad_proj_api.Helpers.Pagination;
 using grad_proj_api.Interfaces;

@@ -3,9 +3,9 @@ import { CustomDatePicker } from "../../helper/custom-date-picker";
 import { LanguageEnum } from "../../helper/enums/language.enum";
 import { SharedService } from "../../services/shared.service";
 import { NgbDatePickerValue } from "../../helper/ngb-date-picker-value";
-import { EditProfileResolverData } from "../../helper/edit-profile-resolver-data";
+import { EditProfileResolverData } from "../../helper/resolvers-data/edit-profile-resolver-data";
 import { ProgrammingLanguage } from "../../models/programming-language";
-import { User } from "../../models/User";
+import { User } from "../../models/user";
 import {
   Component,
   OnInit,
@@ -121,12 +121,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         (data: { editProfileResolverData: EditProfileResolverData }) => {
           this.user = data.editProfileResolverData.user;
           this.photoUrl = this.user.photoUrl || environment.defaultPhoto;
-          this.setProfileFormData();
           this.setProgrammingLanguagesDataSource(
             data.editProfileResolverData.programmingLanguages
           );
+          this.setProfileFormData();
           this.setCountriesDataSource(data.editProfileResolverData.countries);
-          this.setSelectedProgrammingLanguages();
         }
       );
 
@@ -143,6 +142,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       unSelectAllText: this.lexicon.unselectAll,
       enableSearchFilter: true,
       badgeShowLimit: 2,
+      noDataLabel: "",
       classes: "multiselect-dropdown",
       lazyLoading: true,
       filterSelectAllText: this.lexicon.filterSelectAll,
@@ -173,14 +173,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       a.name > b.name ? 1 : -1
     );
   }
-  private setSelectedProgrammingLanguages() {
-    this.selectedProgrammingLanguages = this.programmingLanguagesDataSource.filter(
+  private getSelectedProgrammingLanguages() {
+    return this.programmingLanguagesDataSource.filter(
       (pl) =>
         this.user.programmingLanguagesIds.find((uplId) => uplId === pl.id) !==
         undefined
-    );
-    this.selectedProgrammingLanguages.sort((a, b) =>
-      a.name > b.name ? 1 : -1
     );
   }
 
@@ -190,14 +187,16 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private setProfileFormData() {
     this.editFormGroup.reset(this.user);
-
+    this.editFormGroup
+      .get("programmingLanguages")
+      .setValue(this.getSelectedProgrammingLanguages());
     if (this.user.dateOfBirth != null) {
       // for some reason dateOfBirth gets casted to string so I need to create a date object from it
       const dob = new Date(this.user.dateOfBirth);
       this.dateOfBirth.reset({
         year: dob.getFullYear(),
-        month: dob.getMonth(),
-        day: dob.getDay(),
+        month: dob.getUTCMonth() + 1,
+        day: dob.getUTCDate(),
       });
     }
 
@@ -300,20 +299,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   get faCalendar() {
     return faCalendar;
   }
-  get formLabelClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
-      return "form-label";
-    } else {
-      return "form-label form-label-rtl";
-    }
-  }
-  get formClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
-      return "form";
-    } else {
-      return "form rtl";
-    }
-  }
+
   onSelectAll(newProgrammingLanguages: ProgrammingLanguage[]) {
     this.selectedProgrammingLanguages = newProgrammingLanguages;
   }
@@ -333,7 +319,14 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   get photo() {
     return this.editFormGroup.get("photo");
   }
-
+  findAlpha2CodeForNumericCode(numericCode) {
+    return this.countriesDataSource
+      .filter((c) => c.numericCode === numericCode)[0]
+      .alpha2Code.toLowerCase();
+  }
+  get countryNumericCode() {
+    return this.editFormGroup.get("countryNumericCode");
+  }
   openImageUploaderModal() {
     this.modalOption.backdrop = "static";
     this.modalOption.keyboard = false;
@@ -345,5 +338,9 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   get faSave() {
     return faSave;
+  }
+
+  get isLanguageArabic() {
+    return this.sharedService.currentLanguage.value === LanguageEnum.Arabic;
   }
 }

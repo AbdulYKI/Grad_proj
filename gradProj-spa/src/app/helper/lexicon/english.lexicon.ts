@@ -376,4 +376,5 @@ export const englishLexicon = {
    non-Arab developers of the world, explore its posts in which you canhelp others or create your
     own post and ask for other developers' help.`,
   getStartedLinkText: "Get Started",
+  chat: "Chat",
 };

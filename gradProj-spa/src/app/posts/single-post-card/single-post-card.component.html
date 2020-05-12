@@ -8,7 +8,8 @@
         <a [routerLink]="['/post', post.id]">{{ post.title }}</a>
       </h5>
       <div class="date-section">
-        <span>{{ post.username }} {{ lexicon.createdAt }}</span>
+        <a [routerLink]="['/profile', post.userId]"> {{ post.username }}</a>
+        <span> {{ lexicon.createdAt }}</span>
 
         <fa-icon class="calender" [icon]="faCalendar"></fa-icon>
         <span

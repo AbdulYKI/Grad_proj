@@ -19,18 +19,19 @@ namespace grad_proj_api.Helpers
             //the resultContext gives access to the token which in turn
             //gives access to the userId 
             var resultContext = await next ();
+            var nameIdentifier = resultContext.HttpContext.User
+                .FindFirst (ClaimTypes.NameIdentifier);
+            if (nameIdentifier != null) {
+                var userId = int.Parse (nameIdentifier.Value);
 
-            var userId = int.Parse (resultContext.HttpContext.User
+                var repo = resultContext.HttpContext.RequestServices.GetService<IMainRepository> ();
 
-                .FindFirst (ClaimTypes.NameIdentifier).Value);
+                var user = await repo.GetUser (userId);
 
-            var repo = resultContext.HttpContext.RequestServices.GetService<IMainRepository> ();
+                user.LastActiveUtc = DateTime.UtcNow;
 
-            var user = await repo.GetUser (userId);
-
-            user.LastActiveUtc = DateTime.UtcNow;
-
-            await repo.SaveAll ();
+                await repo.SaveAll ();
+            }
 
         }
 
