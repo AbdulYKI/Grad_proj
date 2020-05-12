@@ -1,4 +1,8 @@
-import { ViewPostResolverData } from "./helper/view-post-resolver-data";
+import { MessagesThreadResolver } from "../resolvers/messages-thread.resolver";
+import { ViewProfileResolver } from "./../resolvers/view-profile.resolver";
+import { ViewProfileResolverData } from "./helper/resolvers-data/view-profile-resolver-data";
+import { ViewProfileComponent } from "./profile/view-profile/view-profile.component";
+import { ViewPostResolverData } from "./helper/resolvers-data/view-post-resolver-data";
 import { ViewPostComponent } from "./posts/view-post/view-post.component";
 import { PostsListResolver } from "./../resolvers/posts-list.resolver";
 import { PreventUnsavedChangesGuardForCreatePost } from "./guards/prevent-unsaved-changes-for-create-post.guard";
@@ -13,11 +17,12 @@ import { PreventUnsavedChangesGuardForEditProfile } from "./guards/prevent-unsav
 import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
 import { PostsListComponent } from "./posts/posts-list/posts-list.component";
 import { ViewPostResolver } from "src/resolvers/post-view.resolver";
+import { MessageCardComponent } from "./message-card/message-card.component";
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
   {
-    path: "user",
+    path: "profile",
     runGuardsAndResolvers: "always",
     canActivate: [AuthGuard],
     children: [
@@ -35,6 +40,11 @@ const routes: Routes = [
     component: SignInComponent,
   },
   {
+    path: "profile/:id",
+    component: ViewProfileComponent,
+    resolve: { viewProfileResolverData: ViewProfileResolver },
+  },
+  {
     path: "sign-up",
     component: SignUpComponent,
   },
@@ -50,6 +60,13 @@ const routes: Routes = [
     component: ViewPostComponent,
     resolve: { viewPostResolverData: ViewPostResolver },
     canDeactivate: [PreventUnsavedChangesGuardForCreatePost],
+  },
+  {
+    path: "chat/:recipientId",
+    runGuardsAndResolvers: "always",
+    canActivate: [AuthGuard],
+    component: MessageCardComponent,
+    resolve: { messagesThreadResolverData: MessagesThreadResolver },
   },
 
   { path: "**", redirectTo: "home", pathMatch: "full" },

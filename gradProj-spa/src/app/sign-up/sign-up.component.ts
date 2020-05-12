@@ -18,7 +18,7 @@ import {
   AbstractControl,
 } from "@angular/forms";
 import { MustMatch } from "../helper/validation/must-match.validator";
-import { User } from "../models/User";
+import { User } from "../models/user";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { AlertifyService } from "../services/alertify.service";

@@ -1,0 +1,11 @@
+.modal-body .c-remove,
+.modal-body .c-angle-down {
+  display: none;
+}
+.modal-body .c-btn.disabled {
+  background: transparent;
+}
+
+.modal-body .selected-list .c-btn {
+  cursor: auto;
+}

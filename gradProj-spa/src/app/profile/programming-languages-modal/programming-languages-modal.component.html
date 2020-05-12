@@ -1,0 +1,32 @@
+<div [class.rtl]="isLanguageArabic">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ lexicon.programmingLanguages }}</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModal()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <input
+          type="text"
+          [placeholder]="lexicon.searchPlaceholder"
+          class="form-control mb-2"
+          (input)="onSearchChange($event.target.value)"
+        />
+
+        <angular2-multiselect
+          [settings]="programmingLanguagesDropDownSettings"
+          [data]="programmingLanguagesDataSource"
+          [(ngModel)]="filteredSelectedProgrammingLanguages"
+        >
+        </angular2-multiselect>
+      </div>
+    </div>
+  </div>
+</div>

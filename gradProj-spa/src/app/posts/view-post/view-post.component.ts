@@ -2,7 +2,7 @@ import { paginationDefaults } from "./../../helper/pagination/pagination-default
 import { CommentService } from "src/app/services/comment.service";
 import { Pagination } from "./../../helper/pagination/pagination";
 import { Comment } from "./../../models/comment";
-import { ViewPostResolverData } from "./../../helper/view-post-resolver-data";
+import { ViewPostResolverData } from "../../helper/resolvers-data/view-post-resolver-data";
 import { element } from "protractor";
 import { Patterns } from "../../helper/validation/patterns";
 import { AlertifyService } from "./../../services/alertify.service";

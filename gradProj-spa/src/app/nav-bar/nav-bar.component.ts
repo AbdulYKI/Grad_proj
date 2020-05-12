@@ -30,7 +30,7 @@ export class NavBarComponent implements OnInit, AfterViewChecked {
   logoUrl = environment.logo;
   photoUrl: string;
   shouldIncludeOnScrollClass = false;
-  shouldHaveStartHeaderClass = false;
+  shouldHaveStartHeaderClass = true;
   destroy: Subject<boolean> = new Subject<boolean>();
   defaultPhoto = environment.defaultPhoto;
   constructor(

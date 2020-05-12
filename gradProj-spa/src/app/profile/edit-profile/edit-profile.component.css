@@ -5,7 +5,7 @@
 .edit-profile-container {
   color: #8888;
 }
-.cuppa-dropdown {
+.edit-profile-container .cuppa-dropdown {
   width: 70% !important;
   margin: auto !important;
 }
@@ -72,7 +72,7 @@
   cursor: pointer;
 }
 
-.overlay {
+.edit-profile-container .overlay {
   background-color: #000000bd;
   display: none;
   position: absolute;
@@ -84,21 +84,21 @@
   border-radius: 50%;
 }
 
-.user-info h4 {
+.edit-profile-container .user-info h4 {
   color: #000000bd;
   letter-spacing: 2px;
   font-weight: bolder;
 }
-.user-info p {
+.edit-profile-container .user-info p {
   padding: 0px 6px;
   font-size: 14px;
   letter-spacing: 1px;
 }
-.fix_overlay:hover .overlay {
+.edit-profile-container .fix_overlay:hover .overlay {
   opacity: 1;
 }
 
-input[type="file"] {
+.edit-profile-container input[type="file"] {
   position: absolute;
   width: 50%;
   height: 50%;
@@ -108,38 +108,38 @@ input[type="file"] {
   top: 24%;
   z-index: 10;
 }
-.fa-camera {
+.edit-profile-container .fa-camera {
   position: absolute;
   left: 45%;
   top: 45%;
   color: white;
   font-size: 20px;
 }
-.profile-input {
+.edit-profile-container .profile-input {
   margin-top: 10px;
 }
-.form-control {
+.edit-profile-container .form-control {
   width: 70%;
   margin: auto;
 }
-.input-group {
+.edit-profile-container .input-group {
   width: 70%;
   margin: auto;
 }
 
-.form-label {
+.edit-profile-container .form-label {
   text-align: start;
   margin-bottom: 8px;
   margin-left: 15%;
   font-size: 13px;
 }
-.btn-save {
+.edit-profile-container .btn-save {
   text-align: center;
   margin-top: 30px;
   margin-bottom: 2px;
 }
 
-.btn-save button {
+.edit-profile-container .btn-save button {
   width: 160px;
   height: 40px;
   color: white;
@@ -149,19 +149,19 @@ input[type="file"] {
   font-weight: 600;
   outline: none;
 }
-.btn-save button:enabled {
+.edit-profile-container .btn-save button:enabled {
   background-color: #3dc867 !important;
 }
-textarea {
+.edit-profile-container textarea {
   resize: none;
 }
-.form-label-rtl {
+.edit-profile-container .form-label-rtl {
   margin-left: 0%;
   margin-right: 15%;
 }
 
 /* fix unwanted white space in rtl for the date picker*/
-.rtl .dropdown-menu,
+.edit-profile-container .rtl .dropdown-menu,
 [dir="rtl"] .dropdown-menu {
   right: 0;
   left: inherit;
@@ -170,18 +170,21 @@ textarea {
 }
 
 /*fix the padding in months and weeks in rtl for the date picker*/
-.rtl .custom-select,
+.edit-profile-container .rtl .custom-select,
 [dir="rtl"] .custom-select {
   padding: -0.625rem 0.75rem 0.375rem 1.75rem;
 }
-.selected-list .c-angle-down,
-.selected-list .c-angle-up {
-  position: absolute;
-  right: unset;
+
+.edit-profile-container .dropdown-list {
+  z-index: 1000;
+}
+.edit-profile-container .dropdown-list .arrow-down,
+.edit-profile-container .dropdown-list .arrow-up {
+  display: none !important;
 }
 /*fix the mutliselect angle position for rtl*/
-.rtl .selected-list .c-angle-down,
-.rtl .selected-list .c-angle-up {
+.edit-profile-container .rtl .selected-list .c-angle-down,
+.edit-profile-container .rtl .selected-list .c-angle-up {
   position: absolute;
   right: 93%;
 }
@@ -202,36 +205,36 @@ textarea {
 } */
 
 /* keep the direction of languages' names ltr since they are in english*/
-.pure-checkbox input[type="checkbox"] + label {
+.edit-profile-container .pure-checkbox input[type="checkbox"] + label {
   direction: ltr !important;
 }
 /* keep the direction of languages' names ltr since they are in english in selected tags*/
-.selected-list .c-list .c-token .c-label {
+.edit-profile-container .selected-list .c-list .c-token .c-label {
   direction: ltr !important;
 }
 /* rtl for the (x) button in multiselect */
-.rtl .list-filter .c-clear {
+.edit-profile-container .rtl .list-filter .c-clear {
   position: absolute;
   top: 6px;
   right: 80%;
 }
 
 /*keep the selects inside the date popup the same*/
-ngb-datepicker-navigation-select > .custom-select {
+.edit-profile-container ngb-datepicker-navigation-select > .custom-select {
   padding: 0 0.5rem !important;
 }
-.flag-span {
+.edit-profile-container .flag-span {
   padding: 0px;
   padding-left: 1px;
 }
 
-.img-grid img {
+.edit-profile-container .img-grid img {
   border-radius: 50%;
 }
-.rtl .img-grid .row .col-6.col-md-6 .card {
+.edit-profile-container .rtl .img-grid .row .col-6.col-md-6 .card {
   float: left;
 }
-.img-grid .row .col-6.col-md-6 .card {
+.edit-profile-container .img-grid .row .col-6.col-md-6 .card {
   min-width: 137.5px;
   max-width: 150px;
   max-height: 150px;
@@ -241,7 +244,7 @@ ngb-datepicker-navigation-select > .custom-select {
   border: none;
   box-shadow: 0px 0px 17px 0px #777676;
 }
-.img-grid .row .col-6.col-md-6 .card .card-img {
+.edit-profile-container .img-grid .row .col-6.col-md-6 .card .card-img {
   border-radius: 50%;
   max-width: 150px;
   max-height: 150px;
@@ -249,13 +252,18 @@ ngb-datepicker-navigation-select > .custom-select {
   min-height: 137.5px;
 }
 
-.img-grid .row .col-6.col-md-6 .card .card-img-overlay {
+.edit-profile-container .img-grid .row .col-6.col-md-6 .card .card-img-overlay {
   opacity: 0;
   border-radius: 50%;
   cursor: pointer;
   transition: 0.5s ease;
 }
-.img-grid .row .col-6.col-md-6 .card:hover .card-img-overlay {
+.edit-profile-container
+  .img-grid
+  .row
+  .col-6.col-md-6
+  .card:hover
+  .card-img-overlay {
   opacity: 0.7;
   background-color: #777;
 }

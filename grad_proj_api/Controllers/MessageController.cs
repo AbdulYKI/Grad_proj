@@ -10,74 +10,63 @@ using grad_proj_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace grad_proj_api.Controllers
-{
-    [ServiceFilter(typeof(LogUserActivity))]
-    [Authorize]
-    [Route("api/user/{userId}/[controller]")]
+namespace grad_proj_api.Controllers {
+    [ServiceFilter (typeof (LogUserActivity))]
+    [Route ("api/user/{userId}/[controller]")]
     [ApiController]
 
-    public class MessageController : ControllerBase
-    {
+    public class MessageController : ControllerBase {
 
         private readonly IMainRepository _repo;
         private readonly IMapper _mapper;
-        private readonly ChatHub _chatHub;
-        public MessageController(IMainRepository repo, IMapper mapper, ChatHub chatHub)
-        {
+
+        public MessageController (IMainRepository repo, IMapper mapper) {
             _repo = repo;
             _mapper = mapper;
-            _chatHub = chatHub;
         }
 
-
-
-        [HttpGet("{id}", Name = "GetMessage")]
-        public async Task<IActionResult> GetMessage(int userId, int id)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-            var messageFromRepo = await _repo.GetMessage(id);
+        [HttpGet ("{id}", Name = "GetMessage")]
+        public async Task<IActionResult> GetMessage (int userId, int id) {
+            if (userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
+                return Unauthorized ();
+            var messageFromRepo = await _repo.GetMessage (id);
             if (messageFromRepo == null)
-                return BadRequest("Message not found");
-            var messageToReturnDto = _mapper.Map<MessageToReturnDto>(messageFromRepo);
-            return Ok(messageToReturnDto);
-
-        }
-        [HttpGet("thread/{recipientId}")]
-        public async Task<IActionResult> GetMessageThread(int userId, int recipientId)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var messagesThread = await _repo.GetMessagesThread(userId, recipientId);
-
-            var messagesToReturnDto = _mapper.Map<IEnumerable<MessageToReturnDto>>(messagesThread);
-            return Ok(messagesToReturnDto);
+                return BadRequest ("Message not found");
+            var messageToReturnDto = _mapper.Map<MessageToReturnDto> (messageFromRepo);
+            return Ok (messageToReturnDto);
 
         }
 
+        [HttpGet ("thread/{recipientId}")]
+        public async Task<IActionResult> GetMessageThread (int userId, int recipientId) {
+            if (userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
+                return Unauthorized ();
 
+            var messagesThread = await _repo.GetMessagesThread (userId, recipientId);
+
+            var messagesToReturnDto = _mapper.Map<IEnumerable<MessageToReturnDto>> (messagesThread);
+            return Ok (messagesToReturnDto);
+
+        }
 
         [HttpGet]
-        public async Task<IActionResult> GetMessages(int userId, [FromQuery] MessageParams messageParams)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+        public async Task<IActionResult> GetMessages (int userId, [FromQuery] MessageParams messageParams) {
+            if (userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
+                return Unauthorized ();
             messageParams.UserId = userId;
-            var messages = await _repo.GetMessagesForUser(messageParams);
-            var messageToReturnDtos = _mapper.Map<IEnumerable<MessageToReturnDto>>(messages);
-            Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize, messages.TotalCount, messages.TotalPages);
-            return Ok(messageToReturnDtos);
+            var messages = await _repo.GetMessagesForUser (messageParams);
+            var messageToReturnDtos = _mapper.Map<IEnumerable<MessageToReturnDto>> (messages);
+            Response.AddPaginationHeader (messages.CurrentPage, messages.PageSize, messages.TotalCount, messages.TotalPages);
+            return Ok (messageToReturnDtos);
         }
-        [HttpPost("{id}")]
-        public async Task<IActionResult> DeleteMessage(int userId, int id)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-            var messageFromRepo = await _repo.GetMessage(id);
+
+        [HttpPost ("{id}")]
+        public async Task<IActionResult> DeleteMessage (int userId, int id) {
+            if (userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
+                return Unauthorized ();
+            var messageFromRepo = await _repo.GetMessage (id);
             if (messageFromRepo == null)
-                return BadRequest("Message not found.");
+                return NotFound ();
             if (messageFromRepo.RecipientId == userId)
                 messageFromRepo.RecipientDeleted = true;
 
@@ -85,14 +74,12 @@ namespace grad_proj_api.Controllers
                 messageFromRepo.SenderDeleted = true;
 
             if (messageFromRepo.SenderDeleted && messageFromRepo.RecipientDeleted)
-                _repo.Delete(messageFromRepo);
+                _repo.Delete (messageFromRepo);
 
-            if (await _repo.SaveAll())
-                return NoContent();
+            if (await _repo.SaveAll ())
+                return NoContent ();
 
-            throw new Exception("An error occured in deleting message");
-
-
+            throw new Exception ("An error occured in deleting message");
 
         }
 

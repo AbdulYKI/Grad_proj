@@ -1,3 +1,4 @@
+import { MessagesThreadResolver } from "../resolvers/messages-thread.resolver";
 import { environment } from "src/environments/environment";
 import { MyRoutes } from "./routes.routing";
 import { JwtModule } from "@auth0/angular-jwt";
@@ -40,7 +41,11 @@ import { ViewPostResolver } from "src/resolvers/post-view.resolver";
 import { CommentCardComponent } from "./posts/comments/comment-card/comment-card.component";
 import { PhotoUploaderComponent } from "./profile/photo-uploader/photo-uploader.component";
 import { AddCommentComponent } from "./posts/comments/add-comment/add-comment.component";
-import { MessageCardComponent } from './message-card/message-card.component';
+import { MessageCardComponent } from "./message-card/message-card.component";
+import { ViewProfileComponent } from "./profile/view-profile/view-profile.component";
+import { ProgrammingLanguagesModalComponent } from "./profile/programming-languages-modal/programming-languages-modal.component";
+import { ViewProfileResolver } from "src/resolvers/view-profile.resolver";
+import { MessageService } from "./services/message.service";
 
 export function tokenGetter() {
   return localStorage.getItem(environment.tokenName);
@@ -65,6 +70,8 @@ export function tokenGetter() {
     LocaliseDatePipe,
     AddCommentComponent,
     MessageCardComponent,
+    ViewProfileComponent,
+    ProgrammingLanguagesModalComponent,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
@@ -98,6 +105,9 @@ export function tokenGetter() {
     PostsListResolver,
     SharedService,
     ViewPostResolver,
+    ViewProfileResolver,
+    MessageService,
+    MessagesThreadResolver,
     { provide: TINYMCE_SCRIPT_SRC, useValue: "tinymce/tinymce.min.js" },
   ],
   bootstrap: [AppComponent],

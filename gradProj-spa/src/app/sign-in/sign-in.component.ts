@@ -1,5 +1,5 @@
 import { SharedService } from "./../services/shared.service";
-import { User } from "./../models/User";
+import { User } from "../models/user";
 import { Router } from "@angular/router";
 import { AlertifyService } from "./../services/alertify.service";
 import { AuthService } from "./../services/auth.service";

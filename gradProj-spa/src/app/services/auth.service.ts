@@ -5,7 +5,7 @@ import { environment } from "src/environments/environment";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
-import { User } from "../models/User";
+import { User } from "../models/user";
 @Injectable({
   providedIn: "root",
 })

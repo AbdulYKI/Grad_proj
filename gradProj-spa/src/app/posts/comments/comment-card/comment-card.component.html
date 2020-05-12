@@ -32,7 +32,9 @@
             <img class="avatar" [src]="comment.userPhotoUrl || null" />
           </a>
           <div class="username">
-            <a> {{ comment.username }}</a>
+            <a [routerLink]="['/profile', comment.userId]">
+              {{ comment.username }}
+            </a>
           </div>
 
           <div class="voting-section">

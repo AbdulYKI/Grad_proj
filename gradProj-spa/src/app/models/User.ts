@@ -1,6 +1,7 @@
 import { GenderEnum } from "../helper/enums/gender.enum";
 
 export class User {
+  id: number;
   username: string;
   confirmPassword: string;
   email: string;
