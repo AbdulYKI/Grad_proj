@@ -1,5 +1,5 @@
 import { takeUntil } from "rxjs/operators";
-import { environment } from "src/environments/environment";
+import { environment, tokenGetter } from "src/environments/environment";
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "src/app/services/user.service";
 import { MessagesThreadResolverData } from "src/app/helper/resolvers-data/messages-thread-resolver-data";
@@ -20,7 +20,7 @@ import { User } from "../models/user";
 import { Message } from "../models/message";
 import * as signalR from "@aspnet/signalr";
 import { Subject, pipe } from "rxjs";
-import { tokenGetter } from "../app.module";
+
 @Component({
   selector: "app-message-card",
   templateUrl: "./message-card.component.html",

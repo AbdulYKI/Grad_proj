@@ -13,10 +13,12 @@ export const environment = {
   instagramLogo: "../assets/icons/instagram.png",
   defaultPhoto: "../assets/icons/user.png",
   tokenName: "gradProjToken",
-  langAr:"../assets/langIcons/arFlag.png",
-  langEn:"../assets/langIcons/enFlag.png"
-
+  langAr: "../assets/langIcons/arFlag.png",
+  langEn: "../assets/langIcons/enFlag.png",
 };
+export function tokenGetter() {
+  return localStorage.getItem(environment.tokenName);
+}
 
 /*
  * For easier debugging in development mode, you can import the following file
