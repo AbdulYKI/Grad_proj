@@ -30,7 +30,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(0deg, #ff2e22, #ffbc00);

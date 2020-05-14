@@ -32,9 +32,10 @@
   background-color: rgba(0, 0, 0, 0.3) !important;
   border: 0 !important;
   color: white !important;
-  height: 60px !important;
   overflow-y: auto;
-  line-height: 2.5;
+  resize: none;
+  height: 36px;
+
 }
 .chat-container .message-textbox:focus {
   box-shadow: none !important;
@@ -195,4 +196,41 @@
 .chat-container .action-menu ul li:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+
+ul#sortable {
+  margin: 25px;
+  padding: 0;
+  list-style: none;
+}
+
+ul#sortable li {
+  font-size: 2em;
+  font-weight: 700;
+  border-radius: 10px;
+  background-color: #e0c6f7;
+  margin-bottom: 14px;
+  padding: 1em;
+  cursor: pointer;
+}
+
+ul#sortable li:nth-of-type(1) {
+  background-color: #8522e1;
+}
+
+ul#sortable li:nth-of-type(2) {
+  background-color: #9540e5;
+}
+
+ul#sortable li:nth-of-type(3) {
+  background-color: #ae6deb;
+}
+
+ul#sortable li:nth-of-type(4) {
+  background-color: #c79af1;
+}
+
+ul#sortable li:nth-of-type(5) {
+  background-color: #e0c6f7;
 }
