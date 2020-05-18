@@ -73,12 +73,13 @@ namespace grad_proj_api.Helpers
             var message = await _repo.GetMessage (messageId);
             if (message == null)
                 throw new Exception ("Not Found");
-            if (message.DateReadUtc != null) {
+            if (message.DateReadUtc == null) {
                 message.DateReadUtc = DateTime.UtcNow;
                 var groupName = createGroupName (senderId, recipientId);
                 if (await _repo.SaveAll ()) {
                     var notification = new MessageReadNotification () { Id = messageId, DateReadUtc = message.DateReadUtc.Value };
-                    var recipientConnectionIds = (from user in groupsDictornary[groupName] where user.Id == recipientId select user.ConnectionId).ToList ();
+                    var chatGroup = groupsDictornary[groupName];
+                    var recipientConnectionIds = (from user in chatGroup where user.Id == recipientId select user.ConnectionId).ToList ();
                     await Clients.GroupExcept (groupName, recipientConnectionIds).SendAsync ("recieveNotification", notification);
                 }
             }
@@ -103,6 +104,9 @@ namespace grad_proj_api.Helpers
                 var user = userGroup.Value.FirstOrDefault (u => u.ConnectionId == Context.ConnectionId);
                 if (user != null) {
                     groupsDictornary[userGroup.Key].Remove (user);
+                    if (groupsDictornary[userGroup.Key].Count == 0) {
+                        groupsDictornary.Remove (userGroup.Key);
+                    }
                     await Groups.RemoveFromGroupAsync (Context.ConnectionId, userGroup.Key);
                 }
 

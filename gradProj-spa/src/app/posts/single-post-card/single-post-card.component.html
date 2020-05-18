@@ -21,14 +21,11 @@
           <fa-icon [icon]="faEye"></fa-icon>
           {{ post.viewersCount }}
         </span>
-        <span
-          ><fa-icon class="caret-up" [icon]="faCaretUp"></fa-icon>
-          {{ post.votesCount }}</span
-        >
-        <span
-          ><fa-icon class="caret-down" [icon]="faCaretDown"></fa-icon>
-          {{ post.votesCount }}</span
-        >
+        <span>
+          <fa-icon class="caret-up" [icon]="faCaretUp"></fa-icon>
+          {{ post.votesCount }}
+          <fa-icon class="caret-down" [icon]="faCaretDown"></fa-icon>
+        </span>
       </div>
 
       <div class="tag-section">

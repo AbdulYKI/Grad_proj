@@ -33,9 +33,5 @@
   width: 4px;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(0deg, #ff2e22, #ffbc00);
-}
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ff2e22, #ffbc00);
+  background: #f17548;
 }

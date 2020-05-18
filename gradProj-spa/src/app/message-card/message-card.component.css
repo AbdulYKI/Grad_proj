@@ -35,7 +35,6 @@
   overflow-y: auto;
   resize: none;
   height: 36px;
-
 }
 .chat-container .message-textbox:focus {
   box-shadow: none !important;
@@ -104,7 +103,7 @@
   margin-bottom: auto;
   margin-left: 10px;
   border-radius: 25px;
-  background-color: #00a1ffd6;
+  background-color: #efefef;
   padding: 10px;
   position: relative;
 }
@@ -117,7 +116,8 @@
   margin-bottom: auto;
   margin-right: 10px;
   border-radius: 25px;
-  background-color: #efefef;
+  background-color: #00a1ffd6;
+
   padding: 10px;
   position: relative;
 }
@@ -198,7 +198,6 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-
 ul#sortable {
   margin: 25px;
   padding: 0;
@@ -233,4 +232,10 @@ ul#sortable li:nth-of-type(4) {
 
 ul#sortable li:nth-of-type(5) {
   background-color: #e0c6f7;
+}
+
+.chat-container ::-webkit-scrollbar-thumb {
+  background: #534e4c;
+  direction: ltr !important;
+  text-align: left !important;
 }

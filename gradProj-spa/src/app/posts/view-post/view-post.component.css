@@ -80,9 +80,11 @@
 }
 .up-vote-container {
   vertical-align: middle;
+  cursor: pointer;
 }
 .down-vote-container {
   vertical-align: text-bottom;
+  cursor: pointer;
 }
 .up-vote,
 .down-vote {

@@ -375,4 +375,6 @@ export const arabicLexicon = {
   أو أنشئ منشورك الخاص لتطلب مساعدة من ذوي الخبرة`,
   getStartedLinkText: "لنبدأ",
   chat: "المحادثة",
+  viewProfileText: "إظهار الصفحة الشخصية",
+  readText: "قُرأ",
 };

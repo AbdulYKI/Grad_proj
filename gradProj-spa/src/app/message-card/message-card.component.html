@@ -10,8 +10,8 @@
             <li>Up Rating Ahmad</li>
             <li>Last login : Today</li>
           </ul>
+        </div>
       </div>
-    </div>
       <div class="col-md-8">
         <div class="card">
           <div class="card-header message-head">
@@ -35,8 +35,10 @@
             ></span>
             <div class="action-menu" [class.show]="isActionCollapsed">
               <ul>
-                <li><fa-icon [icon]="faUserCircle"></fa-icon> View profile</li>
-                <li><fa-icon [icon]="faBan"></fa-icon> Block</li>
+                <li (click)="navigateToProfile()">
+                  <fa-icon [icon]="faUserCircle"></fa-icon>
+                  {{ lexicon.viewProfileText }}
+                </li>
               </ul>
             </div>
           </div>
@@ -48,15 +50,6 @@
                 [class.justify-content-end]="message.senderId === recipient.id"
               >
                 <div
-                  *ngIf="message.senderId === sender.id"
-                  class="img-container-message"
-                >
-                  <img
-                    [src]="message.senderPhotoUrl || defaultPhotoUrl"
-                    class="rounded-circle user-img mr-2"
-                  />
-                </div>
-                <div
                   [class.message-container-recipient]="
                     message.senderId === recipient.id
                   "
@@ -64,13 +57,29 @@
                     message.senderId === sender.id
                   "
                 >
-                  {{ message.content }}
-                  <span class="message-time" *ngIf="message.dateRead">
-                    {{ message.dateRead }}</span
+                  <span
+                    placement="top"
+                    [ngbTooltip]="transformDate(message.messageSentUtc)"
                   >
+                    {{ message.content }}
+                  </span>
+                  <span
+                    class="message-time"
+                    *ngIf="
+                      message.dateReadUtc && message.senderId === sender.id
+                    "
+                    [class.rtl]="isInRtlMode"
+                  >
+                    {{ lexicon.readText }}
+                    <fa-icon [icon]="faCheck"></fa-icon>
+                  </span>
                 </div>
+
                 <div
-                  *ngIf="message.senderId === recipient.id"
+                  *ngIf="
+                    message.senderId === recipient.id &&
+                    message.senderId !== sender.id
+                  "
                   class="img-container-message"
                 >
                   <img
@@ -83,30 +92,30 @@
           </div>
           <div class="card-footer">
             <form
-            #messageForm="ngForm"
-            (ngSubmit)="messageForm.valid && sendMessage()"
-          >
-            <div class="input-group">
-              <textarea
-                name="content"
-                required
-                class="form-control message-textbox"
-                placeholder="Type your message..."
-                [(ngModel)]="newMessageContent"
-                (keyup)="autoGrowTextZone($event)"
-                (paste)="autoGrowTextZone($event)"
-                (cut)="autoGrowTextZone($event)"
-              ></textarea>
-              <div class="input-group-append">
-                <button
-                  class="input-group-text send-btn"
-                  [disabled]="!messageForm.valid"
-                >
-                  <fa-icon [icon]="faPaperPlane"></fa-icon>
-                </button>
+              #messageForm="ngForm"
+              (ngSubmit)="messageForm.valid && sendMessage()"
+            >
+              <div class="input-group">
+                <textarea
+                  name="content"
+                  required
+                  class="form-control message-textbox"
+                  placeholder="Type your message..."
+                  [(ngModel)]="newMessageContent"
+                  (keyup)="autoGrowTextZone($event)"
+                  (paste)="autoGrowTextZone($event)"
+                  (cut)="autoGrowTextZone($event)"
+                ></textarea>
+                <div class="input-group-append">
+                  <button
+                    class="input-group-text send-btn"
+                    [disabled]="!messageForm.valid"
+                  >
+                    <fa-icon [icon]="faPaperPlane"></fa-icon>
+                  </button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
           </div>
         </div>
       </div>

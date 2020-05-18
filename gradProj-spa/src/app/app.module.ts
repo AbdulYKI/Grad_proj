@@ -1,5 +1,5 @@
 import { MessagesThreadResolver } from "../resolvers/messages-thread.resolver";
-import { environment } from "src/environments/environment";
+import { environment, tokenGetter } from "src/environments/environment";
 import { MyRoutes } from "./routes.routing";
 import { JwtModule } from "@auth0/angular-jwt";
 import { HomeComponent } from "./home/home.component";
@@ -47,9 +47,6 @@ import { ProgrammingLanguagesModalComponent } from "./profile/programming-langua
 import { ViewProfileResolver } from "src/resolvers/view-profile.resolver";
 import { MessageService } from "./services/message.service";
 
-export function tokenGetter() {
-  return localStorage.getItem(environment.tokenName);
-}
 @NgModule({
   declarations: [
     AppComponent,

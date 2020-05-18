@@ -3,7 +3,7 @@ import { environment, tokenGetter } from "src/environments/environment";
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "src/app/services/user.service";
 import { MessagesThreadResolverData } from "src/app/helper/resolvers-data/messages-thread-resolver-data";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
   faEllipsisV,
@@ -13,6 +13,7 @@ import {
   faUserCircle,
   faBan,
   faPaperPlane,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { SharedService } from "../services/shared.service";
 import { LanguageEnum } from "../helper/enums/language.enum";
@@ -20,6 +21,7 @@ import { User } from "../models/user";
 import { Message } from "../models/message";
 import * as signalR from "@aspnet/signalr";
 import { Subject, pipe } from "rxjs";
+import { LocaliseDatePipe } from "../helper/pipes/localiseDate.pipe";
 
 @Component({
   selector: "app-message-card",
@@ -32,13 +34,15 @@ export class MessageCardComponent implements OnInit, OnDestroy {
   messagesThread: Message[];
   sender: User;
   newMessageContent = "";
+  localiseDatePipe = new LocaliseDatePipe();
   defaultPhotoUrl = environment.defaultPhoto;
   private hubConnection: signalR.HubConnection;
   private unSubscribe = new Subject<void>();
   constructor(
     private sharedService: SharedService,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -99,7 +103,10 @@ export class MessageCardComponent implements OnInit, OnDestroy {
           this.onRecieveNotificationHandler();
           this.onMessageSavedOnServerHandler();
           this.messagesThread.forEach((message) => {
-            if (message.dateRead == null) {
+            if (
+              message.dateReadUtc == null &&
+              message.senderId === this.recipient.id
+            ) {
               this.notifySender(message);
             }
           });
@@ -144,18 +151,15 @@ export class MessageCardComponent implements OnInit, OnDestroy {
   }
 
   onRecieveNotificationHandler() {
-    this.hubConnection.on(
-      "recieveNotification",
-      (notification: { messageId: number; dateRead: Date }) => {
-        const messageToEditIndex = this.messagesThread.findIndex(
-          (m) => m.id === notification.messageId
-        );
-        if (messageToEditIndex !== -1) {
-          this.messagesThread[messageToEditIndex].dateRead =
-            notification.dateRead;
-        }
+    this.hubConnection.on("recieveNotification", (notification: any) => {
+      const messageToEditIndex = this.messagesThread.findIndex(
+        (m) => m.id === notification.id
+      );
+      if (messageToEditIndex !== -1) {
+        this.messagesThread[messageToEditIndex].dateReadUtc =
+          notification.dateReadUtc;
       }
-    );
+    });
   }
   onMessageSavedOnServerHandler() {
     this.hubConnection.on("messageSavedOnServer", (message: Message) => {
@@ -175,10 +179,26 @@ export class MessageCardComponent implements OnInit, OnDestroy {
   }
 
   autoGrowTextZone(e) {
-        if(e.target.scrollHeight < 120){
-          e.target.style.height = "0px";
-          e.target.style.height = (e.target.scrollHeight)+"px";
-        }
+    if (e.target.scrollHeight < 120) {
+      e.target.style.height = "0px";
+      e.target.style.height = e.target.scrollHeight + "px";
+    }
   }
 
+  get localeCode() {
+    return this.sharedService.localeCode;
+  }
+  navigateToProfile() {
+    this.router.navigate(["/profile", this.recipient.id]);
+  }
+  get faCheck() {
+    return faCheck;
+  }
+  transformDate(date: Date) {
+    return this.localiseDatePipe.transform(
+      date,
+      "short",
+      this.sharedService.localeCode
+    );
+  }
 }

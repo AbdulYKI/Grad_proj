@@ -377,4 +377,6 @@ export const englishLexicon = {
     own post and ask for other developers' help.`,
   getStartedLinkText: "Get Started",
   chat: "Chat",
+  viewProfileText: "View Profile",
+  readText: "read",
 };

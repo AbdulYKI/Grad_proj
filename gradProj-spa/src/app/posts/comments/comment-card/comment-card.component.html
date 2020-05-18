@@ -6,7 +6,11 @@
         <div class="col-12 date">
           <div class="comment-date">
             <span class="caption col-4">
-              <span placement="top" [ngbTooltip]="lexicon.dateAdded">
+              <span
+                placement="top"
+                triggers="click blur hover"
+                [ngbTooltip]="lexicon.dateAdded"
+              >
                 <fa-icon [icon]="faCalender"></fa-icon>
 
                 {{ comment.dateAddedUtc | localiseDate: "medium":localeCode }}
@@ -16,6 +20,7 @@
                 class="ml-2 mr-2"
                 *ngIf="comment.dateEditedUtc"
                 placement="top"
+                triggers="click blur hover "
                 [ngbTooltip]="lexicon.dateEdited"
               >
                 <fa-icon [icon]="faEdit"></fa-icon>
