@@ -173,4 +173,12 @@ export class MessageCardComponent implements OnInit, OnDestroy {
     this.unSubscribe.next();
     this.unSubscribe.complete();
   }
+
+  autoGrowTextZone(e) {
+        if(e.target.scrollHeight < 120){
+          e.target.style.height = "0px";
+          e.target.style.height = (e.target.scrollHeight)+"px";
+        }
+  }
+
 }
