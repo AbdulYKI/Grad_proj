@@ -1,5 +1,8 @@
-import { MessageContainer } from "./../enums/pagination-params-enums.enum";
-import { PaginationParams } from "./pagination-params";
-export class MessageThreadPaginationParams extends PaginationParams {
+import {
+  MessageContainer,
+  OrderMessagesBy,
+} from "./../enums/pagination-params-enums.enum";
+export class MessageListPaginationParams {
   messageContainer: MessageContainer;
+  orderBy: OrderMessagesBy;
 }

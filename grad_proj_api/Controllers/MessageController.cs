@@ -53,14 +53,13 @@ namespace grad_proj_api.Controllers {
         public async Task<IActionResult> GetMessages (int userId, [FromQuery] MessageParams messageParams) {
             if (userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
                 return Unauthorized ();
-            messageParams.UserId = userId;
-            var messages = await _repo.GetMessagesForUser (messageParams);
+            var messages = await _repo.GetMessagesForUser (messageParams, userId);
             var messageToReturnDtos = _mapper.Map<IEnumerable<MessageToReturnDto>> (messages);
             Response.AddPaginationHeader (messages.CurrentPage, messages.PageSize, messages.TotalCount, messages.TotalPages);
             return Ok (messageToReturnDtos);
         }
 
-        [HttpPost ("{id}")]
+        [HttpDelete ("{id}")]
         public async Task<IActionResult> DeleteMessage (int userId, int id) {
             if (userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
                 return Unauthorized ();

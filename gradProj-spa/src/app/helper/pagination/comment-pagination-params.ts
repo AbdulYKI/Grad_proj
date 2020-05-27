@@ -1,2 +1,5 @@
-import { PaginationParams } from "./pagination-params";
-export class CommentPaginationParams extends PaginationParams {}
+import { OrderCommentsBy } from "../enums/pagination-params-enums.enum";
+
+export class CommentPaginationParams {
+  orderBy: OrderCommentsBy;
+}

@@ -1,0 +1,190 @@
+<div class="container mt-5" [class.rtl]="isInRtl()">
+  <div class="table-responsive">
+    <div class="btn-group btn-group-toggle mb-2">
+      <label
+        class="btn btn-danger"
+        [class.active]="
+          paginationParameters.messageContainer === MessageContainer.Unread
+        "
+      >
+        <input
+          type="radio"
+          (click)="changeMessageContainer(MessageContainer.Unread)"
+        />
+
+        <fa-icon [icon]="faEnvelope"></fa-icon> {{ lexicon.unread }}
+      </label>
+      <label
+        class="btn btn-success"
+        [class.active]="
+          paginationParameters.messageContainer === MessageContainer.Inbox
+        "
+      >
+        <input
+          type="radio"
+          (click)="changeMessageContainer(MessageContainer.Inbox)"
+        />
+
+        <fa-icon [icon]="faEnvelopeOpen"></fa-icon> {{ lexicon.inbox }}
+      </label>
+
+      <label
+        class="btn btn-warning text-white"
+        [class.active]="
+          paginationParameters.messageContainer === MessageContainer.Outbox
+        "
+      >
+        <input
+          type="radio"
+          (click)="changeMessageContainer(MessageContainer.Outbox)"
+        />
+
+        <fa-icon [icon]="faPaperPlane"></fa-icon> {{ lexicon.outbox }}
+      </label>
+
+      <label
+        class="btn btn-primary text-white"
+        [class.active]="
+          paginationParameters.messageContainer ===
+          MessageContainer.LastRecievedFromEachUser
+        "
+      >
+        <input
+          type="radio"
+          (click)="
+            changeMessageContainer(MessageContainer.LastRecievedFromEachUser)
+          "
+        />
+
+        <fa-icon [icon]="faUser"></fa-icon>
+        {{ lexicon.lastMessageFromEachUser }}
+      </label>
+    </div>
+
+    <table *ngIf="messages.length > 0" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>{{ lexicon.messageColumnHeaderText }}</th>
+          <th>
+            <span
+              *ngIf="
+                paginationParameters.messageContainer ===
+                MessageContainer.Outbox
+              "
+              >{{ lexicon.toColumnHeaderText }}</span
+            >
+            <span
+              *ngIf="
+                paginationParameters.messageContainer ===
+                  MessageContainer.Inbox ||
+                paginationParameters.messageContainer ===
+                  MessageContainer.LastRecievedFromEachUser ||
+                paginationParameters.messageContainer ===
+                  MessageContainer.Unread
+              "
+              >{{ lexicon.fromColumnHeaderText }}</span
+            >
+          </th>
+          <th>
+            <span
+              *ngIf="
+                paginationParameters.messageContainer ===
+                MessageContainer.Outbox
+              "
+              >{{ lexicon.sentColumnHeaderText }}</span
+            >
+            <span
+              *ngIf="
+                paginationParameters.messageContainer ===
+                  MessageContainer.Inbox ||
+                paginationParameters.messageContainer ===
+                  MessageContainer.LastRecievedFromEachUser ||
+                paginationParameters.messageContainer ===
+                  MessageContainer.Unread
+              "
+              >{{ lexicon.recievedColumnHeaderText }}</span
+            >
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let message of messages">
+          <td>
+            <a
+              [routerLink]="[
+                '/message',
+                paginationParameters.messageContainer ===
+                MessageContainer.Outbox
+                  ? message.recipientId
+                  : message.senderId
+              ]"
+            >
+              {{ message.content | truncate: 20 }}
+            </a>
+          </td>
+          <td>
+            <div
+              *ngIf="
+                paginationParameters.messageContainer ===
+                  MessageContainer.Inbox ||
+                paginationParameters.messageContainer ===
+                  MessageContainer.LastRecievedFromEachUser ||
+                paginationParameters.messageContainer ===
+                  MessageContainer.Unread
+              "
+            >
+              <img
+                [src]="message.senderPhotoUrl || defaultPhoto"
+                class="img-circle rounded-circle mr-2"
+              />
+              <strong
+                ><a [routerLink]="['/profile', message.senderId]">
+                  {{ message.senderUsername }}
+                </a></strong
+              >
+            </div>
+            <div
+              *ngIf="
+                paginationParameters.messageContainer ===
+                MessageContainer.Outbox
+              "
+            >
+              <img
+                [src]="message.recipientPhotoUrl || defaultPhoto"
+                class="img-circle rounded-circle mr-2"
+              />
+              <strong
+                ><a [routerLink]="['/profile', message.recipientId]">
+                  {{ message.recipientUsername }}
+                </a></strong
+              >
+            </div>
+          </td>
+          <td>
+            {{ message.messageSentUtc | localiseDate: "medium":localeCode }}
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteMessage(message.id)">
+              {{ lexicon.deleteButtonText }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row justify-content-center" *ngIf="messages.length === 0">
+    <h3>{{ lexicon.noMessagesPlaceHolder }}</h3>
+  </div>
+  <div *ngIf="messages.length > 0" class="d-flex justify-content-center">
+    <ngb-pagination
+      class="d-flex justify-content-center"
+      [(page)]="pagination.currentPage"
+      [pageSize]="pagination.pageSize"
+      [boundaryLinks]="true"
+      [collectionSize]="pagination.totalItems"
+      (pageChange)="pageChange($event)"
+    >
+    </ngb-pagination>
+  </div>
+</div>

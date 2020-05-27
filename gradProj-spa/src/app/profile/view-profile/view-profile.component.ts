@@ -132,7 +132,10 @@ export class ViewProfileComponent implements OnInit {
     if (!this.authService.signedIn()) {
       this.router.navigate(["/sign-in"]);
     } else {
-      this.router.navigate(["/chat/" + this.user.id]);
+      this.router.navigate(["/message/" + this.user.id]);
     }
+  }
+  isSignedIn() {
+    return this.authService.signedIn();
   }
 }

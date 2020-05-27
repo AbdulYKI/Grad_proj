@@ -51,6 +51,17 @@
                   {{ lexicon.posts }}
                 </a>
               </li>
+
+              <li *ngIf="signedIn()" [ngClass]="sideSectionClasses">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  [routerLink]="['/message']"
+                  (click)="closeCollapse()"
+                >
+                  {{ lexicon.messages }}
+                </a>
+              </li>
             </ul>
             <ul *ngIf="!signedIn()" class="navbar-nav ml-auto py-0 py-md-0">
               <li [ngClass]="sideSectionClasses">
@@ -62,6 +73,7 @@
                   >{{ lexicon.signUp }}</a
                 >
               </li>
+
               <li [ngClass]="sideSectionClasses">
                 <a
                   class="nav-link"
@@ -85,12 +97,13 @@
                 >
                   {{ name }}
                 </a>
+
                 <div
                   aria-labelledby="navbarDropdown1"
                   ngbDropdownMenu
                   class="dropdown-menu"
                 >
-                  <a ngbDropdownItem [routerLink]="['/user/edit']">{{
+                  <a ngbDropdownItem [routerLink]="['/profile/edit']">{{
                     lexicon.editProfile
                   }}</a>
                   <a

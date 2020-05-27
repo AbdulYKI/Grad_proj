@@ -1,0 +1,29 @@
+<div [class.rtl]="isInRtlMode">
+  <div class="modal-header">
+    <h4 class="modal-title">Grad-Proj</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="activeModal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>{{ lexicon.confirmDeleteMessageModalText }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="activeModal.dismiss()">
+      {{ lexicon.cancel }}
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-danger"
+      (click)="activeModal.close()"
+    >
+      {{ lexicon.confirm }}
+    </button>
+  </div>
+</div>

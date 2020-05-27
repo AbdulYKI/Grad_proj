@@ -7,17 +7,8 @@ declare let alertify: any;
   providedIn: "root",
 })
 export class AlertifyService {
-  constructor(private sharedService: SharedService) {
-    alertify.defaults.theme.ok = " btn-outline-primary";
-    alertify.defaults.theme.cancel = "btn btn-outline-danger";
-  }
-  confirm(message: string, okCallBack: () => any) {
-    alertify
-      .confirm(message, function (e) {
-        if (e) okCallBack();
-      })
-      .set({ title: "GradProj", transition: "zoom" });
-  }
+  constructor(private sharedService: SharedService) {}
+
   success(message: string) {
     alertify.set("notifier", "position", this.notifierPosition);
     alertify.success(message);

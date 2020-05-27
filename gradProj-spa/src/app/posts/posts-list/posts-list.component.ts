@@ -79,10 +79,15 @@ export class PostsListComponent implements OnInit, OnDestroy {
     return this.authService.signedIn();
   }
   pageChange(pageNumber: number) {
-    this.postService.getPosts(5, pageNumber).subscribe((paginationResult) => {
-      this.posts = paginationResult.result;
-      this.pagination = paginationResult.pagination;
-    });
+    this.postService
+      .getPosts(paginationDefaults.postsPaginationPageSize, pageNumber)
+      .subscribe((paginationResult) => {
+        this.posts = paginationResult.result;
+        this.pagination = paginationResult.pagination;
+      });
   }
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.destroy.next(true);
+    this.destroy.unsubscribe();
+  }
 }

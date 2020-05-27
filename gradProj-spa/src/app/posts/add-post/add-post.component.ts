@@ -34,13 +34,16 @@ export class AddPostComponent implements OnInit, OnDestroy {
     width: "100%",
     base_url: "/tinymce",
     suffix: ".min",
-    // powerpaste advcode toc tinymcespellchecker a11ychecker mediaembed linkchecker help
-    plugins:
-      // tslint:disable-next-line: max-line-length
-      "print preview  searchreplace autolink directionality visualblocks visualchars  image imagetools link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists  wordcount   textpattern preview",
-    toolbar:
-      // tslint:disable-next-line: max-line-length
-      "formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat | preview",
+    plugins: `print preview
+       searchreplace autolink directionality
+       visualblocks visualchars
+       image imagetools link media template
+       codesample table charmap hr pagebreak
+        nonbreaking anchor insertdatetime advlist
+         lists  wordcount   textpattern preview`,
+    toolbar: `formatselect | bold italic strikethrough 
+    forecolor backcolor | link | alignleft aligncenter alignright alignjustify  |
+     numlist bullist outdent indent  | removeformat | preview`,
     image_advtab: true,
     imagetools_toolbar:
       "rotateleft rotateright | flipv fliph | editimage imageoptions",

@@ -26,7 +26,7 @@ export class PhotoUploaderComponent implements OnInit, OnDestroy {
   ) {}
   destroy: Subject<boolean> = new Subject<boolean>();
   // has to be null or I can't access it from outside
-  photoUrl: string = null;
+  @Input() photoUrl: string = null;
   defaultPhoto = environment.defaultPhoto;
   isUploading = false;
   allowedExtensions = ["jpg", "jpeg", "png"];

@@ -34,7 +34,6 @@
   color: white !important;
   overflow-y: auto;
   resize: none;
-  height: 36px;
 }
 .chat-container .message-textbox:focus {
   box-shadow: none !important;

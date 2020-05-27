@@ -1,3 +1,4 @@
+import { DeleteMessageConfirmationModalComponent } from "./messages/messages-list/delete-message-confirmation-modal/delete-message-confirmation-modal.component";
 import { MessagesThreadResolver } from "../resolvers/messages-thread.resolver";
 import { environment, tokenGetter } from "src/environments/environment";
 import { MyRoutes } from "./routes.routing";
@@ -13,6 +14,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule } from "@angular/common/http";
 import { EditorModule, TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { AngularMultiSelectModule } from "angular2-multiselect-dropdown";
+import { AutosizeModule } from "ngx-autosize";
 /*-------------------------------------------------------------------------------------------------*/
 import { LocaliseDatePipe } from "./helper/pipes/localiseDate.pipe";
 import { ViewPostComponent } from "./posts/view-post/view-post.component";
@@ -41,11 +43,14 @@ import { ViewPostResolver } from "src/resolvers/post-view.resolver";
 import { CommentCardComponent } from "./posts/comments/comment-card/comment-card.component";
 import { PhotoUploaderComponent } from "./profile/photo-uploader/photo-uploader.component";
 import { AddCommentComponent } from "./posts/comments/add-comment/add-comment.component";
-import { MessageCardComponent } from "./message-card/message-card.component";
 import { ViewProfileComponent } from "./profile/view-profile/view-profile.component";
 import { ProgrammingLanguagesModalComponent } from "./profile/programming-languages-modal/programming-languages-modal.component";
 import { ViewProfileResolver } from "src/resolvers/view-profile.resolver";
 import { MessageService } from "./services/message.service";
+import { MessagesListComponent } from "./messages/messages-list/messages-list.component";
+import { MessagesListResovler } from "src/resolvers/messages-list.resolver";
+import { MessageThreadComponent } from "./messages/message-thread/message-thread.component";
+import { TruncatePipe } from "./helper/pipes/truncate.pipe";
 
 @NgModule({
   declarations: [
@@ -66,9 +71,12 @@ import { MessageService } from "./services/message.service";
     CommentCardComponent,
     LocaliseDatePipe,
     AddCommentComponent,
-    MessageCardComponent,
+    MessageThreadComponent,
     ViewProfileComponent,
     ProgrammingLanguagesModalComponent,
+    MessagesListComponent,
+    TruncatePipe,
+    DeleteMessageConfirmationModalComponent,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
@@ -79,6 +87,7 @@ import { MessageService } from "./services/message.service";
     FormsModule,
     ReactiveFormsModule,
     MyRoutes,
+    AutosizeModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {
@@ -105,6 +114,7 @@ import { MessageService } from "./services/message.service";
     ViewProfileResolver,
     MessageService,
     MessagesThreadResolver,
+    MessagesListResovler,
     { provide: TINYMCE_SCRIPT_SRC, useValue: "tinymce/tinymce.min.js" },
   ],
   bootstrap: [AppComponent],

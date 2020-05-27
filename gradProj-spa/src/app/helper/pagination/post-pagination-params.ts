@@ -1,2 +1,4 @@
-import { PaginationParams } from "./pagination-params";
-export class PostPaginationParams extends PaginationParams {}
+import { OrderPostsBy } from "./../enums/pagination-params-enums.enum";
+export class PostPaginationParams {
+  orderBy: OrderPostsBy;
+}

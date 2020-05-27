@@ -1,13 +1,12 @@
+import { MessageListPaginationParams } from "src/app/helper/pagination/message-list-pagination-params";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Observable } from "rxjs/internal/Observable";
-
-import { MessageThreadPaginationParams } from "../helper/pagination/message-list-pagination-params";
 import { PaginationResult } from "../helper/pagination/pagination-result";
 import { map } from "rxjs/operators";
 import { Message } from "../models/message";
-
+import { PropertyNameFinder as PropertyNameToStringConverter } from "./../helper/property-name-to-string";
 @Injectable({
   providedIn: "root",
 })
@@ -21,16 +20,19 @@ export class MessageService {
   }
   getMessagesForList(
     userId: number,
-    pageSize?: number,
-    pageNumber?: number,
-    messageParams?: MessageThreadPaginationParams
+    pageSize: number,
+    pageNumber: number,
+    messageParams: MessageListPaginationParams
   ): Observable<PaginationResult<Message[]>> {
     const paginationResult = new PaginationResult<Message[]>();
     let httpParams = new HttpParams();
     if (messageParams?.messageContainer != null) {
       httpParams = httpParams.append(
-        "messageContainer",
-        messageParams.toString()
+        PropertyNameToStringConverter.propertyNameToString(
+          messageParams,
+          messageParams.messageContainer
+        ),
+        messageParams.messageContainer.toString()
       );
     }
 
@@ -54,5 +56,8 @@ export class MessageService {
           return paginationResult;
         })
       );
+  }
+  deleteMessage(messageId: number, userId: number) {
+    return this.http.delete(this.baseUrl + userId + "/message/" + messageId);
   }
 }

@@ -155,7 +155,7 @@
               </textarea>
             </div>
           </div>
-          <div class="btn-chat">
+          <div *ngIf="isSignedIn()" class="btn-chat">
             <button class="form-button" (click)="navigateToChat()">
               {{ lexicon.chat }}
               <fa-icon [icon]="faEnvelope"></fa-icon>

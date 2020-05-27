@@ -15,29 +15,33 @@ import {
   faPaperPlane,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { SharedService } from "../services/shared.service";
-import { LanguageEnum } from "../helper/enums/language.enum";
-import { User } from "../models/user";
-import { Message } from "../models/message";
+
 import * as signalR from "@aspnet/signalr";
 import { Subject, pipe } from "rxjs";
-import { LocaliseDatePipe } from "../helper/pipes/localiseDate.pipe";
+import { User } from "src/app/models/user";
+
+import { LocaliseDatePipe } from "src/app/helper/pipes/localiseDate.pipe";
+import { SharedService } from "src/app/services/shared.service";
+import { Message } from "src/app/models/message";
+import { LanguageEnum } from "src/app/helper/enums/language.enum";
 
 @Component({
-  selector: "app-message-card",
-  templateUrl: "./message-card.component.html",
-  styleUrls: ["./message-card.component.css"],
+  selector: "app-message-thread",
+  templateUrl: "./message-thread.component.html",
+  styleUrls: ["./message-thread.component.css"],
 })
-export class MessageCardComponent implements OnInit, OnDestroy {
+export class MessageThreadComponent implements OnInit, OnDestroy {
   isActionCollapsed = false;
   recipient: User;
   messagesThread: Message[];
   sender: User;
   newMessageContent = "";
+  defaultMessageTextAreaHeight = "36px";
+  messageTextAreaHeight = this.defaultMessageTextAreaHeight;
   localiseDatePipe = new LocaliseDatePipe();
   defaultPhotoUrl = environment.defaultPhoto;
   private hubConnection: signalR.HubConnection;
-  private unSubscribe = new Subject<void>();
+  private unSubscribe = new Subject<boolean>();
   constructor(
     private sharedService: SharedService,
     private activatedRoute: ActivatedRoute,
@@ -52,6 +56,7 @@ export class MessageCardComponent implements OnInit, OnDestroy {
         (data: { messagesThreadResolverData: MessagesThreadResolverData }) => {
           this.messagesThread = data.messagesThreadResolverData.messagesThread;
           this.recipient = data.messagesThreadResolverData.recipient;
+          this.buildConnection();
           this.startConnection();
         }
       );
@@ -88,13 +93,14 @@ export class MessageCardComponent implements OnInit, OnDestroy {
   get faBan() {
     return faBan;
   }
-
-  startConnection() {
+  buildConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(environment.apiUrl + "chat/", {
         accessTokenFactory: () => tokenGetter(),
       })
       .build();
+  }
+  startConnection() {
     this.hubConnection
       .start()
       .then(() => {
@@ -102,6 +108,7 @@ export class MessageCardComponent implements OnInit, OnDestroy {
           this.onRecieveMessageHandler();
           this.onRecieveNotificationHandler();
           this.onMessageSavedOnServerHandler();
+          this.onClosedHandler();
           this.messagesThread.forEach((message) => {
             if (
               message.dateReadUtc == null &&
@@ -127,9 +134,13 @@ export class MessageCardComponent implements OnInit, OnDestroy {
       recipientId: this.recipient.id,
       content: this.newMessageContent,
     };
-    this.newMessageContent = "";
+
     this.hubConnection
       .invoke("SendMessage", newMessage)
+      .then(() => {
+        this.newMessageContent = "";
+        this.messageTextAreaHeight = this.defaultMessageTextAreaHeight;
+      })
       .catch((err) => console.log("Error while sending messages: " + err));
   }
 
@@ -166,6 +177,16 @@ export class MessageCardComponent implements OnInit, OnDestroy {
       this.messagesThread.push(message);
     });
   }
+  //you need to reconnect in case the connection was closed for inactivity
+  onClosedHandler() {
+    this.hubConnection.onclose(() => {
+      setTimeout(() => {
+        {
+          this.startConnection();
+        }
+      }, 2000);
+    });
+  }
   ngOnDestroy() {
     this.hubConnection
       .invoke("LeaveRoom", this.sender.id)
@@ -173,16 +194,8 @@ export class MessageCardComponent implements OnInit, OnDestroy {
         this.hubConnection.stop();
       })
       .catch((err) => console.log("Error while leaving room: " + err));
-
-    this.unSubscribe.next();
+    this.unSubscribe.next(true);
     this.unSubscribe.complete();
-  }
-
-  autoGrowTextZone(e) {
-    if (e.target.scrollHeight < 120) {
-      e.target.style.height = "0px";
-      e.target.style.height = e.target.scrollHeight + "px";
-    }
   }
 
   get localeCode() {

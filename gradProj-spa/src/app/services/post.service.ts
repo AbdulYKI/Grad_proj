@@ -7,7 +7,6 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Post } from "../models/post";
 import { PostPaginationParams } from "../helper/pagination/post-pagination-params";
 import { PaginationResult } from "../helper/pagination/pagination-result";
-import { OrderBy } from "../helper/enums/pagination-params-enums.enum";
 
 @Injectable({
   providedIn: "root",

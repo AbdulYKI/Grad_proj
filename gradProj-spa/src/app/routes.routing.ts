@@ -1,3 +1,5 @@
+import { MessagesListResovler } from "src/resolvers/messages-list.resolver";
+import { MessagesListComponent } from "./messages/messages-list/messages-list.component";
 import { MessagesThreadResolver } from "../resolvers/messages-thread.resolver";
 import { ViewProfileResolver } from "./../resolvers/view-profile.resolver";
 import { ViewProfileResolverData } from "./helper/resolvers-data/view-profile-resolver-data";
@@ -17,7 +19,7 @@ import { PreventUnsavedChangesGuardForEditProfile } from "./guards/prevent-unsav
 import { EditProfileResolver } from "src/resolvers/edit-profile.resolver";
 import { PostsListComponent } from "./posts/posts-list/posts-list.component";
 import { ViewPostResolver } from "src/resolvers/post-view.resolver";
-import { MessageCardComponent } from "./message-card/message-card.component";
+import { MessageThreadComponent } from "./messages/message-thread/message-thread.component";
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
@@ -62,13 +64,19 @@ const routes: Routes = [
     canDeactivate: [PreventUnsavedChangesGuardForCreatePost],
   },
   {
-    path: "chat/:recipientId",
+    path: "message/:recipientId",
     runGuardsAndResolvers: "always",
     canActivate: [AuthGuard],
-    component: MessageCardComponent,
+    component: MessageThreadComponent,
     resolve: { messagesThreadResolverData: MessagesThreadResolver },
   },
-
+  {
+    path: "message",
+    runGuardsAndResolvers: "always",
+    canActivate: [AuthGuard],
+    component: MessagesListComponent,
+    resolve: { messagesListResolverData: MessagesListResovler },
+  },
   { path: "**", redirectTo: "home", pathMatch: "full" },
 ];
 
