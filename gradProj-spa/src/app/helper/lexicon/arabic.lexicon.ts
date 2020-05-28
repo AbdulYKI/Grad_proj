@@ -394,4 +394,7 @@ export const arabicLexicon = {
     "سيتم حذف هذه الرسالة لك/ي فقط, هل أنت متأكد من الحذف ؟",
   messageDeletedSuccessfullyText: "تم حذف الرسالة بنجاح !",
   lastMessageFromEachUser: "آخر رسالة من كل مستخدم",
+  noUsersFoundMessageText: "لا يوجد مستخدمين",
+  searchForUsersPlaceholderText: "ابحث...",
+  users: "المستخدمين",
 };

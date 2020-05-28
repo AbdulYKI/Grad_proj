@@ -1,7 +1,9 @@
 using System;
 
-namespace grad_proj_api.Dtos {
-    public class PostToReturnDto {
+namespace grad_proj_api.Dtos
+{
+    public class PostToReturnDto
+    {
 
         public string Title { get; set; }
         public string Content { get; set; }

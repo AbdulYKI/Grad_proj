@@ -98,16 +98,6 @@
   opacity: 1;
 }
 
-.edit-profile-container input[type="file"] {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  opacity: 0;
-  cursor: pointer;
-  left: 26%;
-  top: 24%;
-  z-index: 10;
-}
 .edit-profile-container .fa-camera {
   position: absolute;
   left: 45%;

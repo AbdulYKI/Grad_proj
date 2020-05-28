@@ -1,3 +1,4 @@
+import { CommentPaginationParams } from "./../app/helper/pagination/comment-pagination-params";
 import { Comment } from "./../app/models/comment";
 import { PaginationResult } from "./../app/helper/pagination/pagination-result";
 import { CommentService } from "src/app/services/comment.service";
@@ -11,6 +12,7 @@ import { Resolve, Router, ActivatedRouteSnapshot } from "@angular/router";
 import { Post } from "src/app/models/post";
 import { paginationDefaults } from "src/app/helper/pagination/pagination-defaults.constants";
 import { ViewPostResolverData } from "src/app/helper/resolvers-data/view-post-resolver-data";
+import { OrderCommentsBy } from "src/app/helper/enums/pagination-params-enums.enum";
 
 @Injectable()
 export class ViewPostResolver implements Resolve<ViewPostResolverData> {
@@ -31,11 +33,17 @@ export class ViewPostResolver implements Resolve<ViewPostResolverData> {
         return of(null);
       })
     );
-
+    const commentPaginationParams = new CommentPaginationParams();
+    commentPaginationParams.orderBy = OrderCommentsBy.Oldest;
     const comments: Observable<PaginationResult<
       Comment[]
     >> = this.commentSerivce
-      .getComments(id, paginationDefaults.commentsPaginationPageSize)
+      .getComments(
+        id,
+        paginationDefaults.commentsPaginationPageSize,
+        1,
+        commentPaginationParams
+      )
       .pipe(
         catchError((error) => {
           this.handleError();

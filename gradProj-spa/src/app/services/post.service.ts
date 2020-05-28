@@ -5,7 +5,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Post } from "../models/post";
-import { PostPaginationParams } from "../helper/pagination/post-pagination-params";
+import { PostListPaginationParams } from "../helper/pagination/post-list-pagination-params";
 import { PaginationResult } from "../helper/pagination/pagination-result";
 
 @Injectable({
@@ -24,9 +24,9 @@ export class PostService {
     return this.http.get<Post>(this.baseUrl + postId);
   }
   getPosts(
-    pageSize?: number,
-    pageNumber?: number,
-    postPaginationParams?: PostPaginationParams
+    pageSize: number,
+    pageNumber: number,
+    postPaginationParams?: PostListPaginationParams
   ): Observable<PaginationResult<Post[]>> {
     const paginationResult = new PaginationResult<Post[]>();
     let httpParams = new HttpParams();
@@ -39,18 +39,16 @@ export class PostService {
         postPaginationParams.orderBy.toString()
       );
     }
-    if (pageSize != null) {
-      httpParams = httpParams.append(
-        Object.keys({ pageSize })[0],
-        pageSize.toString()
-      );
-    }
-    if (pageNumber != null) {
-      httpParams = httpParams.append(
-        Object.keys({ pageNumber })[0],
-        pageNumber.toString()
-      );
-    }
+
+    httpParams = httpParams.append(
+      Object.keys({ pageSize })[0],
+      pageSize.toString()
+    );
+
+    httpParams = httpParams.append(
+      Object.keys({ pageNumber })[0],
+      pageNumber.toString()
+    );
 
     return this.http
       .get<Post[]>(this.baseUrl, { observe: "response", params: httpParams })

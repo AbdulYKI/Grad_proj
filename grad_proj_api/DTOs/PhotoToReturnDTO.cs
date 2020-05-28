@@ -1,7 +1,9 @@
 using System;
 
-namespace grad_proj_api.Dtos {
-    public class PhotoToReturnDto {
+namespace grad_proj_api.Dtos
+{
+    public class PhotoToReturnDto
+    {
 
         public int Id { get; set; }
         public string Url { get; set; }

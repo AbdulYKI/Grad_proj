@@ -1,3 +1,5 @@
+import { ProfileListResolver } from "./../resolvers/profile-list.resolver";
+import { ProfileCardComponent } from "./profile/profile-card/profile-card.component";
 import { DeleteMessageConfirmationModalComponent } from "./messages/messages-list/delete-message-confirmation-modal/delete-message-confirmation-modal.component";
 import { MessagesThreadResolver } from "../resolvers/messages-thread.resolver";
 import { environment, tokenGetter } from "src/environments/environment";
@@ -51,6 +53,7 @@ import { MessagesListComponent } from "./messages/messages-list/messages-list.co
 import { MessagesListResovler } from "src/resolvers/messages-list.resolver";
 import { MessageThreadComponent } from "./messages/message-thread/message-thread.component";
 import { TruncatePipe } from "./helper/pipes/truncate.pipe";
+import { ProfileListComponent } from "./profile/profile-list/profile-list.component";
 
 @NgModule({
   declarations: [
@@ -77,6 +80,8 @@ import { TruncatePipe } from "./helper/pipes/truncate.pipe";
     MessagesListComponent,
     TruncatePipe,
     DeleteMessageConfirmationModalComponent,
+    ProfileListComponent,
+    ProfileCardComponent,
   ],
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
@@ -115,6 +120,7 @@ import { TruncatePipe } from "./helper/pipes/truncate.pipe";
     MessageService,
     MessagesThreadResolver,
     MessagesListResovler,
+    ProfileListResolver,
     { provide: TINYMCE_SCRIPT_SRC, useValue: "tinymce/tinymce.min.js" },
   ],
   bootstrap: [AppComponent],

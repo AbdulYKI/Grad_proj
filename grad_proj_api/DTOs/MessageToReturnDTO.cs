@@ -1,7 +1,9 @@
 using System;
 
-namespace grad_proj_api.Dtos {
-    public class MessageToReturnDto {
+namespace grad_proj_api.Dtos
+{
+    public class MessageToReturnDto
+    {
         public int Id { get; set; }
 
         public int SenderId { get; set; }

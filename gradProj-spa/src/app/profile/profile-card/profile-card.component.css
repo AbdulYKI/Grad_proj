@@ -1,0 +1,8 @@
+.circular-img {
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #dadada;
+  max-width: 100px;
+  max-height: 100px;
+  min-width: 87.5px;
+  min-height: 87.5px;
+}

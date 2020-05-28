@@ -396,4 +396,7 @@ export const englishLexicon = {
     "This message will be deleted only for you, Are you sure you want to delete this?",
   messageDeletedSuccessfullyText: "Message Deleted Successfully!",
   lastMessageFromEachUser: "Last Message From Each User",
+  searchForUsersPlaceholderText: "Search ...",
+  noUsersFoundMessageText: "No Users Found.",
+  users: "Users",
 };

@@ -1,5 +1,7 @@
-namespace grad_proj_api.Dtos {
-    public class CountryDto {
+namespace grad_proj_api.Dtos
+{
+    public class CountryDto
+    {
 
         public int NumericCode { get; set; }
         public string Name { get; set; }

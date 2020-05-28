@@ -91,9 +91,9 @@ namespace grad_proj_api.Data
                 .Include(uv => uv.UpVoters)
                 .Include(dv => dv.DownVoters)
                 .Include(v => v.PostViewers);
-            if (postPagingParams.OrderBy == OrderBy.NEWEST)
+            if (postPagingParams.OrderBy == OrderPostsBy.NEWEST)
                 posts.OrderByDescending((p) => p.DateAddedUtc);
-            else if (postPagingParams.OrderBy == OrderBy.OLDEST)
+            else if (postPagingParams.OrderBy == OrderPostsBy.OLDEST)
                 posts.OrderBy((p) => p.DateAddedUtc);
 
             return await PagedList<Post>.CreateAsync(posts, postPagingParams.PageSize, postPagingParams.PageNumber);
@@ -121,7 +121,7 @@ namespace grad_proj_api.Data
                 .Include(dv => dv.DownVoters)
                 .Where(c => c.PostId == postId);
 
-            if (commentPaginationParams.OrderBy == OrderBy.NEWEST)
+            if (commentPaginationParams.OrderBy == OrderCommentsBy.NEWEST)
             {
                 comments.OrderByDescending((c) => c.DateAddedUtc);
             }
@@ -171,7 +171,7 @@ namespace grad_proj_api.Data
             return messages;
         }
 
-        public async Task<PagedList<Message>> GetMessagesForUser(MessageParams messageParams, int userId)
+        public async Task<PagedList<Message>> GetMessagesForUser(MessagePaginationParams messageParams, int userId)
         {
             var messages = _context.Meessages
                 .Include(m => m.Sender)
@@ -208,6 +208,17 @@ namespace grad_proj_api.Data
             messages = messages.OrderByDescending(m => m.MessageSentUtc);
             return await PagedList<Message>.CreateAsync(messages, messageParams.PageSize, messageParams.PageNumber);
 
+        }
+
+        public async Task<PagedList<User>> GetUsersForList(ProfileListPaginationParams profileListPaginationParams)
+        {
+            var users = _context.Users.Include(p => p.Photo).AsQueryable();
+            if (profileListPaginationParams.Username != null && profileListPaginationParams.Username.Trim() != "")
+            {
+                users = users.Where(u => u.Username.Contains(profileListPaginationParams.Username));
+
+            }
+            return await PagedList<User>.CreateAsync(users, profileListPaginationParams.PageSize, profileListPaginationParams.PageNumber);
         }
     }
 }

@@ -21,34 +21,31 @@ export class CommentService {
   }
   getComments(
     postId: number,
-    pageSize?: number,
-    pageNumber?: number,
+    pageSize: number,
+    pageNumber: number,
     commentPagingParams?: CommentPaginationParams
   ): Observable<PaginationResult<Comment[]>> {
     const paginationResult = new PaginationResult<Comment[]>();
     let httpParams = new HttpParams();
-    if (pageSize != null) {
+
+    httpParams = httpParams.append(
+      Object.keys({ pageSize })[0],
+      pageSize.toString()
+    );
+
+    httpParams = httpParams.append(
+      Object.keys({ pageNumber })[0],
+      pageNumber.toString()
+    );
+
+    if (commentPagingParams?.orderBy != null) {
       httpParams = httpParams.append(
-        Object.keys({ pageSize })[0],
-        pageSize.toString()
+        PropertyNameFinder.propertyNameToString(
+          commentPagingParams,
+          commentPagingParams.orderBy
+        ),
+        commentPagingParams.orderBy.toString()
       );
-    }
-    if (pageNumber != null) {
-      httpParams = httpParams.append(
-        Object.keys({ pageNumber })[0],
-        pageNumber.toString()
-      );
-    }
-    if (commentPagingParams != null) {
-      if (commentPagingParams.orderBy != null) {
-        httpParams = httpParams.append(
-          PropertyNameFinder.propertyNameToString(
-            commentPagingParams,
-            commentPagingParams.orderBy
-          ),
-          commentPagingParams.orderBy.toString()
-        );
-      }
     }
 
     return this.http

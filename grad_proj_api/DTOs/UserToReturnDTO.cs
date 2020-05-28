@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using grad_proj_api.Helpers;
 
-namespace grad_proj_api.Dtos {
-    public class UserToReturnDto {
+namespace grad_proj_api.Dtos
+{
+    public class UserToReturnDto
+    {
         public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }

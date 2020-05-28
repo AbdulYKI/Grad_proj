@@ -51,6 +51,16 @@
                   {{ lexicon.posts }}
                 </a>
               </li>
+              <li [ngClass]="sideSectionClasses">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  [routerLink]="['/profile-list']"
+                  (click)="closeCollapse()"
+                >
+                  {{ lexicon.users }}
+                </a>
+              </li>
 
               <li *ngIf="signedIn()" [ngClass]="sideSectionClasses">
                 <a

@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-header text-center">
+    <img
+      [src]="user.photoUrl || defaultPhotoUrl"
+      class="card-img-top circular-img"
+    />
+  </div>
+  <div class="card-body">
+    <div class="text-center">
+      <fa-icon [icon]="faUser"></fa-icon>
+      &nbsp;
+      <a [title]="user.username" [routerLink]="['/profile', user.id]">{{
+        user.username | truncate: 7
+      }}</a>
+    </div>
+  </div>
+</div>

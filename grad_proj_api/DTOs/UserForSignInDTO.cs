@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace grad_proj_api.Dtos {
-    public class UserForSignInDto {
+namespace grad_proj_api.Dtos
+{
+    public class UserForSignInDto
+    {
 
         [Required]
         public string Username { get; set; }

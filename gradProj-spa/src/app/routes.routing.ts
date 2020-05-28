@@ -1,15 +1,14 @@
+import { ProfileListResolver } from "./../resolvers/profile-list.resolver";
+import { ProfileListComponent } from "./profile/profile-list/profile-list.component";
 import { MessagesListResovler } from "src/resolvers/messages-list.resolver";
 import { MessagesListComponent } from "./messages/messages-list/messages-list.component";
 import { MessagesThreadResolver } from "../resolvers/messages-thread.resolver";
 import { ViewProfileResolver } from "./../resolvers/view-profile.resolver";
-import { ViewProfileResolverData } from "./helper/resolvers-data/view-profile-resolver-data";
 import { ViewProfileComponent } from "./profile/view-profile/view-profile.component";
-import { ViewPostResolverData } from "./helper/resolvers-data/view-post-resolver-data";
 import { ViewPostComponent } from "./posts/view-post/view-post.component";
 import { PostsListResolver } from "./../resolvers/posts-list.resolver";
 import { PreventUnsavedChangesGuardForCreatePost } from "./guards/prevent-unsaved-changes-for-create-post.guard";
 import { EditProfileComponent } from "./profile/edit-profile/edit-profile.component";
-import { NotFoundComponent } from "./not-found/not-found.component";
 import { SignUpComponent } from "./sign-up/sign-up.component";
 import { SignInComponent } from "./sign-in/sign-in.component";
 import { HomeComponent } from "./home/home.component";
@@ -69,6 +68,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: MessageThreadComponent,
     resolve: { messagesThreadResolverData: MessagesThreadResolver },
+  },
+  {
+    path: "profile-list",
+    runGuardsAndResolvers: "always",
+    resolve: { profileListPaginationResult: ProfileListResolver },
+    component: ProfileListComponent,
   },
   {
     path: "message",

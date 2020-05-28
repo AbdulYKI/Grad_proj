@@ -14,83 +14,94 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace grad_proj_api.Controllers {
-    [ServiceFilter (typeof (LogUserActivity))]
-    [Route ("api/user/{userId}/photo")]
+namespace grad_proj_api.Controllers
+{
+    [ServiceFilter(typeof(LogUserActivity))]
+    [Route("api/user/{userId}/photo")]
     [ApiController]
-    public class PhotoController : ControllerBase {
+    public class PhotoController : ControllerBase
+    {
         private readonly IOptions<CloudinarySettings> _cloudinarySettings;
         private readonly IMainRepository _repo;
         private readonly IMapper _mapper;
         private Cloudinary _cloudinary;
-        public PhotoController (IMainRepository repo, IMapper mapper, IOptions<CloudinarySettings> cloudinarySettings) {
+        public PhotoController(IMainRepository repo, IMapper mapper, IOptions<CloudinarySettings> cloudinarySettings)
+        {
             _cloudinarySettings = cloudinarySettings;
             _repo = repo;
             _mapper = mapper;
-            var account = new Account (_cloudinarySettings.Value.CloudName,
+            var account = new Account(_cloudinarySettings.Value.CloudName,
                 _cloudinarySettings.Value.ApiKey,
                 _cloudinarySettings.Value.ApiSecret);
-            _cloudinary = new Cloudinary (account);
+            _cloudinary = new Cloudinary(account);
 
         }
 
-        [HttpGet ("{id}", Name = nameof (GetPhoto))]
-        public async Task<IActionResult> GetPhoto (int id) {
-            var photo = await _repo.GetPhoto (id);
-            var photoToReturn = _mapper.Map<PhotoToReturnDto> (photo);
-            return Ok (photoToReturn);
+        [HttpGet("{id}", Name = nameof(GetPhoto))]
+        public async Task<IActionResult> GetPhoto(int id)
+        {
+            var photo = await _repo.GetPhoto(id);
+            var photoToReturn = _mapper.Map<PhotoToReturnDto>(photo);
+            return Ok(photoToReturn);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPhotoForUser (int userId, [FromForm] PhotoForAddingDto photoForAddingDTO) {
-            if (User.FindFirst (ClaimTypes.NameIdentifier) == null ||
-                userId != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
-                return Unauthorized ();
+        public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm] PhotoForAddingDto photoForAddingDTO)
+        {
+            if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
+                userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser (userId);
+            var userFromRepo = await _repo.GetUser(userId);
             if (userFromRepo.Photo != null)
-                DeletePhoto (ref userFromRepo);
+                DeletePhoto(ref userFromRepo);
             var file = photoForAddingDTO.File;
-            var uploadResult = new ImageUploadResult ();
-            if (file.Length > 0) {
-                using (var stream = file.OpenReadStream ()) {
-                    var uploadParameters = new ImageUploadParams () {
-                    File = new FileDescription (file.Name, stream),
-                    Transformation = new Transformation ().
-                    Width (300).
-                    Height (300).
-                    Crop ("fill").
-                    Gravity ("face").
-                    Quality ("100")
+            var uploadResult = new ImageUploadResult();
+            if (file.Length > 0)
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    var uploadParameters = new ImageUploadParams()
+                    {
+                        File = new FileDescription(file.Name, stream),
+                        Transformation = new Transformation().
+                    Width(300).
+                    Height(300).
+                    Crop("fill").
+                    Gravity("face").
+                    Quality("100")
                     };
-                    uploadResult = _cloudinary.Upload (uploadParameters);
+                    uploadResult = _cloudinary.Upload(uploadParameters);
 
                 }
 
             }
 
-            var photo = _mapper.Map<Photo> (photoForAddingDTO);
+            var photo = _mapper.Map<Photo>(photoForAddingDTO);
             photo.UserId = userId;
             photo.PublicId = uploadResult.PublicId;
-            photo.Url = uploadResult.Uri.ToString ();
+            photo.Url = uploadResult.Uri.ToString();
             photo.DateAddedUtc = DateTime.UtcNow;
-            await _repo.Add (photo);
+            await _repo.Add(photo);
 
-            if (await _repo.SaveAll ()) {
-                var photoToReturn = _mapper.Map<PhotoToReturnDto> (photo);
-                return CreatedAtAction (nameof (GetPhoto), new { userId = userId, id = photo.Id }, (photoToReturn));
+            if (await _repo.SaveAll())
+            {
+                var photoToReturn = _mapper.Map<PhotoToReturnDto>(photo);
+                return CreatedAtAction(nameof(GetPhoto), new { userId = userId, id = photo.Id }, (photoToReturn));
 
             }
-            return BadRequest ("Uploading image failed");
+            return BadRequest("Uploading image failed");
         }
 
-        public void DeletePhoto (ref User userFromRepo) {
+        public void DeletePhoto(ref User userFromRepo)
+        {
 
-            if (userFromRepo.Photo.PublicId != null) {
-                var deleteParams = new DeletionParams (userFromRepo.Photo.PublicId);
-                var result = _cloudinary.Destroy (deleteParams);
+            if (userFromRepo.Photo.PublicId != null)
+            {
+                var deleteParams = new DeletionParams(userFromRepo.Photo.PublicId);
+                var result = _cloudinary.Destroy(deleteParams);
                 if (result.Result == "ok")
-                    _repo.Delete (userFromRepo.Photo);
+                    _repo.Delete(userFromRepo.Photo);
 
             }
         }
