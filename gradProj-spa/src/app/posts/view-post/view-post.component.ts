@@ -178,10 +178,17 @@ export class ViewPostComponent implements OnInit {
   }
 
   refreshEditor() {
-    this.loadingDivHeight =
-      this.tinymce?.editor.editorContainer.clientHeight + "px";
-    this.loadingDivWidth =
-      this.tinymce?.editor.editorContainer.clientWidth + "px";
+    if (
+      this.tinymce?.editor.editorContainer.clientHeight !== undefined &&
+      this.tinymce?.editor.editorContainer.clientHeight != null &&
+      this.tinymce?.editor.editorContainer.clientWidth !== undefined &&
+      this.tinymce?.editor.editorContainer.clientWidth !== null
+    ) {
+      this.loadingDivHeight =
+        this.tinymce?.editor.editorContainer.clientHeight + "px";
+      this.loadingDivWidth =
+        this.tinymce?.editor.editorContainer.clientWidth + "px";
+    }
 
     this.getPost();
     if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
