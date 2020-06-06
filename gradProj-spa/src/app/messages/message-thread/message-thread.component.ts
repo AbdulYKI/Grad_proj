@@ -32,6 +32,7 @@ import { LanguageEnum } from "src/app/helper/enums/language.enum";
 })
 export class MessageThreadComponent implements OnInit, OnDestroy {
   isActionCollapsed = false;
+  connectionClosed = false;
   recipient: User;
   messagesThread: Message[];
   sender: User;
@@ -180,22 +181,25 @@ export class MessageThreadComponent implements OnInit, OnDestroy {
   //you need to reconnect in case the connection was closed for inactivity
   onClosedHandler() {
     this.hubConnection.onclose(() => {
-      setTimeout(() => {
-        {
-          this.startConnection();
-        }
-      }, 2000);
+      if (!this.connectionClosed) {
+        setTimeout(() => {
+          {
+            this.startConnection();
+          }
+        }, 2000);
+      }
     });
   }
   ngOnDestroy() {
     this.hubConnection
-      .invoke("LeaveRoom", this.sender.id)
+      .invoke("LeaveRoom", this.sender.id, this.recipient.id)
       .then(() => {
+        this.connectionClosed = true;
         this.hubConnection.stop();
+        this.unSubscribe.next(true);
+        this.unSubscribe.complete();
       })
       .catch((err) => console.log("Error while leaving room: " + err));
-    this.unSubscribe.next(true);
-    this.unSubscribe.complete();
   }
 
   get localeCode() {

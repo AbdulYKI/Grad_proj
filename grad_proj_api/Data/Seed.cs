@@ -1,35 +1,43 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using grad_proj_api.Data;
 using grad_proj_api.Models;
 using Newtonsoft.Json;
 
-namespace grad_proj_api.Data {
-    public class Seed {
-        public Seed (DataContext context) {
+namespace grad_proj_api.Data
+{
+    public class Seed
+    {
+        public Seed(DataContext context)
+        {
             _context = context;
         }
 
         private readonly DataContext _context;
 
-        public void SeedCountries () {
+        public async Task SeedCountries()
+        {
 
-            var countriesData = System.IO.File.ReadAllText ("Models/Countries.json");
-            List<Country> countries = JsonConvert.DeserializeObject<List<Country>> (countriesData);
+            var countriesData = System.IO.File.ReadAllText("Models/Countries.json");
+            List<Country> countries = JsonConvert.DeserializeObject<List<Country>>(countriesData);
 
-            foreach (var country in countries)
-                _context.Countries.Add (country);
+            await _context.Countries.AddRangeAsync(countries);
 
-            _context.SaveChanges ();
+            _context.SaveChanges();
         }
-        public void SeedProgrammingLanguages () {
+        public async Task SeedProgrammingLanguages()
+        {
 
-            var programmingLanguagesData = System.IO.File.ReadAllText ("Models/ProgrammingLanguages.json");
-            string[] programmingLanguagesNames = JsonConvert.DeserializeObject<string[]> (programmingLanguagesData);
+            var programmingLanguagesData = System.IO.File.ReadAllText("Models/ProgrammingLanguages.json");
+            string[] programmingLanguagesNames = JsonConvert.DeserializeObject<string[]>(programmingLanguagesData);
+            var programmingLanguages = new List<ProgrammingLanguage>();
+            foreach (string programmingLanguageName in programmingLanguagesNames)
+            {
+                programmingLanguages.Add(new ProgrammingLanguage { Name = programmingLanguageName });
+            }
 
-            foreach (var programmingLanguageName in programmingLanguagesNames)
-                _context.ProgrammingLanguages.Add (new ProgrammingLanguage { Name = programmingLanguageName });
-
-            _context.SaveChanges ();
+            await _context.AddRangeAsync(programmingLanguages);
+            _context.SaveChanges();
         }
     }
 }
