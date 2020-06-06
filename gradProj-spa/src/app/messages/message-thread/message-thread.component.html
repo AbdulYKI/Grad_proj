@@ -31,7 +31,11 @@
               </ul>
             </div>
           </div>
-          <div class="card-body message-card-body">
+          <div
+            #messagesContainer
+            [scrollTop]="messagesContainer.scrollHeight"
+            class="card-body message-card-body"
+          >
             <span *ngFor="let message of messagesThread">
               <div
                 class="d-flex mb-4"
