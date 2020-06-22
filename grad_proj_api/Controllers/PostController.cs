@@ -107,7 +107,7 @@ namespace grad_proj_api.Controllers
 
         }
 
-        [HttpGet("{language?}")]
+        [HttpGet]
         public async Task<IActionResult> GetPosts([FromQuery] PostPaginationParams postPagingParams)
         {
             var posts = await _repo.GetPosts(postPagingParams);

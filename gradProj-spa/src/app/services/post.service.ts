@@ -57,7 +57,7 @@ export class PostService {
     );
 
     return this.http
-      .get<Post[]>(this.baseUrl + "/" + this.sharedService.currentLanguage, {
+      .get<Post[]>(this.baseUrl, {
         observe: "response",
         params: httpParams,
       })

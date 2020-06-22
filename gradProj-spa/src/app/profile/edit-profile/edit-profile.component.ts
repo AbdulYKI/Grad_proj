@@ -307,6 +307,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.editForm.form.controls.programmingLanguages.markAsDirty();
     this.editForm.form.controls.programmingLanguages.markAsTouched();
     this.selectedProgrammingLanguages = [];
+    this.editFormGroup.get("programmingLanguages").setValue([]);
   }
   get dateOfBirthClasses() {
     if (this.dateOfBirth.errors && this.dateOfBirth.touched) {
