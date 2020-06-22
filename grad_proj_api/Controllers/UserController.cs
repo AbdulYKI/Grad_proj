@@ -36,20 +36,20 @@ namespace grad_proj_api.Controllers
             return Ok(userDTO);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForEditDTO)
+        [HttpPut("{id}/{language?}")]
+        public async Task<IActionResult> UpdateUser(int id, Languages? language, UserForUpdateDto userForUpdateDTO)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null || id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+                throw new UnauthorisedException(language);
 
             var userFromRepo = await _repo.GetUser(id);
-            _mapper.Map(userForEditDTO, userFromRepo);
-            await updateUserProgrammingLanguages(userForEditDTO.ProgrammingLanguagesIds, id);
+            _mapper.Map(userForUpdateDTO, userFromRepo);
+            await updateUserProgrammingLanguages(userForUpdateDTO.ProgrammingLanguagesIds, id);
             userFromRepo.DateUpdatedUtc = DateTime.UtcNow;
             if (await _repo.SaveAll())
                 return NoContent();
 
-            throw new UpdatingFailedException(ExceptionsEnum.UPDATING_FAILED_EXCEPTION.ToString());
+            throw new FailedToUpdateEntityException(language);
 
         }
 

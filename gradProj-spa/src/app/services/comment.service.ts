@@ -1,3 +1,4 @@
+import { SharedService } from "./shared.service";
 import { PropertyNameFinder } from "./../helper/property-name-to-string";
 import { PaginationResult } from "./../helper/pagination/pagination-result";
 import { CommentPaginationParams } from "./../helper/pagination/comment-pagination-params";
@@ -14,10 +15,18 @@ import { map } from "rxjs/operators";
 })
 export class CommentService {
   baseUrl = environment.apiUrl + "comment/";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private sharedService: SharedService) {}
 
   createComment(userId: number, postId: number, comment: Comment) {
-    return this.http.post(this.baseUrl + userId + "/" + postId, comment);
+    return this.http.post(
+      this.baseUrl +
+        userId +
+        "/" +
+        postId +
+        "/" +
+        this.sharedService.currentLanguage.value,
+      comment
+    );
   }
   getComments(
     postId: number,
@@ -49,10 +58,13 @@ export class CommentService {
     }
 
     return this.http
-      .get<Comment[]>(this.baseUrl + postId, {
-        observe: "response",
-        params: httpParams,
-      })
+      .get<Comment[]>(
+        this.baseUrl + postId + "/" + this.sharedService.currentLanguage.value,
+        {
+          observe: "response",
+          params: httpParams,
+        }
+      )
       .pipe(
         map((response) => {
           paginationResult.result = response.body;
@@ -66,36 +78,84 @@ export class CommentService {
       );
   }
   editComment(userId: number, id: number, comment: Comment) {
-    return this.http.put(this.baseUrl + userId + "/" + id, comment);
+    return this.http.put(
+      this.baseUrl +
+        userId +
+        "/" +
+        id +
+        "/" +
+        this.sharedService.currentLanguage.value,
+      comment
+    );
   }
   deleteComment(userId: number, postId: number, id: number) {
-    return this.http.delete(this.baseUrl + postId + "/" + userId + "/" + id);
+    return this.http.delete(
+      this.baseUrl +
+        postId +
+        "/" +
+        userId +
+        "/" +
+        id +
+        "/" +
+        this.sharedService.currentLanguage.value
+    );
   }
   createUpVote(userId: number, commentId: number) {
     return this.http.post(
-      this.baseUrl + "up-vote/" + commentId + "/" + userId,
+      this.baseUrl +
+        "up-vote/" +
+        commentId +
+        "/" +
+        userId +
+        "/" +
+        this.sharedService.currentLanguage.value,
       {}
     );
   }
   createDownVote(userId: number, commentId: number) {
     return this.http.post(
-      this.baseUrl + "down-vote/" + commentId + "/" + userId,
+      this.baseUrl +
+        "down-vote/" +
+        commentId +
+        "/" +
+        userId +
+        "/" +
+        this.sharedService.currentLanguage.value,
       {}
     );
   }
 
   deleteUpVote(userId: number, commentId: number) {
     return this.http.delete(
-      this.baseUrl + "up-vote/" + commentId + "/" + userId
+      this.baseUrl +
+        "up-vote/" +
+        commentId +
+        "/" +
+        userId +
+        "/" +
+        this.sharedService.currentLanguage.value
     );
   }
   deleteDownVote(userId: number, commentId: number) {
     return this.http.delete(
-      this.baseUrl + "down-vote/" + commentId + "/" + userId
+      this.baseUrl +
+        "down-vote/" +
+        commentId +
+        "/" +
+        userId +
+        "/" +
+        this.sharedService.currentLanguage.value
     );
   }
 
   getComment(postId: number, commentId: number): Observable<Comment> {
-    return this.http.get<Comment>(this.baseUrl + postId + "/" + commentId);
+    return this.http.get<Comment>(
+      this.baseUrl +
+        postId +
+        "/" +
+        commentId +
+        "/" +
+        this.sharedService.currentLanguage.value
+    );
   }
 }

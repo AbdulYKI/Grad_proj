@@ -1,3 +1,4 @@
+import { SharedService } from "./shared.service";
 import { Country } from "./../models/country";
 import { environment } from "./../../environments/environment";
 import { Observable, observable } from "rxjs";
@@ -16,13 +17,16 @@ import { PropertyNameFinder } from "../helper/property-name-to-string";
 export class UserService {
   baseUrl: string = environment.apiUrl + "user/";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private sharedService: SharedService) {}
 
   getUser(id: number): Observable<User> {
     return this.http.get<User>(this.baseUrl + id);
   }
   updateUser(id: number, user: User) {
-    return this.http.put(this.baseUrl + id, user);
+    return this.http.put(
+      this.baseUrl + id + "/" + this.sharedService.currentLanguage.value,
+      user
+    );
   }
   getProgrammingLanguages(): Observable<ProgrammingLanguage[]> {
     return this.http.get<ProgrammingLanguage[]>(

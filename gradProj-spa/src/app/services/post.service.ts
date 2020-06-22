@@ -1,3 +1,4 @@
+import { SharedService } from "./shared.service";
 import { map } from "rxjs/operators";
 import { PropertyNameFinder as PropertyNameToStringConverter } from "./../helper/property-name-to-string";
 import { Observable } from "rxjs";
@@ -14,14 +15,19 @@ import { PaginationResult } from "../helper/pagination/pagination-result";
 export class PostService {
   baseUrl: string = environment.apiUrl + "post/";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private sharedService: SharedService) {}
 
   createPost(userId: number, post: Post) {
-    return this.http.post(this.baseUrl + userId, post);
+    return this.http.post(
+      this.baseUrl + userId + "/" + this.sharedService.currentLanguage.value,
+      post
+    );
   }
 
   getPost(postId: number): Observable<Post> {
-    return this.http.get<Post>(this.baseUrl + postId);
+    return this.http.get<Post>(
+      this.baseUrl + postId + "/" + this.sharedService.currentLanguage.value
+    );
   }
   getPosts(
     pageSize: number,
@@ -51,7 +57,10 @@ export class PostService {
     );
 
     return this.http
-      .get<Post[]>(this.baseUrl, { observe: "response", params: httpParams })
+      .get<Post[]>(this.baseUrl + "/" + this.sharedService.currentLanguage, {
+        observe: "response",
+        params: httpParams,
+      })
       .pipe(
         map((response) => {
           paginationResult.result = response.body;
@@ -65,31 +74,72 @@ export class PostService {
       );
   }
   deletePost(userId: number, id: number) {
-    return this.http.delete(this.baseUrl + userId + "/" + id);
+    return this.http.delete(
+      this.baseUrl +
+        userId +
+        "/" +
+        id +
+        "/" +
+        this.sharedService.currentLanguage.value
+    );
   }
   updatePost(userId: number, id: number, post: Post) {
-    return this.http.put(this.baseUrl + userId + "/" + id, post);
+    return this.http.put(
+      this.baseUrl +
+        userId +
+        "/" +
+        id +
+        "/" +
+        this.sharedService.currentLanguage.value,
+      post
+    );
   }
 
   createUpVote(userId: number, postId: number) {
     return this.http.post(
-      this.baseUrl + "up-vote/" + postId + "/" + userId,
+      this.baseUrl +
+        "up-vote/" +
+        postId +
+        "/" +
+        userId +
+        "/" +
+        this.sharedService.currentLanguage.value,
       {}
     );
   }
   createDownVote(userId: number, postId: number) {
     return this.http.post(
-      this.baseUrl + "down-vote/" + postId + "/" + userId,
+      this.baseUrl +
+        "down-vote/" +
+        postId +
+        "/" +
+        userId +
+        "/" +
+        this.sharedService.currentLanguage.value,
       {}
     );
   }
 
   deleteUpVote(userId: number, postId: number) {
-    return this.http.delete(this.baseUrl + "up-vote/" + postId + "/" + userId);
+    return this.http.delete(
+      this.baseUrl +
+        "up-vote/" +
+        postId +
+        "/" +
+        userId +
+        "/" +
+        this.sharedService.currentLanguage.value
+    );
   }
   deleteDownVote(userId: number, postId: number) {
     return this.http.delete(
-      this.baseUrl + "down-vote/" + postId + "/" + userId
+      this.baseUrl +
+        "down-vote/" +
+        postId +
+        "/" +
+        userId +
+        "/" +
+        this.sharedService.currentLanguage.value
     );
   }
 }

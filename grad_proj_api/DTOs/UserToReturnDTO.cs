@@ -9,7 +9,7 @@ namespace grad_proj_api.Dtos
         public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
-        public GenderEnum Gender { get; set; }
+        public Gender Gender { get; set; }
         public string SchoolName { get; set; }
         public string CompanyName { get; set; }
         public DateTime CreatedUtc { get; set; }

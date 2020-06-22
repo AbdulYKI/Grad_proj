@@ -40,6 +40,8 @@ namespace grad_proj_api.Dtos
         }
 
         [Required]
-        public GenderEnum Gender { get; set; }
+        public Gender Gender { get; set; }
+
+
     }
 }

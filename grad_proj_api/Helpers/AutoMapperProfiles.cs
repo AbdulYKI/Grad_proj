@@ -37,7 +37,7 @@ namespace grad_proj_api.Helpers
                     opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.GivenName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.FamilyName))
-                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => GenderEnum.None));
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => Gender.None));
 
             CreateMap<Country, CountryDto>();
 

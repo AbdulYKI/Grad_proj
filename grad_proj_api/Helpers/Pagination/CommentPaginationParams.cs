@@ -5,6 +5,7 @@ namespace grad_proj_api.Helpers.Pagination
 
 
         public OrderCommentsBy OrderBy { get; set; } = OrderCommentsBy.NEWEST;
+        public Languages? Language { get; set; }
 
     }
 }

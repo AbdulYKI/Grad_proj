@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+
 
 namespace grad_proj_api
 {
@@ -25,15 +25,32 @@ namespace grad_proj_api
                 if (await dbContext.Countries.CountAsync() == 0)
                 {
                     var seeder = servicesScope.ServiceProvider.GetRequiredService<Seed>();
-                    seeder.SeedCountries();
+                    await seeder.SeedCountries();
                 }
 
                 if (await dbContext.ProgrammingLanguages.CountAsync() == 0)
                 {
                     var seeder = servicesScope.ServiceProvider.GetRequiredService<Seed>();
-                    seeder.SeedProgrammingLanguages();
+                    await seeder.SeedProgrammingLanguages();
                 }
 
+                var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config.xml").GetCurrentClassLogger();
+                try
+                {
+                    logger.Debug("init main");
+                    CreateHostBuilder(args).Build().Run();
+                }
+                catch (Exception exception)
+                {
+                    //NLog: catch setup errors
+                    logger.Error(exception, "Stopped program because of exception");
+                    throw;
+                }
+                finally
+                {
+                    // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+                    NLog.LogManager.Shutdown();
+                }
             }
             await host.RunAsync();
         }

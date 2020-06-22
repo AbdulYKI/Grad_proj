@@ -88,18 +88,22 @@ export class SignUpComponent implements OnInit {
     } else {
       const user: User = Object.assign({}, this.signupForm.value);
       this.authService.signUp(user).subscribe(
-        () => {
+        (next) => {
           this.alertifyService.success(this.lexicon.signedUpSucessFullyMessage);
         },
         (error) => {
-          if (typeof error === "number") {
-            if (error === ExceptionEnum.EmailUsedException) {
-              this.serverError.message = "emailUsedErrorMessage";
-              this.serverError.controllerName = "email";
-            } else if (error === ExceptionEnum.UsernameUsedException) {
-              this.serverError.message = "usernameUsedErrorMessage";
-              this.serverError.controllerName = "username";
-            }
+          if (
+            error.startsWith("This Username") ||
+            error.startsWith("اسم المستخدم")
+          ) {
+            this.serverError.message = "usernameUsedErrorMessage";
+            this.serverError.controllerName = "username";
+          } else if (
+            error.startsWith("This Email") ||
+            error.startsWith("هذا")
+          ) {
+            this.serverError.message = "emailUsedErrorMessage";
+            this.serverError.controllerName = "email";
           } else {
             this.alertifyService.error(error);
           }
@@ -108,8 +112,7 @@ export class SignUpComponent implements OnInit {
           this.authService.signIn(user).subscribe(
             () => this.router.navigate([""]),
             (error) => {
-              console.log(error);
-              this.alertifyService.error(error);
+              this.alertifyService.error(error.message);
             }
           );
         }

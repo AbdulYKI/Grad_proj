@@ -1,3 +1,4 @@
+import { SharedService } from "./shared.service";
 import { LanguageEnum } from "../helper/enums/language.enum";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
@@ -17,27 +18,35 @@ export class AuthService {
 
   photoUrl = new BehaviorSubject<string>("../../assets/user.png");
   currentPhotoUrl = this.photoUrl.asObservable();
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private sharedService: SharedService) {}
   changeMemeberPhotoUrl(photoUrl: string) {
     this.photoUrl.next(photoUrl);
     this.currentUser.photoUrl = photoUrl;
     localStorage.setItem("info", JSON.stringify(this.currentUser));
   }
   signIn(model: User) {
-    return this.http.post(this.baseUrl + "sign-in", model).pipe(
-      map((user: any) => {
-        if (user) {
-          localStorage.setItem("info", JSON.stringify(user.info));
-          localStorage.setItem(environment.tokenName, user.token);
-          this.currentUser = user.info;
-          this.changeMemeberPhotoUrl(this.currentUser.photoUrl);
-          this.decodedToken = this.jwtHelper.decodeToken(user.token);
-        }
-      })
-    );
+    return this.http
+      .post(
+        this.baseUrl + "sign-in/" + this.sharedService.currentLanguage.value,
+        model
+      )
+      .pipe(
+        map((user: any) => {
+          if (user) {
+            localStorage.setItem("info", JSON.stringify(user.info));
+            localStorage.setItem(environment.tokenName, user.token);
+            this.currentUser = user.info;
+            this.changeMemeberPhotoUrl(this.currentUser.photoUrl);
+            this.decodedToken = this.jwtHelper.decodeToken(user.token);
+          }
+        })
+      );
   }
   signUp(model: User) {
-    return this.http.post(this.baseUrl + "sign-up", model);
+    return this.http.post(
+      this.baseUrl + "sign-up/" + this.sharedService.currentLanguage.value,
+      model
+    );
   }
   signedIn() {
     const token = localStorage.getItem(environment.tokenName);

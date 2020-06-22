@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using grad_proj_api.Dtos;
+using grad_proj_api.Exceptions;
 using grad_proj_api.Helpers;
 using grad_proj_api.Helpers.Pagination;
 using grad_proj_api.Interfaces;
@@ -32,42 +33,38 @@ namespace grad_proj_api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("{userId}")]
-        public async Task<IActionResult> AddPost(int userId, PostForAddDto postForAddDto)
+        [HttpPost("{userId}/{language?}")]
+        public async Task<IActionResult> CreatePost(int userId, Languages? language, PostForAddDto postForAddDto)
         {
 
-            try
-            {
-                if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
-                    userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                    return Unauthorized();
-                var post = _mapper.Map<Post>(postForAddDto);
-                post.UserId = userId;
-                post.DateAddedUtc = DateTime.UtcNow;
-                await _repo.Add(post);
 
-                if (await _repo.SaveAll())
-                {
-                    var postFromRepo = await _repo.GetPost(post.Id);
-                    var postToReturnDto = _mapper.Map<PostToReturnDto>(postFromRepo);
-                    return CreatedAtAction(nameof(GetPost), new { id = post.Id }, postToReturnDto);
-                }
+            if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
+                userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                throw new UnauthorisedException(language);
+            var post = _mapper.Map<Post>(postForAddDto);
+            post.UserId = userId;
+            post.DateAddedUtc = DateTime.UtcNow;
+            await _repo.Add(post);
 
-                return BadRequest("Uploading post failed");
-            }
-            catch (Exception exception)
+            if (await _repo.SaveAll())
             {
-                return BadRequest(exception.Message);
+                var postFromRepo = await _repo.GetPost(post.Id);
+                var postToReturnDto = _mapper.Map<PostToReturnDto>(postFromRepo);
+                return CreatedAtAction(nameof(GetPost), new { id = post.Id }, postToReturnDto);
             }
+
+            throw new FailedToCreateEntityException(language);
+
+
 
         }
 
-        [HttpGet("{id}", Name = nameof(GetPost))]
-        public async Task<IActionResult> GetPost(int id)
+        [HttpGet("{id}/{language?}", Name = nameof(GetPost))]
+        public async Task<IActionResult> GetPost(int id, Languages? language)
         {
             var postFromRepo = await _repo.GetPost(id);
             if (postFromRepo == null)
-                return NotFound();
+                throw new NotFoundException(language);
 
             PostToReturnDto postToReturnDto;
             var nameIdentifier = (User.FindFirst(ClaimTypes.NameIdentifier));
@@ -86,18 +83,18 @@ namespace grad_proj_api.Controllers
             return Ok(postToReturnDto);
         }
 
-        [HttpPut("{userId}/{Id}")]
-        public async Task<IActionResult> UpdatePost(int userId, int id, PostForEditDto postForEditDto)
+        [HttpPut("{userId}/{Id}/{language?}")]
+        public async Task<IActionResult> UpdatePost(int userId, int id, Languages? language, PostForEditDto postForEditDto)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null || userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var postFromRepo = await _repo.GetPost(id);
 
             if (postFromRepo == null || postFromRepo.UserId != userId)
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             _mapper.Map(postForEditDto, postFromRepo);
             postFromRepo.DateEditedUtc = DateTime.UtcNow;
@@ -106,11 +103,11 @@ namespace grad_proj_api.Controllers
                 return NoContent();
             }
 
-            return BadRequest("Failed To Update Post");
+            throw new FailedToUpdateEntityException(language);
 
         }
 
-        [HttpGet]
+        [HttpGet("{language?}")]
         public async Task<IActionResult> GetPosts([FromQuery] PostPaginationParams postPagingParams)
         {
             var posts = await _repo.GetPosts(postPagingParams);
@@ -132,42 +129,42 @@ namespace grad_proj_api.Controllers
             return Ok(postDtos);
         }
 
-        [HttpDelete("{userId}/{id}")]
-        public async Task<IActionResult> DeletePost(int userId, int id)
+        [HttpDelete("{userId}/{id}/{language?}")]
+        public async Task<IActionResult> DeletePost(int userId, int id, Languages? language)
         {
 
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var postFromRepo = await _repo.GetPost(id);
 
             if (postFromRepo == null || postFromRepo.UserId != userId)
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             _repo.Delete(postFromRepo);
             if (await _repo.SaveAll())
             {
                 return NoContent();
             }
-            return BadRequest("Failed To delete Post");
+            throw new FailedToDeleteEntityException(language);
 
         }
 
-        [HttpPost("up-vote/{id}/{userId}")]
-        public async Task<IActionResult> CreateUpVote(int userId, int id)
+        [HttpPost("up-vote/{id}/{userId}/{language?}")]
+        public async Task<IActionResult> CreateUpVote(int userId, int id, Languages? language)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
                 userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var postFromRepo = await _repo.GetPost(id);
 
             if (postFromRepo == null)
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
 
             var downVote = postFromRepo.DownVoters.FirstOrDefault(pdv => pdv.UserId == userId);
@@ -179,7 +176,7 @@ namespace grad_proj_api.Controllers
 
             if (postFromRepo.UpVoters.Any(puv => puv.UserId == userId && puv.PostId == id))
             {
-                return BadRequest("Post Already Upvoted");
+                throw new EntityAlreadyCreatedException(language);
             }
             var upVote = new UpVotedPost() { PostId = id, UserId = userId };
             await _repo.Add(upVote);
@@ -189,21 +186,22 @@ namespace grad_proj_api.Controllers
                 var upVoteDto = _mapper.Map<UpVoteForPostToReturnDto>(upVote);
                 return CreatedAtRoute(nameof(GetUpVoteForPost), new { id = id, userId = userId }, upVoteDto);
             }
-            return BadRequest("Failed To Upvote Post");
+
+            throw new FailedToCreateEntityException(language);
         }
 
-        [HttpPost("down-vote/{id}/{userId}")]
-        public async Task<IActionResult> CreateDownVote(int userId, int id)
+        [HttpPost("down-vote/{id}/{userId}/{language?}")]
+        public async Task<IActionResult> CreateDownVote(int userId, int id, Languages? language)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null || userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var postFromRepo = await _repo.GetPost(id);
 
             if (postFromRepo == null)
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var upVote = postFromRepo.UpVoters.FirstOrDefault(puv => puv.UserId == userId);
             if (upVote != null)
@@ -214,7 +212,7 @@ namespace grad_proj_api.Controllers
 
             if (postFromRepo.DownVoters.Any(pdv => pdv.UserId == userId && pdv.PostId == id))
             {
-                return BadRequest("Post Already Downvoted");
+                throw new EntityAlreadyCreatedException(language);
             }
             var downVote = new DownVotedPost() { PostId = id, UserId = userId };
             await _repo.Add(downVote);
@@ -224,21 +222,21 @@ namespace grad_proj_api.Controllers
                 var downVoteDto = _mapper.Map<DownVoteForPostToReturnDto>(downVote);
                 return CreatedAtRoute(nameof(GetDownVoteForPost), new { id = id, userId = userId }, downVoteDto);
             }
-            return BadRequest("Failed To Downvote Post");
+            throw new FailedToCreateEntityException(language);
         }
 
-        [HttpDelete("down-vote/{id}/{userId}")]
-        public async Task<IActionResult> DeleteDownVote(int userId, int id)
+        [HttpDelete("down-vote/{id}/{userId}/{language?}")]
+        public async Task<IActionResult> DeleteDownVote(int userId, int id, Languages? language)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null || userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var postFromRepo = await _repo.GetPost(id);
 
             if (postFromRepo == null)
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language); ;
             }
 
             var downVote = postFromRepo.DownVoters.FirstOrDefault(pdv => pdv.PostId == id && pdv.UserId == userId);
@@ -249,21 +247,21 @@ namespace grad_proj_api.Controllers
             {
                 return NoContent();
             }
-            return BadRequest("Failed To Delete Downvote");
+            throw new FailedToDeleteEntityException(language);
         }
 
-        [HttpDelete("up-vote/{id}/{userId}")]
-        public async Task<IActionResult> DeleteUpVote(int userId, int id)
+        [HttpDelete("up-vote/{id}/{userId}/{language?}")]
+        public async Task<IActionResult> DeleteUpVote(int userId, int id, Languages? language)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null || userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var postFromRepo = await _repo.GetPost(id);
 
             if (postFromRepo == null)
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var upVote = postFromRepo.UpVoters.FirstOrDefault(puv => puv.PostId == id && puv.UserId == userId);
             if (upVote == null) { return NotFound(); }
@@ -273,7 +271,7 @@ namespace grad_proj_api.Controllers
             {
                 return NoContent();
             }
-            return BadRequest("Failed To Delete Upvote");
+            throw new FailedToDeleteEntityException(language);
         }
 
         [HttpGet("up-vote/{id}/{userId}", Name = nameof(GetUpVoteForPost))]

@@ -1,20 +1,18 @@
-using System;
 using grad_proj_api.Exceptions.Messages;
 using grad_proj_api.Helpers;
-using Newtonsoft.Json;
 
 namespace grad_proj_api.Exceptions
 {
-
-    public class EmailUsedException : System.Exception
+    [System.Serializable]
+    public class FailedToUpdateEntityException : System.Exception
     {
-        public EmailUsedException(Languages? language) : base(GetExceptionMessage(language)) { }
+
+        public FailedToUpdateEntityException(Languages? language) : base(GetExceptionMessage(language)) { }
         public static string GetExceptionMessage(Languages? language)
         {
-            var exceptionMessage = new ExceptionMessage(nameof(EmailUsedException));
+            var exceptionMessage = new ExceptionMessage(nameof(FailedToUpdateEntityException));
             var message = language == null || language == Languages.Arabic ? exceptionMessage.ArabicMessageText : exceptionMessage.EnglishMessageText;
             return message;
-
         }
 
     }

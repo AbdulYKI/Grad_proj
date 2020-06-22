@@ -9,7 +9,7 @@ namespace grad_proj_api.Dtos
 {
     public class UserForUpdateDto
     {
-        public GenderEnum Gender { get; set; }
+        public Gender Gender { get; set; }
         public string SchoolName { get; set; }
         public string CompanyName { get; set; }
 
@@ -34,6 +34,7 @@ namespace grad_proj_api.Dtos
                 ValidationResult.Success;
         }
         public IFormFile PhotoFile { get; set; }
+
 
     }
 

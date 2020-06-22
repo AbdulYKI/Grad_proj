@@ -8,6 +8,7 @@ using grad_proj_api.Interfaces;
 using grad_proj_api.Models;
 using Google.Apis.Auth;
 using Microsoft.EntityFrameworkCore;
+using grad_proj_api.Helpers;
 
 namespace grad_proj_api.Data
 {
@@ -24,8 +25,8 @@ namespace grad_proj_api.Data
         public async Task<User> SignIn(string username, string password)
         {
             var user = username.Contains('@') ?
-           await _context.Users.Include(p => p.Photo).FirstOrDefaultAsync(userDB => userDB.Email == username) :
-          await _context.Users.Include(p => p.Photo).FirstOrDefaultAsync(userDB => userDB.Username == username);
+                await _context.Users.Include(p => p.Photo).FirstOrDefaultAsync(userDB => userDB.Email == username) :
+                await _context.Users.Include(p => p.Photo).FirstOrDefaultAsync(userDB => userDB.Username == username);
 
             if (user == null || !VerifyPasswordHash(password, user.PasswordSalt, user.PasswordHash)) { return null; }
 
@@ -92,12 +93,11 @@ namespace grad_proj_api.Data
 
         }
 
-
-        public async Task<User> GoogleSignIn(GoogleJsonWebSignature.Payload payload)
+        public async Task<User> GoogleSignIn(GoogleJsonWebSignature.Payload payload, Languages? Language)
         {
             var user = await _context.Users.FirstOrDefaultAsync(userDB => userDB.Email == payload.Email);
             if (user != null && user.CreatedWithGoogle == false)
-                throw new EmailUsedException(ExceptionsEnum.EMAIL_USED_EXCEPTION.ToString());
+                throw new EmailUsedException(Language);
             if (user == null)
             {
                 var userTobeCreated = _mapper.Map<User>(payload);

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using grad_proj_api.Dtos;
+using grad_proj_api.Exceptions;
 using grad_proj_api.Helpers;
 using grad_proj_api.Helpers.Pagination;
 using grad_proj_api.Interfaces;
@@ -28,20 +29,20 @@ namespace grad_proj_api.Controllers
             _repo = repo;
         }
 
-        [HttpPost("{userId}/{postId}")]
-        public async Task<IActionResult> CreateComment(int userId, int postId, CommentForAddDto commentForAddDto)
+        [HttpPost("{userId}/{postId}/{language?}")]
+        public async Task<IActionResult> CreateComment(int userId, int postId, Languages? language, CommentForAddDto commentForAddDto)
         {
 
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
                 userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
 
             var postFromRepo = await _repo.GetPost(postId);
             if (postFromRepo == null)
             {
-                return NotFound();
+                throw new NotFoundException(language);
             }
             var comment = _mapper.Map<Comment>(commentForAddDto);
             comment.UserId = userId;
@@ -55,22 +56,22 @@ namespace grad_proj_api.Controllers
                 var commentToReturnDto = _mapper.Map<CommentToReturnDto>(commentFromRepo);
                 return CreatedAtRoute(nameof(GetComment), new { postId = comment.PostId, id = comment.Id }, commentToReturnDto);
             }
-            return BadRequest("Failed To Add Comment");
+            throw new FailedToCreateEntityException(language);
 
         }
 
-        [HttpGet("{postId}/{id}", Name = nameof(GetComment))]
-        public async Task<IActionResult> GetComment(int postId, int id)
+        [HttpGet("{postId}/{id}/{language?}", Name = nameof(GetComment))]
+        public async Task<IActionResult> GetComment(int postId, int id, Languages? language)
         {
             var postFromRepo = await _repo.GetPost(postId);
             if (postFromRepo == null)
             {
-                return NotFound();
+                throw new NotFoundException(language);
             }
             var commentFromRepo = await _repo.GetComment(id);
             if (commentFromRepo == null)
             {
-                return NotFound();
+                throw new NotFoundException(language);
             }
             var commentToReturnDto = _mapper.Map<CommentToReturnDto>(commentFromRepo);
             var nameIdentifier = (User.FindFirst(ClaimTypes.NameIdentifier));
@@ -85,13 +86,13 @@ namespace grad_proj_api.Controllers
 
         }
 
-        [HttpGet("{postId}")]
-        public async Task<IActionResult> GetComments(int postId, [FromQuery] CommentPaginationParams commentPaginationParams)
+        [HttpGet("{postId}/{language?}")]
+        public async Task<IActionResult> GetComments(int postId, Languages? language, [FromQuery] CommentPaginationParams commentPaginationParams)
         {
             var postFromRepo = await _repo.GetPost(postId);
             if (postFromRepo == null)
             {
-                return NotFound();
+                throw new NotFoundException(language);
             }
 
             var commentsFromRepo = await _repo.GetComments(postId, commentPaginationParams);
@@ -113,18 +114,18 @@ namespace grad_proj_api.Controllers
 
         }
 
-        [HttpPut("{userId}/{id}")]
-        public async Task<IActionResult> EditComment(int userId, int id, CommentForEditDto commentForEditDto)
+        [HttpPut("{userId}/{id}/{language?}")]
+        public async Task<IActionResult> EditComment(int userId, int id, Languages? language, CommentForEditDto commentForEditDto)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
                 userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var commentFromRepo = await _repo.GetComment(id);
             if (commentFromRepo == null)
             {
-                return NotFound();
+                throw new NotFoundException(language);
             }
             _mapper.Map(commentForEditDto, commentFromRepo);
             commentFromRepo.DateEditedUtc = DateTime.UtcNow;
@@ -132,51 +133,51 @@ namespace grad_proj_api.Controllers
             {
                 return NoContent();
             }
-            return BadRequest("Failed To Edit Comment");
+            throw new FailedToUpdateEntityException(language);
 
         }
 
-        [HttpDelete("{postId}/{userId}/{id}")]
-        public async Task<IActionResult> DeleteComment(int postId, int userId, int id)
+        [HttpDelete("{postId}/{userId}/{id}/{language?}")]
+        public async Task<IActionResult> DeleteComment(int postId, int userId, int id, Languages? language)
         {
             var postFromRepo = await _repo.GetPost(postId);
             if (postFromRepo == null)
             {
-                return NotFound();
+                throw new NotFoundException(language);
             }
 
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
                 userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var commentFromRepo = await _repo.GetComment(id);
             if (commentFromRepo == null)
             {
-                return NotFound();
+                throw new NotFoundException(language);
             }
             _repo.Delete(commentFromRepo);
             if (await _repo.SaveAll())
             {
                 return NoContent();
             }
-            return BadRequest("Failed To Delete Comment");
+            throw new FailedToDeleteEntityException(language);
 
         }
 
-        [HttpPost("up-vote/{id}/{userId}")]
-        public async Task<IActionResult> CreateUpVote(int userId, int id)
+        [HttpPost("up-vote/{id}/{userId}/{language?}")]
+        public async Task<IActionResult> CreateUpVote(int userId, int id, Languages? language)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
                 userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
 
             var commentFromRepo = await _repo.GetComment(id);
             if (commentFromRepo == null)
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var downVote = commentFromRepo.DownVoters.FirstOrDefault(cdv => cdv.UserId == userId);
             if (downVote != null)
@@ -187,7 +188,7 @@ namespace grad_proj_api.Controllers
             var upVote = new UpVotedComment() { CommentId = id, UserId = userId };
             if (commentFromRepo.UpVoters.Any(cuv => cuv.UserId == upVote.UserId && cuv.CommentId == id))
             {
-                return BadRequest("Comment Already Upvoted");
+                throw new EntityAlreadyCreatedException(language);
             }
             await _repo.Add(upVote);
 
@@ -196,22 +197,24 @@ namespace grad_proj_api.Controllers
                 var upVoteDto = _mapper.Map<UpVoteForCommentToReturnDto>(upVote);
                 return CreatedAtRoute(nameof(GetUpVoteForComment), new { id = id, userId = userId }, upVoteDto);
             }
-            return BadRequest("Failed To Upvote Comment");
+            throw new FailedToCreateEntityException(language);
         }
 
-        [HttpPost("down-vote/{id}/{userId}")]
-        public async Task<IActionResult> CreateDownVote(int userId, int id)
+        [HttpPost("down-vote/{id}/{userId}/{language?}")]
+        public async Task<IActionResult> CreateDownVote(int userId, int id, Languages? language)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
                 userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+
+                throw new UnauthorisedException(language);
             }
             var commentFromRepo = await _repo.GetComment(id);
 
             if (commentFromRepo == null)
             {
-                return Unauthorized();
+
+                throw new UnauthorisedException(language);
             }
             var upVote = commentFromRepo.UpVoters.FirstOrDefault(cuv => cuv.UserId == userId);
             if (upVote != null)
@@ -221,7 +224,7 @@ namespace grad_proj_api.Controllers
             var downVote = new DownVotedComment() { CommentId = id, UserId = userId };
             if (commentFromRepo.DownVoters.Any(cdv => cdv.UserId == downVote.UserId && cdv.CommentId == id))
             {
-                return BadRequest("Comment Already Downvoted");
+                throw new EntityAlreadyCreatedException(language);
             }
             await _repo.Add(downVote);
 
@@ -230,21 +233,21 @@ namespace grad_proj_api.Controllers
                 var downVoteDto = _mapper.Map<DownVoteForCommentToReturnDto>(downVote);
                 return CreatedAtRoute(nameof(GetUpVoteForComment), new { id = id, userId = userId }, downVoteDto);
             }
-            return BadRequest("Failed To Downvote Comment");
+            throw new FailedToCreateEntityException(language);
         }
 
-        [HttpDelete("down-vote/{id}/{userId}")]
-        public async Task<IActionResult> DeleteDownVote(int userId, int id)
+        [HttpDelete("down-vote/{id}/{userId}/{language?}")]
+        public async Task<IActionResult> DeleteDownVote(int userId, int id, Languages? language)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
                 userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var commentFromRepo = await _repo.GetComment(id);
             if (commentFromRepo == null)
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
 
             var downVote = commentFromRepo.DownVoters.FirstOrDefault(cdv => cdv.UserId == userId);
@@ -256,22 +259,22 @@ namespace grad_proj_api.Controllers
                 var downVoteDto = _mapper.Map<DownVoteForCommentToReturnDto>(downVote);
                 return CreatedAtRoute(nameof(GetDownVoteForComment), new { id = id, userId = userId }, downVoteDto);
             }
-            return BadRequest("Failed To Delete Downvote Comment");
+            throw new FailedToDeleteEntityException(language);
         }
 
-        [HttpDelete("up-vote/{id}/{userId}")]
-        public async Task<IActionResult> DeleteUpVoteComment(int userId, int id)
+        [HttpDelete("up-vote/{id}/{userId}/{language?}")]
+        public async Task<IActionResult> DeleteUpVoteComment(int userId, int id, Languages? language)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
                 userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
             var commentFromRepo = await _repo.GetComment(id);
 
             if (commentFromRepo == null)
             {
-                return Unauthorized();
+                throw new UnauthorisedException(language);
             }
 
             var upVote = commentFromRepo.UpVoters.FirstOrDefault(cuv => cuv.UserId == userId);
@@ -282,7 +285,7 @@ namespace grad_proj_api.Controllers
             {
                 return NoContent();
             }
-            return BadRequest("Failed To Delete Upvote Comment");
+            throw new FailedToDeleteEntityException(language);
         }
 
         [HttpGet("up-vote/{id}/{userId}", Name = nameof(GetUpVoteForComment))]

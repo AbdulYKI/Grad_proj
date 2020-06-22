@@ -13,5 +13,7 @@ namespace grad_proj_api.Dtos
         [CustomValidation(typeof(Extension), nameof(Extension.ValidateContent))]
         public string Content { get; set; }
 
+
+
     }
 }

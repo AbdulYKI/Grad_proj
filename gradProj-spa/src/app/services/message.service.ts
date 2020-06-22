@@ -1,3 +1,4 @@
+import { SharedService } from "./shared.service";
 import { MessageListPaginationParams } from "src/app/helper/pagination/message-list-pagination-params";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
@@ -12,10 +13,15 @@ import { PropertyNameFinder as PropertyNameToStringConverter } from "./../helper
 })
 export class MessageService {
   baseUrl: string = environment.apiUrl + "user/";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private sharedService: SharedService) {}
   getMessagesThread(id: number, recipienetId: number): Observable<Message[]> {
     return this.http.get<Message[]>(
-      this.baseUrl + id + "/message/thread/" + recipienetId
+      this.baseUrl +
+        id +
+        "/message/thread/" +
+        recipienetId +
+        "/" +
+        this.sharedService.currentLanguage.value
     );
   }
   getMessagesForList(
@@ -41,10 +47,16 @@ export class MessageService {
       httpParams = httpParams.append("pageNumber", pageNumber.toString());
     }
     return this.http
-      .get(this.baseUrl + userId + "/message", {
-        observe: "response",
-        params: httpParams,
-      })
+      .get(
+        this.baseUrl +
+          userId +
+          "/message/" +
+          this.sharedService.currentLanguage.value,
+        {
+          observe: "response",
+          params: httpParams,
+        }
+      )
       .pipe(
         map((response) => {
           paginationResult.result = response.body as Message[];
@@ -58,6 +70,13 @@ export class MessageService {
       );
   }
   deleteMessage(messageId: number, userId: number) {
-    return this.http.delete(this.baseUrl + userId + "/message/" + messageId);
+    return this.http.delete(
+      this.baseUrl +
+        userId +
+        "/message/" +
+        messageId +
+        "/" +
+        this.sharedService.currentLanguage.value
+    );
   }
 }

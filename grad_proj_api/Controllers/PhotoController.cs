@@ -7,6 +7,7 @@ using AutoMapper;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using grad_proj_api.Dtos;
+using grad_proj_api.Exceptions;
 using grad_proj_api.Helpers;
 using grad_proj_api.Interfaces;
 using grad_proj_api.Models;
@@ -45,12 +46,12 @@ namespace grad_proj_api.Controllers
             return Ok(photoToReturn);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm] PhotoForAddingDto photoForAddingDTO)
+        [HttpPost("{language?}")]
+        public async Task<IActionResult> AddPhotoForUser(int userId, Languages? language, [FromForm] PhotoForAddingDto photoForAddingDTO)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) == null ||
                 userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+                throw new UnauthorisedException(language);
 
             var userFromRepo = await _repo.GetUser(userId);
             if (userFromRepo.Photo != null)
@@ -90,7 +91,7 @@ namespace grad_proj_api.Controllers
                 return CreatedAtAction(nameof(GetPhoto), new { userId = userId, id = photo.Id }, (photoToReturn));
 
             }
-            return BadRequest("Uploading image failed");
+            throw new FailedToCreateEntityException(language);
         }
 
         public void DeletePhoto(ref User userFromRepo)

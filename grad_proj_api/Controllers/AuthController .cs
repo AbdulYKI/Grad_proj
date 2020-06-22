@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using grad_proj_api.Helpers;
 
 namespace grad_proj_api.Controllers
 {
@@ -36,101 +37,84 @@ namespace grad_proj_api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("sign-up")]
-        public async Task<IActionResult> SignUp(UserForSignUpDto userForSignUpDTO)
+        [HttpPost("sign-up/{language?}")]
+        public async Task<IActionResult> SignUp(Languages? language, UserForSignUpDto userForSignUpDTO)
         {
 
-            try
-            {
-                userForSignUpDTO.Username = userForSignUpDTO.Username.ToLower();
 
-                if (await _repo.EmailExists(userForSignUpDTO.Email))
-                    throw new EmailUsedException(ExceptionsEnum.EMAIL_USED_EXCEPTION.ToString("D"));
+            userForSignUpDTO.Username = userForSignUpDTO.Username.ToLower();
 
-                if (await _repo.UserExists(userForSignUpDTO.Username))
-                    throw new UsernameUsedException(ExceptionsEnum.USERNAME_USED_EXCEPTION.ToString("D"));
-                var userTobeCreated = _mapper.Map<User>(userForSignUpDTO);
-                userTobeCreated.CreatedUtc = DateTime.UtcNow;
-                var createdUser = await _repo.SignUp(userTobeCreated, userForSignUpDTO.Password);
-                var userToReturn = _mapper.Map<UserToReturnDto>(createdUser);
+            if (await _repo.EmailExists(userForSignUpDTO.Email))
+                throw new EmailUsedException(language);
 
-                return CreatedAtRoute("get-user", new { controller = "user", id = createdUser.Id }, userToReturn);
+            if (await _repo.UserExists(userForSignUpDTO.Username))
+                throw new UsernameUsedException(language);
 
-            }
-            catch (Exception exception)
-            {
+            var userTobeCreated = _mapper.Map<User>(userForSignUpDTO);
+            userTobeCreated.CreatedUtc = DateTime.UtcNow;
+            var createdUser = await _repo.SignUp(userTobeCreated, userForSignUpDTO.Password);
+            var userToReturn = _mapper.Map<UserToReturnDto>(createdUser);
 
-                if (exception is EmailUsedException || exception is UsernameUsedException)
-                    return StatusCode(422, exception.Message);
+            return CreatedAtRoute("get-user", new { controller = "user", id = createdUser.Id }, userToReturn);
 
-                return StatusCode(400, exception.Message);
-            }
+
+
 
         }
 
-        [HttpPost("sign-in")]
-        public async Task<IActionResult> SignIn(UserForSignInDto userForSignInDTO)
+        [HttpPost("sign-in/{language?}")]
+        public async Task<IActionResult> SignIn(Languages? language, UserForSignInDto userForSignInDTO)
         {
-            try
+
+            User user = user = await _repo.SignIn(userForSignInDTO.Username.ToLower(), userForSignInDTO.Password);
+
+            if (user == null)
+                throw new UnauthorisedException(language);
+            var tokenDescriptor = CreateSecurityTokenDescriptor(user);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            var userToReturn = _mapper.Map<UserToReturnDto>(user);
+
+            return Ok(new
             {
-                User user = user = await _repo.SignIn(userForSignInDTO.Username.ToLower(), userForSignInDTO.Password);
+                token = tokenHandler.WriteToken(token),
+                info = userToReturn
+            });
 
-                if (user == null)
-                    return Unauthorized();
-                var tokenDescriptor = CreateSecurityTokenDescriptor(user);
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-
-                var userToReturn = _mapper.Map<UserToReturnDto>(user);
-
-                return Ok(new
-                {
-                    token = tokenHandler.WriteToken(token),
-                    info = userToReturn
-                });
-            }
-            catch (Exception exception) { return StatusCode(400, exception.Message); }
 
         }
 
-        [HttpPost("sign-in/Google")]
-        public async Task<IActionResult> GoogleSignIn(UserForGoogleSignInDto userForGoogleSignInDTO)
+        [HttpPost("sign-in/Google/{language?}")]
+        public async Task<IActionResult> GoogleSignIn(Languages? language, UserForGoogleSignInDto userForGoogleSignInDTO)
         {
-            try
+
+            GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings();
+
+            settings.Audience = new List<string>() { _configuration.GetSection("AppSettings:GoogleClientId").Value };
+
+            var payload = GoogleJsonWebSignature.ValidateAsync(userForGoogleSignInDTO.IdToken, settings).Result;
+
+            var user = await _repo.GoogleSignIn(payload, language);
+
+            var tokenDescriptor = CreateSecurityTokenDescriptor(user);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            var userToReturn = _mapper.Map<UserToReturnDto>(user);
+
+            return Ok(new
             {
-                GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings();
+                token = tokenHandler.WriteToken(token),
+                info = userToReturn
+            });
 
-                settings.Audience = new List<string>() { _configuration.GetSection("AppSettings:GoogleClientId").Value };
 
-                var payload = GoogleJsonWebSignature.ValidateAsync(userForGoogleSignInDTO.IdToken, settings).Result;
 
-                var user = await _repo.GoogleSignIn(payload);
-
-                var tokenDescriptor = CreateSecurityTokenDescriptor(user);
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-
-                var userToReturn = _mapper.Map<UserToReturnDto>(user);
-
-                return Ok(new
-                {
-                    token = tokenHandler.WriteToken(token),
-                    info = userToReturn
-                });
-
-            }
-            catch (Exception exception)
-            {
-                if (exception.InnerException is EmailUsedException)
-                    return StatusCode(422, exception.Message);
-
-                return StatusCode(400, exception.Message);
-
-            }
         }
 
         private SecurityTokenDescriptor CreateSecurityTokenDescriptor(User user)
