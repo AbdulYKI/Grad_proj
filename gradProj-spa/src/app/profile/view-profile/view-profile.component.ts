@@ -61,7 +61,7 @@ export class ViewProfileComponent implements OnInit {
     return this.sharedService.lexicon;
   }
   get isLanguageArabic() {
-    return this.sharedService.currentLanguage.value === LanguageEnum.Arabic;
+    return this.sharedService.LanguageSubject.value === LanguageEnum.Arabic;
   }
   private setProgrammingLanguagesDataSource(
     programmingLanguages: ProgrammingLanguage[]

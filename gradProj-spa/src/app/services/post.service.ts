@@ -19,14 +19,14 @@ export class PostService {
 
   createPost(userId: number, post: Post) {
     return this.http.post(
-      this.baseUrl + userId + "/" + this.sharedService.currentLanguage.value,
+      this.baseUrl + userId + "/" + this.sharedService.LanguageSubject.value,
       post
     );
   }
 
   getPost(postId: number): Observable<Post> {
     return this.http.get<Post>(
-      this.baseUrl + postId + "/" + this.sharedService.currentLanguage.value
+      this.baseUrl + postId + "/" + this.sharedService.LanguageSubject.value
     );
   }
   getPosts(
@@ -80,7 +80,7 @@ export class PostService {
         "/" +
         id +
         "/" +
-        this.sharedService.currentLanguage.value
+        this.sharedService.LanguageSubject.value
     );
   }
   updatePost(userId: number, id: number, post: Post) {
@@ -90,7 +90,7 @@ export class PostService {
         "/" +
         id +
         "/" +
-        this.sharedService.currentLanguage.value,
+        this.sharedService.LanguageSubject.value,
       post
     );
   }
@@ -103,7 +103,7 @@ export class PostService {
         "/" +
         userId +
         "/" +
-        this.sharedService.currentLanguage.value,
+        this.sharedService.LanguageSubject.value,
       {}
     );
   }
@@ -115,7 +115,7 @@ export class PostService {
         "/" +
         userId +
         "/" +
-        this.sharedService.currentLanguage.value,
+        this.sharedService.LanguageSubject.value,
       {}
     );
   }
@@ -128,7 +128,7 @@ export class PostService {
         "/" +
         userId +
         "/" +
-        this.sharedService.currentLanguage.value
+        this.sharedService.LanguageSubject.value
     );
   }
   deleteDownVote(userId: number, postId: number) {
@@ -139,7 +139,7 @@ export class PostService {
         "/" +
         userId +
         "/" +
-        this.sharedService.currentLanguage.value
+        this.sharedService.LanguageSubject.value
     );
   }
 }

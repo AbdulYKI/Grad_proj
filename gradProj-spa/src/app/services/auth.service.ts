@@ -14,20 +14,19 @@ export class AuthService {
   baseUrl: string = environment.apiUrl + "auth/";
   jwtHelper: JwtHelperService = new JwtHelperService();
   decodedToken: any;
-  currentUser: User;
 
-  photoUrl = new BehaviorSubject<string>("../../assets/user.png");
-  currentPhotoUrl = this.photoUrl.asObservable();
+  photoUrlSubject = new BehaviorSubject<string>("../../assets/user.png");
   constructor(private http: HttpClient, private sharedService: SharedService) {}
   changeMemeberPhotoUrl(photoUrl: string) {
-    this.photoUrl.next(photoUrl);
-    this.currentUser.photoUrl = photoUrl;
-    localStorage.setItem("info", JSON.stringify(this.currentUser));
+    this.photoUrlSubject.next(photoUrl);
+    const userInLocalStorage = this.currentUser;
+    userInLocalStorage.photoUrl = photoUrl;
+    this.currentUser = userInLocalStorage;
   }
   signIn(model: User) {
     return this.http
       .post(
-        this.baseUrl + "sign-in/" + this.sharedService.currentLanguage.value,
+        this.baseUrl + "sign-in/" + this.sharedService.LanguageSubject.value,
         model
       )
       .pipe(
@@ -44,7 +43,7 @@ export class AuthService {
   }
   signUp(model: User) {
     return this.http.post(
-      this.baseUrl + "sign-up/" + this.sharedService.currentLanguage.value,
+      this.baseUrl + "sign-up/" + this.sharedService.LanguageSubject.value,
       model
     );
   }
@@ -56,5 +55,15 @@ export class AuthService {
       return false;
     }
     return true;
+  }
+  get currentUser() {
+    return JSON.parse(localStorage.getItem("info")) as User;
+  }
+  set currentUser(user: User) {
+    if (user !== null) {
+      localStorage.setItem("info", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("info");
+    }
   }
 }

@@ -107,7 +107,7 @@ export class MessagesListComponent implements OnInit, OnDestroy {
     return this.sharedService.lexicon;
   }
   isInRtl() {
-    return this.sharedService.currentLanguage.value === LanguageEnum.Arabic;
+    return this.sharedService.LanguageSubject.value === LanguageEnum.Arabic;
   }
   get faEnvelope() {
     return faEnvelope;

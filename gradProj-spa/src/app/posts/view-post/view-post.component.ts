@@ -83,7 +83,7 @@ export class ViewPostComponent implements OnInit {
         this.contentBeforeEdit = this.post.content;
       }
     );
-    this.sharedService.currentLanguage.subscribe(() => this.refreshEditor());
+    this.sharedService.LanguageSubject.subscribe(() => this.refreshEditor());
   }
   emptyEditorCheck() {
     if (this.post.content === "") {
@@ -107,7 +107,7 @@ export class ViewPostComponent implements OnInit {
     return faEye;
   }
   get faChevron() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       return faChevronRight;
     }
     return faChevronLeft;
@@ -128,7 +128,7 @@ export class ViewPostComponent implements OnInit {
     return faExclamationTriangle;
   }
   get containerClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       return "container post-padding rtl";
     }
     return "container post-padding";
@@ -191,7 +191,7 @@ export class ViewPostComponent implements OnInit {
     }
 
     this.getPost();
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       this.config.language = "ar";
     } else {
       this.config.language = "en_GB";

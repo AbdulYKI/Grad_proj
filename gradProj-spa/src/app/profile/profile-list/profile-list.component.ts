@@ -42,7 +42,7 @@ export class ProfileListComponent implements OnInit, OnDestroy {
     return faSearch;
   }
   isInRtlMode() {
-    return this.sharedService.currentLanguage.value === LanguageEnum.Arabic;
+    return this.sharedService.LanguageSubject.value === LanguageEnum.Arabic;
   }
   ngOnDestroy() {
     this.destroy.next(true);

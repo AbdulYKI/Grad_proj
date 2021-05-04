@@ -105,7 +105,7 @@ export class PhotoUploaderComponent implements OnInit, OnDestroy {
     return this.sharedService.lexicon;
   }
   get rtlClass() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       return "rtl";
     }
     return "";

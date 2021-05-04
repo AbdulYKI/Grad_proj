@@ -36,7 +36,7 @@ export class ProgrammingLanguagesModalComponent implements OnInit {
     return this.sharedService.lexicon;
   }
   get isLanguageArabic() {
-    return this.sharedService.currentLanguage.value === LanguageEnum.Arabic;
+    return this.sharedService.LanguageSubject.value === LanguageEnum.Arabic;
   }
   closeModal() {
     this.activeModal.dismiss("Cross click");

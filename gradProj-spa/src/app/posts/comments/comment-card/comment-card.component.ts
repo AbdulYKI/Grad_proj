@@ -101,7 +101,7 @@ export class CommentCardComponent implements OnInit {
   }
   refreshEditor() {
     this.getComment();
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       this.config.language = "ar";
     } else {
       this.config.language = "en_GB";
@@ -129,7 +129,7 @@ export class CommentCardComponent implements OnInit {
     return this.sharedService.lexicon;
   }
   get containerClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       return "container post-padding rtl";
     }
     return "container post-padding";

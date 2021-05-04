@@ -24,7 +24,7 @@ export class UserService {
   }
   updateUser(id: number, user: User) {
     return this.http.put(
-      this.baseUrl + id + "/" + this.sharedService.currentLanguage.value,
+      this.baseUrl + id + "/" + this.sharedService.LanguageSubject.value,
       user
     );
   }

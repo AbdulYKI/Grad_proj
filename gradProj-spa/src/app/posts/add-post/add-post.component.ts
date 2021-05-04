@@ -58,7 +58,7 @@ export class AddPostComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private alertifyService: AlertifyService
   ) {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       this.config.language = "ar";
     } else {
       this.config.language = "en_GB";
@@ -93,7 +93,7 @@ export class AddPostComponent implements OnInit, OnDestroy {
   }
 
   get editorHeaderClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       return "editor-header rtl";
     }
     return "editor-header";

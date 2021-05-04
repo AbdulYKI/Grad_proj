@@ -21,7 +21,7 @@ export class MessageService {
         "/message/thread/" +
         recipienetId +
         "/" +
-        this.sharedService.currentLanguage.value
+        this.sharedService.LanguageSubject.value
     );
   }
   getMessagesForList(
@@ -51,7 +51,7 @@ export class MessageService {
         this.baseUrl +
           userId +
           "/message/" +
-          this.sharedService.currentLanguage.value,
+          this.sharedService.LanguageSubject.value,
         {
           observe: "response",
           params: httpParams,
@@ -76,7 +76,7 @@ export class MessageService {
         "/message/" +
         messageId +
         "/" +
-        this.sharedService.currentLanguage.value
+        this.sharedService.LanguageSubject.value
     );
   }
 }

@@ -41,17 +41,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const token = localStorage.getItem(environment.tokenName);
-    const user = JSON.parse(localStorage.getItem("info"));
     const language = JSON.parse(localStorage.getItem("language"));
     if (token) {
       this.authService.decodedToken = this.jwtHelper.decodeToken(token);
     }
-    if (user) {
-      this.authService.currentUser = user;
-      this.authService.changeMemeberPhotoUrl(
-        this.authService.currentUser.photoUrl
-      );
-    }
+
     if (language) {
       this.sharedService.changeLanguage(language as LanguageEnum);
     } else {

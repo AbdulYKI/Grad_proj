@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
   get isInRtlMode() {
-    return this.sharedService.currentLanguage.value === LanguageEnum.Arabic;
+    return this.sharedService.LanguageSubject.value === LanguageEnum.Arabic;
   }
   get lexicon() {
     return this.sharedService.lexicon;

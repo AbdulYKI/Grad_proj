@@ -13,8 +13,8 @@ export class FooterComponent implements OnInit {
   constructor(private sharedService: SharedService) {}
   language: LanguageEnum = LanguageEnum.Arabic;
   isMenuCollapsed = true;
-   arLang:string = environment.langAr;
-   enLang:string = environment.langEn;
+  arLang: string = environment.langAr;
+  enLang: string = environment.langEn;
   ngOnInit() {}
   changeLanguage(language: LanguageEnum) {
     localStorage.setItem("language", language.toString());
@@ -39,7 +39,7 @@ export class FooterComponent implements OnInit {
     return this.sharedService.lexicon;
   }
   get rtlClass() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       return "rtl";
     }
     return "";

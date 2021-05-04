@@ -27,7 +27,7 @@ export class AlertifyService {
     alertify.message(message);
   }
   get notifierPosition() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       return "bottom-left";
     } else {
       return "bottom-right";

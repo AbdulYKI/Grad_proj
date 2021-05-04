@@ -28,7 +28,7 @@ export class NavBarComponent implements OnInit, AfterViewChecked {
   isMenuCollapsed = true;
   scrolled = 0;
   logoUrl = environment.logo;
-  photoUrl: string;
+
   shouldIncludeOnScrollClass = false;
   shouldHaveStartHeaderClass = true;
   destroy: Subject<boolean> = new Subject<boolean>();
@@ -42,11 +42,11 @@ export class NavBarComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit() {
-    this.authService.currentPhotoUrl
-      .pipe(takeUntil(this.destroy))
-      .subscribe((newPhotoUrl) => {
-        this.photoUrl = newPhotoUrl;
-      });
+    // this.authService.photoUrlSubject
+    //   .pipe(takeUntil(this.destroy))
+    //   .subscribe((newPhotoUrl) => {
+    //     this.photoUrl = newPhotoUrl;
+    //   });
   }
 
   toggleMenuCollapsed() {
@@ -68,8 +68,6 @@ export class NavBarComponent implements OnInit, AfterViewChecked {
   }
   signOut() {
     localStorage.removeItem(environment.tokenName);
-    localStorage.removeItem("info");
-    this.authService.currentUser = null;
     this.authService.decodedToken = null;
     this.alertifyService.message(this.lexicon.signedOutMessage);
     this.router.navigate(["./"]);
@@ -82,14 +80,14 @@ export class NavBarComponent implements OnInit, AfterViewChecked {
     return this.sharedService.lexicon;
   }
   get containerClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.English) {
       return "container";
     } else {
       return "container rtl";
     }
   }
   get sideSectionClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.English) {
       return "side-section nav-item ml-0 ml-md-2 ml-lg-4";
     } else {
       return "side-section-rtl nav-item ml-0 ml-md-2 ml-lg-4";
@@ -104,5 +102,8 @@ export class NavBarComponent implements OnInit, AfterViewChecked {
   }
   ngAfterViewChecked() {
     this.cdr.detectChanges();
+  }
+  get photoUrl() {
+    return this.authService.currentUser.photoUrl;
   }
 }

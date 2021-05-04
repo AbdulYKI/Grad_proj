@@ -19,6 +19,6 @@ export class DeleteMessageConfirmationModalComponent implements OnInit {
     return this.sharedService.lexicon;
   }
   get isInRtlMode() {
-    return this.sharedService.currentLanguage.value === LanguageEnum.Arabic;
+    return this.sharedService.LanguageSubject.value === LanguageEnum.Arabic;
   }
 }

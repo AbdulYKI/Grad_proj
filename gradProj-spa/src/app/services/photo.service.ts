@@ -15,7 +15,7 @@ export class PhotoService {
     const formData = new FormData();
     formData.append("file", photo, photo.name);
     return this.http.post(
-      this.baseUrl + id + "/photo/" + this.sharedService.currentLanguage.value,
+      this.baseUrl + id + "/photo/" + this.sharedService.LanguageSubject.value,
       formData
     );
   }

@@ -59,19 +59,19 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   minDate: NgbDatePickerValue;
   maxDate: NgbDatePickerValue;
   chosenphoto: File = null;
-  displayMonths = 1;
+  numberOfMonthsToDisplay = 1;
   user: User;
   navigation = "select";
   showWeekNumbers = false;
   programmingLanguagesPlaceHolder: string;
   outsideDays = "visible";
   activeButton = "btn1";
-  photoUrl = "";
+
   programmingLanguagesDataSource: ProgrammingLanguage[] = [];
   flagClass: string;
   selectedProgrammingLanguages: ProgrammingLanguage[] = [];
   countriesDataSource: Country[] = [];
-  modalOption: NgbModalOptions = {};
+  imageModalOption: NgbModalOptions = {};
   programmingLanguagesDropDownSettings: any;
   constructor(
     private formBuilder: FormBuilder,
@@ -103,24 +103,18 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   ngOnInit(): void {
-    this.authService.currentPhotoUrl
-      .pipe(takeUntil(this.destroy))
-      .subscribe((newPhotoUrl) => {
-        this.photoUrl = newPhotoUrl;
-      });
-    this.sharedService.currentLanguage
-      .pipe(takeUntil(this.destroy))
-      .subscribe((language) => {
-        this.setProgrammingLanguagesDropDownOptions();
-      });
+    this.subscribeToLanguageSubject();
     this.BuildProfileFormGroup();
     this.programmingLanguagesPlaceHolder = this.lexicon.programmingLanguagesPlaceHolder;
+    this.getProfileData();
+    this.setProgrammingLanguagesDropDownOptions();
+  }
+  private getProfileData() {
     this.route.data
       .pipe(takeUntil(this.destroy))
       .subscribe(
         (data: { editProfileResolverData: EditProfileResolverData }) => {
           this.user = data.editProfileResolverData.user;
-          this.photoUrl = this.user.photoUrl || environment.defaultPhoto;
           this.setProgrammingLanguagesDataSource(
             data.editProfileResolverData.programmingLanguages
           );
@@ -128,9 +122,16 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
           this.setCountriesDataSource(data.editProfileResolverData.countries);
         }
       );
-
-    this.setProgrammingLanguagesDropDownOptions();
   }
+
+  private subscribeToLanguageSubject() {
+    this.sharedService.LanguageSubject.pipe(takeUntil(this.destroy)).subscribe(
+      () => {
+        this.setProgrammingLanguagesDropDownOptions();
+      }
+    );
+  }
+
   private setProgrammingLanguagesDropDownOptions() {
     this.programmingLanguagesDropDownSettings = {
       primaryKey: "id",
@@ -329,11 +330,11 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.editFormGroup.get("countryNumericCode");
   }
   openImageUploaderModal() {
-    this.modalOption.backdrop = "static";
-    this.modalOption.keyboard = false;
+    this.imageModalOption.backdrop = "static";
+    this.imageModalOption.keyboard = false;
     const modalRef = this.modalService.open(
       PhotoUploaderComponent,
-      this.modalOption
+      this.imageModalOption
     );
     modalRef.componentInstance.photoUrl = this.photoUrl;
   }
@@ -342,6 +343,9 @@ export class EditProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get isLanguageArabic() {
-    return this.sharedService.currentLanguage.value === LanguageEnum.Arabic;
+    return this.sharedService.LanguageSubject.value === LanguageEnum.Arabic;
+  }
+  get photoUrl() {
+    return this.authService.currentUser.photoUrl || environment.defaultPhoto;
   }
 }

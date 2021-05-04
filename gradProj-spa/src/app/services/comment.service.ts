@@ -24,7 +24,7 @@ export class CommentService {
         "/" +
         postId +
         "/" +
-        this.sharedService.currentLanguage.value,
+        this.sharedService.LanguageSubject.value,
       comment
     );
   }
@@ -59,7 +59,7 @@ export class CommentService {
 
     return this.http
       .get<Comment[]>(
-        this.baseUrl + postId + "/" + this.sharedService.currentLanguage.value,
+        this.baseUrl + postId + "/" + this.sharedService.LanguageSubject.value,
         {
           observe: "response",
           params: httpParams,
@@ -84,7 +84,7 @@ export class CommentService {
         "/" +
         id +
         "/" +
-        this.sharedService.currentLanguage.value,
+        this.sharedService.LanguageSubject.value,
       comment
     );
   }
@@ -97,7 +97,7 @@ export class CommentService {
         "/" +
         id +
         "/" +
-        this.sharedService.currentLanguage.value
+        this.sharedService.LanguageSubject.value
     );
   }
   createUpVote(userId: number, commentId: number) {
@@ -108,7 +108,7 @@ export class CommentService {
         "/" +
         userId +
         "/" +
-        this.sharedService.currentLanguage.value,
+        this.sharedService.LanguageSubject.value,
       {}
     );
   }
@@ -120,7 +120,7 @@ export class CommentService {
         "/" +
         userId +
         "/" +
-        this.sharedService.currentLanguage.value,
+        this.sharedService.LanguageSubject.value,
       {}
     );
   }
@@ -133,7 +133,7 @@ export class CommentService {
         "/" +
         userId +
         "/" +
-        this.sharedService.currentLanguage.value
+        this.sharedService.LanguageSubject.value
     );
   }
   deleteDownVote(userId: number, commentId: number) {
@@ -144,7 +144,7 @@ export class CommentService {
         "/" +
         userId +
         "/" +
-        this.sharedService.currentLanguage.value
+        this.sharedService.LanguageSubject.value
     );
   }
 
@@ -155,7 +155,7 @@ export class CommentService {
         "/" +
         commentId +
         "/" +
-        this.sharedService.currentLanguage.value
+        this.sharedService.LanguageSubject.value
     );
   }
 }

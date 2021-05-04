@@ -157,7 +157,7 @@ export class SignUpComponent implements OnInit {
     return this.sharedService.lexicon;
   }
   get containerClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.English) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.English) {
       return "container";
     } else {
       return "container rtl";

@@ -70,7 +70,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
     return this.sharedService.lexicon;
   }
   get containerClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       return "container rtl";
     }
     return "container";

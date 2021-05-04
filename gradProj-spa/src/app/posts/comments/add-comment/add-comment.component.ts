@@ -61,7 +61,7 @@ export class AddCommentComponent implements OnInit {
       this.comment.content = this.oldContentBeforeRefresh;
       this.isLoading = false;
     }, 500);
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       this.config.language = "ar";
     } else {
       this.config.language = "en_GB";
@@ -78,14 +78,14 @@ export class AddCommentComponent implements OnInit {
   }
 
   get containerClasses() {
-    if (this.sharedService.currentLanguage.value === LanguageEnum.Arabic) {
+    if (this.sharedService.LanguageSubject.value === LanguageEnum.Arabic) {
       return "container add-comment-card  card rtl mt-2";
     }
     return "container add-comment-card card mt-2";
   }
 
   ngOnInit(): void {
-    this.sharedService.currentLanguage.subscribe(() => {
+    this.sharedService.LanguageSubject.subscribe(() => {
       this.refreshEditor();
     });
   }
